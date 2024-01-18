@@ -2,7 +2,7 @@
 import { CenteredContainer, HeroSection, Nav } from '@/components';
 import { CommonProps } from '@/shared/types';
 
-export default function DashboardLayout({ children }: CommonProps) {
+export default function AdminDashboardLayout({ children }: CommonProps) {
   return (
     <>
       <HeroSection>

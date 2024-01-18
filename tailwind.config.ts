@@ -1,10 +1,12 @@
-import type { Config } from 'tailwindcss';
+import { Config } from 'tailwindcss';
 
 const config: Config = {
   // darkMode: 'class',
+  mode: 'jit',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './containers/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -12,9 +14,6 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-      'h-w-nav': {
-        heigh: 'calc(100% - 200px)',
       },
     },
   },

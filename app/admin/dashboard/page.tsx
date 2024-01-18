@@ -6,12 +6,13 @@ import { redirect } from 'next/navigation';
 export default function Page() {
   const value = useUserAuth();
 
-  if (value?.role == 'admin') {
-    redirect('/admin/dashboard');
+  if (value?.role == 'user') {
+    redirect('/dashboard');
   }
+
   return (
     <div className="flex flex-col gap-4">
-      <AuthHeader title="RateRank" subTitle="Личный кабинет" />
+      <AuthHeader title="RateRank" subTitle="Админ Панель" />
     </div>
   );
 }

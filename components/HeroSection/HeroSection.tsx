@@ -3,8 +3,8 @@ import type { FC } from 'react';
 
 export const HeroSection: FC<CommonProps> = ({ children }) => {
   return (
-    <main className="flex min-h-screen flex-col dark:bg-gray-900 w-full">
-      <div className="relative isolate w-full">
+    <main className="flex min-h-screen flex-col bg-white dark:bg-gray-900 w-full">
+      <div className="relative isolate w-full h-screen overflow-hidden">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"

@@ -1,9 +1,15 @@
+'use client';
+import { useUserAuth } from '@/context';
+import Link from 'next/link';
+
 export const Nav = () => {
+  const value = useUserAuth();
+
   return (
     <nav className="relative">
       <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
-          <a href="#">Rate Rank</a>
+          <Link href="/">RateRank</Link>
 
           <div className="flex lg:hidden">
             <button
@@ -44,29 +50,36 @@ export const Nav = () => {
               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
               href="#"
             >
-              Home
+              Добавить организацию
             </a>
-            <a
-              className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-              href="#"
-            >
-              Shop
-            </a>
-            <a
-              className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-              href="#"
-            >
-              Contact
-            </a>
-            <a
-              className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-              href="#"
-            >
-              About
-            </a>
+            {!value && (
+              <Link
+                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                href="/login"
+              >
+                Вход
+              </Link>
+            )}
+
+            {value?.role === 'admin' && (
+              <Link
+                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                href="/dashboard"
+              >
+                Dashboard
+              </Link>
+            )}
+            {value?.role === 'user' && (
+              <Link
+                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                href="/admin/dashboard"
+              >
+                Dashboard
+              </Link>
+            )}
           </div>
 
-          <div className="flex justify-center md:block">
+          {/* <div className="flex justify-center md:block">
             <a
               className="relative text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300"
               href="#"
@@ -83,7 +96,7 @@ export const Nav = () => {
 
               <span className="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>
