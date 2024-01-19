@@ -69,7 +69,7 @@ export const LoginForm = () => {
 
     setUserData(decoded);
     storage.setItem('user-data', JSON.stringify(decoded));
-    router.push('/check');
+    router.push('/dashboard');
   }, []);
 
   return (

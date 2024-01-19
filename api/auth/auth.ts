@@ -63,10 +63,12 @@ export async function api_auth(user_data: {
 
   if (response.ok) {
     let json = await response.json();
+    console.log('json.data', json.data);
     return json.data;
   } else {
-    console.log('Ошибка HTTP: ' + response.status);
-    return { status: `${response.status}`, data: null };
+    let json = await response.json();
+    console.log('Ошибка HTTP: ' + json.status);
+    return { status: `${json.status}`, data: null };
   }
 }
 

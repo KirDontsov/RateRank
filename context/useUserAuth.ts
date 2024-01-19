@@ -1,13 +1,15 @@
 import { useUnit } from 'effector-react';
-import { $store, setStore } from '.';
-import { useEffect } from 'react';
-import { storage } from '@/shared';
+import { $store } from '.';
+import { redirect } from 'next/navigation';
 
-export function useUserAuth() {
-  const { value, setValue } = useUnit({
+export function useUserAuth(redirectTo?: string) {
+  const { value } = useUnit({
     value: $store,
-    setValue: setStore,
   });
+
+  if (redirectTo && value?.role == 'admin') {
+    redirect(redirectTo);
+  }
 
   return value;
 }

@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // renders only 1 time
+  reactStrictMode: false,
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
@@ -15,14 +17,15 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    swcPlugins: [
-        "@effector/swc-plugin",
-        {
-          "factories": ["src/createEffectStatus", "~/createCommonPending"]
-        }
-      ],
-  },
+  // effector swc нужен для серверных компонентов
+  // experimental: {
+  //   swcPlugins: [
+  //       "@effector/swc-plugin",
+  //       {
+  //         "factories": ["src/createEffectStatus", "~/createCommonPending"]
+  //       }
+  //     ],
+  // },
 }
 
 module.exports = nextConfig

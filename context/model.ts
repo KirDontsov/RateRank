@@ -9,15 +9,20 @@ export interface StorageData {
   exp: number;
 }
 
-export const PageGate = createGate<{ role: string }>('page');
+export const PageGate = createGate<StorageData>('PageGate');
+export const LoadingGate = createGate<boolean>('LoadingGate');
 
 export const setStore = createEvent<StorageData>();
 export const $store = createStore<StorageData | null>(null);
 
+export const setLoading = createEvent<boolean>();
+export const $loading = createStore<boolean>(true);
+
+// При логине добавляю токен в сторейдж и стейт
 sample({
   clock: setStore,
   fn: (v) => {
-    if (storage) {
+    if (typeof window !== 'undefined') {
       const x = storage.getItem('user-data');
       if (x && x !== null) {
         return JSON.parse(x);
@@ -29,15 +34,44 @@ sample({
   target: $store,
 });
 
-$store.watch((value) => {
-  if (!value) {
-    if (storage) {
+// При открытии каждой страницы надо либо слать запрос на бэк либо лезть в сторейдж
+sample({
+  clock: PageGate.open,
+  fn: (v) => {
+    if (typeof window !== 'undefined') {
       const x = storage.getItem('user-data');
       if (x && x !== null) {
-        setStore(JSON.parse(x));
+        console.log('gate', v);
         return JSON.parse(x);
+      } else {
+        return v;
       }
     }
-  }
-  return value;
+  },
+  target: $store,
+});
+
+sample({
+  clock: setStore,
+  fn: (v) => {
+    if (typeof window !== 'undefined') {
+      const x = storage.getItem('user-data');
+      if (x && x !== null) {
+        return JSON.parse(x);
+      } else {
+        return v;
+      }
+    }
+  },
+  target: $store,
+});
+
+// При открытии каждой страницы надо либо слать запрос на бэк либо лезть в сторейдж
+sample({
+  clock: PageGate.open,
+  source: $store,
+  fn: (s, v) => {
+    return false;
+  },
+  target: $loading,
 });

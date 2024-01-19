@@ -1,9 +1,14 @@
 'use client';
-import { useUserAuth } from '@/context';
+import { $loading, useUserAuth } from '@/context';
+import { useUnit } from 'effector-react';
 import Link from 'next/link';
 
 export const Nav = () => {
   const value = useUserAuth();
+
+  const { loading } = useUnit({
+    loading: $loading,
+  });
 
   return (
     <nav className="relative">
@@ -52,7 +57,7 @@ export const Nav = () => {
             >
               Добавить организацию
             </a>
-            {!value && (
+            {!value && !loading && (
               <Link
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                 href="/login"
@@ -61,22 +66,12 @@ export const Nav = () => {
               </Link>
             )}
 
-            {value?.role === 'admin' && (
-              <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="/dashboard"
-              >
-                Dashboard
-              </Link>
-            )}
-            {value?.role === 'user' && (
-              <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="/admin/dashboard"
-              >
-                Dashboard
-              </Link>
-            )}
+            <Link
+              className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+              href="/check"
+            >
+              Dashboard
+            </Link>
           </div>
 
           {/* <div className="flex justify-center md:block">
