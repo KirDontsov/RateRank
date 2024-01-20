@@ -5,5 +5,5 @@ export default function Page({
     cityId: string;
   };
 }) {
-  return <div>City {params.cityId}</div>;
+  return <>City {params.cityId}</>;
 }

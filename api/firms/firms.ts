@@ -35,7 +35,6 @@ export const getFirms = createEffect({
     const res = await fetch(`http://localhost:8080/api/firms?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
-      credentials: 'include',
     });
     const firms = await res.json();
 

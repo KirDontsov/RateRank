@@ -1,3 +1,4 @@
+'use client';
 import { LoginForm, AuthHeader } from '@/containers';
 
 export default function Page() {

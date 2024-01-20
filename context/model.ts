@@ -41,7 +41,6 @@ sample({
     if (typeof window !== 'undefined') {
       const x = storage.getItem('user-data');
       if (x && x !== null) {
-        console.log('gate', v);
         return JSON.parse(x);
       } else {
         return v;
@@ -51,22 +50,7 @@ sample({
   target: $store,
 });
 
-sample({
-  clock: setStore,
-  fn: (v) => {
-    if (typeof window !== 'undefined') {
-      const x = storage.getItem('user-data');
-      if (x && x !== null) {
-        return JSON.parse(x);
-      } else {
-        return v;
-      }
-    }
-  },
-  target: $store,
-});
-
-// При открытии каждой страницы надо либо слать запрос на бэк либо лезть в сторейдж
+// TODO: добавить загрузку
 sample({
   clock: PageGate.open,
   source: $store,
