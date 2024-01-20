@@ -1,3 +1,4 @@
+'use client';
 import { RegisterForm, AuthHeader } from '@/containers';
 
 export default function Page() {

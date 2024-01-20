@@ -1,3 +1,6 @@
+'use client';
+import { AuthHeader } from '@/containers';
+
 export default function Page({
   params,
 }: {
@@ -8,5 +11,9 @@ export default function Page({
     firmId: string;
   };
 }) {
-  return <div>Firm {params.firmId}</div>;
+  return (
+    <div className="h-screen">
+      <AuthHeader title={`Фирма ${params.firmId}`} subTitle="Ураа" />
+    </div>
+  );
 }
