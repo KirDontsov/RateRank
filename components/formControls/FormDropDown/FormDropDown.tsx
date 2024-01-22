@@ -21,7 +21,7 @@ export const FormDropDown = () => {
       {/* Dropdown toggle button */}
       <button
         onClick={handleOpen}
-        className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none"
+        className="relative z-10 flex items-center text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none"
       >
         <span className="mx-1">{value}</span>
         <svg className="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,15 +34,7 @@ export const FormDropDown = () => {
 
       {/* Dropdown menu */}
       {open && (
-        <div
-          // x-transition:enter="transition ease-out duration-100"
-          // x-transition:enter-start="opacity-0 scale-90"
-          // x-transition:enter-end="opacity-100 scale-100"
-          // x-transition:leave="transition ease-in duration-100"
-          // x-transition:leave-start="opacity-100 scale-100"
-          // x-transition:leave-end="opacity-0 scale-90"
-          className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800"
-        >
+        <div className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
           <Link
             id="Москва"
             href={`/city/msk/category/1/type/1/firms`}

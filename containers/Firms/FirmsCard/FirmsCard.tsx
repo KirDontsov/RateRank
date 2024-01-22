@@ -3,9 +3,9 @@ import { FC, useCallback } from 'react';
 
 export interface FirmsCardProps {
   firm_id: string;
-  category_id: string;
-  name: string;
-  address: string;
+  category_id?: string;
+  name?: string;
+  address?: string;
 }
 
 export const FirmsCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, address }) => {
@@ -20,7 +20,7 @@ export const FirmsCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, addr
       key={firm_id}
       onClick={handleClick}
       role="button"
-      className="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
+      className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
     >
       <div className="flex items-center justify-between">
         <span className="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10, 2019</span>

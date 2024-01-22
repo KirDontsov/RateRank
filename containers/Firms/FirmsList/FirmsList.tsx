@@ -1,8 +1,5 @@
 import { $firmsGroups } from '@/api';
 import { useList } from 'effector-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
 import { FirmsCard } from '../FirmsCard';
 
 export const FirmsList = () => {
