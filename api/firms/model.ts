@@ -1,14 +1,11 @@
-import { createEffect, createEvent, createStore, forward, sample } from 'effector';
+import { PaginationOptions } from '@/shared';
+import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
-import { getReviews, notNull } from '../reviews/model';
 
 export const FirmsGate = createGate('FirmsGate');
 export const FirmGate = createGate<{ firmId: string }>('FirmGate');
 
-export interface PaginationOptions {
-  page: number;
-  limit: number;
-}
+export const firmsD = createDomain('firms');
 
 export interface Firm {
   firm_id: string;
@@ -40,13 +37,13 @@ export interface FirmQueryResult {
   };
 }
 
-export const $firmsGroups = createStore<Firm[]>([]);
-export const $firmsPage = createStore<number>(1);
-export const $firmsCount = createStore<number | null>(null);
-export const fetchFirms = createEvent<{ firmId: string }>();
-export const setFirmsPageEvt = createEvent<number>();
+export const $firms = firmsD.createStore<Firm[]>([]);
+export const $firmsPage = firmsD.createStore<number>(1);
+export const $firmsCount = firmsD.createStore<number | null>(null);
+export const fetchFirms = firmsD.createEvent<{ firmId: string }>();
+export const setFirmsPageEvt = firmsD.createEvent<number>();
 
-export const getFirms = createEffect({
+export const getFirms = firmsD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ firms: FirmsQueryResult }> => {
     const res = await fetch(`http://localhost:8080/api/firms?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -61,22 +58,18 @@ export const getFirms = createEffect({
 sample({
   clock: FirmsGate.open,
   fn: () => ({ page: 1, limit: 10 }),
-  target: [getFirms, getReviews],
+  target: getFirms,
 });
 
 sample({
   clock: getFirms.doneData,
-  fn: (c) => {
-    return c.firms.data.firms;
-  },
-  target: $firmsGroups,
+  fn: (c) => c.firms.data.firms || [],
+  target: $firms,
 });
 
 sample({
   clock: getFirms.doneData,
-  fn: (c) => {
-    return c.firms.data.firms_count || null;
-  },
+  fn: (c) => c.firms.data.firms_count || null,
   target: $firmsCount,
 });
 
@@ -87,10 +80,12 @@ sample({
 
 // === FIRM ===
 
-export const $firm = createStore<Firm | null>(null);
-export const fetchFirmEvt = createEvent<{ firmId: string }>();
+export const firmD = createDomain('firm');
 
-export const getFirm = createEffect({
+export const $firm = firmD.createStore<Firm | null>(null);
+export const fetchFirmEvt = firmD.createEvent<{ firmId: string }>();
+
+export const getFirm = firmD.createEffect({
   handler: async ({ firmId }: { firmId: string }): Promise<{ firm: FirmQueryResult }> => {
     const res = await fetch(`http://localhost:8080/api/firm/${firmId}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -104,13 +99,12 @@ export const getFirm = createEffect({
 
 sample({
   clock: FirmGate.open,
-  fn: (v) => v,
   target: getFirm,
 });
 
 sample({
   clock: getFirm.doneData,
-  fn: (c) => c.firm.data.firm,
+  fn: (c) => c.firm.data.firm || null,
   target: $firm,
 });
 

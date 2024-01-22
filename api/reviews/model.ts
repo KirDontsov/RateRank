@@ -1,22 +1,9 @@
 import { createGate } from 'effector-react';
-import { $firm, Firm, FirmGate, PaginationOptions } from '../firms';
-import { Domain, Unit, createDomain, createEffect, createEvent, createStore, guard, sample } from 'effector';
+import { createDomain, sample } from 'effector';
+import { PaginationOptions } from '@/shared';
 
 export const ReviewsGate = createGate<{ firmId: string }>('ReviewsGate');
-
-/** Фильтрует значение, исключая null */
-export function notNull<T>(source: Unit<T>, domain?: Domain) {
-  const d = domain ?? createDomain();
-
-  const x = d.createEvent<NonNullable<T>>();
-
-  return sample({
-    source,
-    filter: (value) => value != null,
-    fn: (v) => v! as NonNullable<T>,
-    target: x,
-  });
-}
+export const reviewsD = createDomain('reviews');
 
 export interface ReviewOptions {
   firmId: string;
@@ -39,19 +26,18 @@ export interface ReviewsQueryResult {
   };
 }
 
-export const $reviews = createStore<Review[]>([]);
-export const $reviewsPage = createStore<number>(1);
-export const $reviewsCount = createStore<number | null>(null);
-export const fetchReviews = createEvent<{ firmId: string }>();
-export const setReviewsPageEvt = createEvent<number>();
+export const $reviews = reviewsD.createStore<Review[]>([]);
+export const $reviewsPage = reviewsD.createStore<number>(1);
+export const $reviewsCount = reviewsD.createStore<number | null>(null);
+export const fetchReviews = reviewsD.createEvent<{ firmId: string }>();
+export const setReviewsPageEvt = reviewsD.createEvent<number>();
 
-export const getReviews = createEffect({
+export const getReviews = reviewsD.createEffect({
   handler: async ({
     firmId,
     page,
     limit,
   }: PaginationOptions & ReviewOptions): Promise<{ reviews: ReviewsQueryResult }> => {
-    console.log('here');
     const res = await fetch(`http://localhost:8080/api/reviews/${firmId}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
@@ -62,11 +48,6 @@ export const getReviews = createEffect({
   },
 });
 
-// sample({
-//   clock: ReviewsGate.open,
-//   target: fetchReviews,
-// });
-
 sample({
   clock: ReviewsGate.open,
   fn: (s) => ({ firmId: s?.firmId, page: 1, limit: 10 }),
@@ -75,17 +56,13 @@ sample({
 
 sample({
   clock: getReviews.doneData,
-  fn: (c) => {
-    return c.reviews.data.reviews;
-  },
+  fn: (c) => c.reviews.data.reviews || [],
   target: $reviews,
 });
 
 sample({
   clock: getReviews.doneData,
-  fn: (c) => {
-    return c.reviews.data.reviews_count || null;
-  },
+  fn: (c) => c.reviews.data.reviews_count || null,
   target: $reviewsCount,
 });
 

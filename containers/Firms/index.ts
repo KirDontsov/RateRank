@@ -1,2 +1,2 @@
 export * from './FirmsList';
-export * from './FirmsCard';
+export * from './FirmCard';

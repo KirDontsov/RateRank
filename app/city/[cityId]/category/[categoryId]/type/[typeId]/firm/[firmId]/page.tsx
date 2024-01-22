@@ -23,7 +23,6 @@ export default function Page({
     reviewsCount: $reviewsCount,
   });
   const [open, setOpen] = useState(false);
-  // TODO: перенести в стор и сделать подгрузку
 
   return (
     <div className="h-screen w-full flex flex-col gap-4">

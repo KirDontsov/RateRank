@@ -1,1 +1,0 @@
-export { FirmsCard } from './FirmsCard';

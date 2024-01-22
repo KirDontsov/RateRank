@@ -1,10 +1,10 @@
 import { $reviews } from '@/api';
-import { FirmsCard } from '@/containers';
 import { useList } from 'effector-react';
+import { ReviewCard } from '../ReviewCard';
 
 export const ReviewsList = () => {
   return useList($reviews, ({ review_id, author, text, date }) => (
     // TODO: карточки отзывов
-    <FirmsCard firm_id={review_id} category_id={date} name={author} address={text} />
+    <ReviewCard review_id={review_id} date={date} author={author} text={text} />
   ));
 };

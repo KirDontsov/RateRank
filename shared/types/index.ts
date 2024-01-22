@@ -11,3 +11,8 @@ export const enum ErrorTypes {
   Pattern = 'pattern',
   Validate = 'validate',
 }
+
+export interface PaginationOptions {
+  page: number;
+  limit: number;
+}

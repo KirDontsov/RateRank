@@ -1,6 +1,6 @@
 'use client';
 import { CommonProps, storage } from '@/shared';
-import { LoadingGate, PageGate } from '.';
+import { PageGate } from '.';
 import { useGate } from 'effector-react';
 import { FC } from 'react';
 

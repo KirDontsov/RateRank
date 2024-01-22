@@ -8,7 +8,7 @@ export interface FirmsCardProps {
   address?: string;
 }
 
-export const FirmsCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, address }) => {
+export const FirmCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, address }) => {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
