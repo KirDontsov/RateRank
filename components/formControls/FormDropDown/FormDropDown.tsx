@@ -1,7 +1,8 @@
 'use client';
+import { $city } from '@/api';
 import { useOnClickOutside } from '@/shared';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useUnit } from 'effector-react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState, MouseEvent, useRef, useCallback, FC } from 'react';
 
 export interface FormDropdownOption {
@@ -19,7 +20,12 @@ export interface FormDropdownProps {
 export const FormDropdown: FC<FormDropdownProps> = ({ options, value, setValue }) => {
   const [open, setOpen] = useState(false);
 
+  const { city } = useUnit({
+    city: $city,
+  });
+
   const router = useRouter();
+  const path = usePathname();
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,11 +34,21 @@ export const FormDropdown: FC<FormDropdownProps> = ({ options, value, setValue }
     (e: MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       e.stopPropagation();
+
       setValue(e?.currentTarget?.id);
       setOpen(false);
-      router.push(e?.currentTarget?.href);
+
+      const currentCity = city?.abbreviation || '';
+      const targetCity = e.currentTarget.getAttribute('data-route');
+      const link = path.split('/');
+      const index = link.indexOf(currentCity || 'spb');
+      if (index !== -1) {
+        link[index] = targetCity || 'spb';
+      }
+      const url = link.join('/');
+      router.push(url === '/' ? `/city/${targetCity}` : url);
     },
-    [setValue, router],
+    [setValue, router, city, path],
   );
 
   const handleClickOutside = () => {
@@ -61,14 +77,16 @@ export const FormDropdown: FC<FormDropdownProps> = ({ options, value, setValue }
       {open && (
         <div className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
           {options.map(({ id, name, abbreviation }) => (
-            <Link
+            <span
               id={id}
-              href={`/city/${abbreviation}/category/1/type/1/firms`}
+              key={id}
+              data-route={abbreviation}
+              role="button"
               onClick={handleSelect}
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
             >
               {name}
-            </Link>
+            </span>
           ))}
         </div>
       )}

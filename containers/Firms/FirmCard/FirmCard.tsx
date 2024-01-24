@@ -1,3 +1,5 @@
+import { $category, $city, $type } from '@/api';
+import { useUnit } from 'effector-react';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
@@ -10,9 +12,16 @@ export interface FirmsCardProps {
 
 export const FirmCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, address }) => {
   const router = useRouter();
+  const { city, type, category } = useUnit({
+    city: $city,
+    category: $category,
+    type: $type,
+  });
 
   const handleClick = useCallback(() => {
-    router.push(`/city/spb/category/${category_id}/type/1/firm/${firm_id}`);
+    router.push(
+      `/city/${city?.abbreviation}/category/${category?.abbreviation}/type/${type?.abbreviation}/firm/${firm_id}`,
+    );
   }, []);
 
   return (

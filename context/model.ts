@@ -1,6 +1,7 @@
 import { storage } from '@/shared';
 import { createEvent, createStore, sample } from 'effector';
 import { createGate } from 'effector-react';
+import persist from 'effector-localstorage';
 
 export interface StorageData {
   sub: string;
@@ -13,7 +14,7 @@ export const PageGate = createGate<StorageData>('PageGate');
 export const LoadingGate = createGate<boolean>('LoadingGate');
 
 export const setStore = createEvent<StorageData>();
-export const $store = createStore<StorageData | null>(null);
+export const $userAuth = createStore<StorageData | null>(null);
 
 export const setLoading = createEvent<boolean>();
 export const $loading = createStore<boolean>(true);
@@ -21,17 +22,8 @@ export const $loading = createStore<boolean>(true);
 // При логине добавляю токен в сторейдж и стейт
 sample({
   clock: setStore,
-  fn: (v) => {
-    if (typeof window !== 'undefined') {
-      const x = storage.getItem('user-data');
-      if (x && x !== null) {
-        return JSON.parse(x);
-      } else {
-        return v;
-      }
-    }
-  },
-  target: $store,
+  fn: (v) => v,
+  target: $userAuth,
 });
 
 // При открытии каждой страницы надо либо слать запрос на бэк либо лезть в сторейдж
@@ -39,7 +31,7 @@ sample({
   clock: PageGate.open,
   fn: (v) => {
     if (typeof window !== 'undefined') {
-      const x = storage.getItem('user-data');
+      const x = storage.getItem('user-auth');
       if (x && x !== null) {
         return JSON.parse(x);
       } else {
@@ -47,15 +39,20 @@ sample({
       }
     }
   },
-  target: $store,
+  target: $userAuth,
 });
 
 // TODO: добавить загрузку
 sample({
   clock: PageGate.open,
-  source: $store,
+  source: $userAuth,
   fn: (s, v) => {
     return false;
   },
   target: $loading,
+});
+
+persist({
+  store: $userAuth,
+  key: 'user-auth',
 });

@@ -2,6 +2,12 @@ import { PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 
+export const DEFAULT_DROPDOWN_VALUE = {
+  city_id: 'Выберите город',
+  name: 'Выберите город',
+  abbreviation: 'Выберите город',
+};
+
 export interface City {
   city_id: string;
   name: string;
@@ -18,13 +24,13 @@ export interface CitiesQueryResult {
 
 export const cityD = createDomain('city');
 export const citiesD = createDomain('cities');
+export const CityGate = createGate<{ cityId: string }>('CityGate');
 export const CitiesGate = createGate('CitiesGate');
 
-export const $city = cityD.createStore<City | null>({
-  city_id: 'Выберите город',
-  name: 'Выберите город',
-  abbreviation: 'Выберите город',
-});
+export const $cityAbbreviation = cityD.createStore<string | null>(null);
+
+export const $city = cityD.createStore<City | null>(DEFAULT_DROPDOWN_VALUE);
+export const fetchCitiesEvt = cityD.createEvent<string>();
 export const setCityEvt = cityD.createEvent<string>();
 
 export const $cities = citiesD.createStore<City[]>([]);
@@ -37,7 +43,7 @@ sample({
   target: $city,
 });
 
-export const getCities = cityD.createEffect({
+export const getCities = citiesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ cities: CitiesQueryResult }> => {
     const res = await fetch(`http://localhost:8080/api/cities?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -51,6 +57,8 @@ export const getCities = cityD.createEffect({
 
 sample({
   clock: CitiesGate.open,
+  source: $cities,
+  filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCities,
 });
@@ -65,4 +73,28 @@ sample({
   clock: getCities.doneData,
   fn: (c) => c.cities.data.cities_count || null,
   target: $citiesCount,
+});
+
+// === CITY ===
+
+sample({
+  clock: CityGate.open,
+  source: $cities,
+  filter: (s) => !s.length,
+  fn: () => ({ page: 1, limit: 10 }),
+  target: getCities,
+});
+
+sample({
+  clock: CityGate.open,
+  fn: (c) => c?.cityId,
+  target: $cityAbbreviation,
+});
+
+sample({
+  clock: getCities.doneData,
+  source: $cityAbbreviation,
+  filter: (s, c) => s !== '',
+  fn: (s, c) => c?.cities?.data.cities?.find((city) => city?.abbreviation === s) || DEFAULT_DROPDOWN_VALUE,
+  target: $city,
 });

@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { api_login } from '@/api';
 import { toast } from 'react-toastify';
-import { parseJwt, storage } from '@/shared';
+import { parseJwt } from '@/shared';
 import { useUnit } from 'effector-react';
 import { setStore } from '@/context';
 
@@ -68,7 +68,7 @@ export const LoginForm = () => {
     const decoded = parseJwt(res?.token);
 
     setUserData(decoded);
-    storage.setItem('user-data', JSON.stringify(decoded));
+    // storage.setItem('user-data', JSON.stringify(decoded));
     router.push('/dashboard');
   }, []);
 

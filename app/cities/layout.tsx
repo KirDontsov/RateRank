@@ -1,19 +1,11 @@
 'use client';
-import { CategoriesGate, CityGate } from '@/api';
+import { CitiesGate } from '@/api';
 import { HeroSection, Nav } from '@/components';
 import { CommonProps } from '@/shared/types';
 import { useGate } from 'effector-react';
 
-export default function CityLayout({
-  children,
-  params,
-}: CommonProps & {
-  params: {
-    cityId: string;
-  };
-}) {
-  useGate(CityGate, { cityId: params.cityId });
-  useGate(CategoriesGate, { cityId: params.cityId });
+export default function CitiesLayout({ children }: CommonProps) {
+  useGate(CitiesGate);
   return (
     <>
       <HeroSection>

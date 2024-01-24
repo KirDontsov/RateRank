@@ -50,7 +50,9 @@ export const getReviews = reviewsD.createEffect({
 
 sample({
   clock: ReviewsGate.open,
-  fn: (s) => ({ firmId: s?.firmId, page: 1, limit: 10 }),
+  source: $reviews,
+  filter: (s) => !s?.length,
+  fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
   target: getReviews,
 });
 

@@ -57,6 +57,8 @@ export const getFirms = firmsD.createEffect({
 
 sample({
   clock: FirmsGate.open,
+  source: $firms,
+  filter: (s) => !s?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getFirms,
 });

@@ -1,10 +1,18 @@
 'use client';
-import { FirmsGate } from '@/api';
-import { CenteredContainer, HeroSection, Nav } from '@/components';
+import { CategoryGate } from '@/api';
 import { CommonProps } from '@/shared/types';
+import { useGate } from 'effector-react';
 
-export default function CategoryLayout({ children }: CommonProps) {
-  // TODO: запросить инфо по category_id
-  // useGate(CategoryGate)
+export default function CategoryLayout({
+  children,
+  params,
+}: CommonProps & {
+  params: {
+    categoryId: string;
+  };
+}) {
+  const { categoryId } = params;
+
+  useGate(CategoryGate, { categoryId });
   return <>{children}</>;
 }

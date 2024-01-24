@@ -12,6 +12,7 @@
     "@effector/next": "^0.7.0",
     "classnames": "^2.5.1",
     "effector": "^23.1.0",
+    "effector-localstorage": "^1.0.0",
     "effector-react": "^23.1.0",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
