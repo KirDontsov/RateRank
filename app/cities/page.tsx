@@ -1,5 +1,5 @@
 'use client';
-import { $cities } from '@/api';
+import { $cities } from '@/shared';
 import { useList } from 'effector-react';
 import Link from 'next/link';
 

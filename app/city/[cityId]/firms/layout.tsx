@@ -1,5 +1,5 @@
 'use client';
-import { FirmsGate } from '@/api';
+import { FirmsGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { useGate } from 'effector-react';
 

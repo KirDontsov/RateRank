@@ -1,7 +1,6 @@
 'use client';
-import { $categories } from '@/api';
-import { useList } from 'effector-react';
-import Link from 'next/link';
+import { Nav } from '@/widgets';
+import { AuthHeader, Categories } from '@/features';
 
 export default function Page({
   params,
@@ -10,10 +9,13 @@ export default function Page({
     cityId: string;
   };
 }) {
-  return useList($categories, ({ category_id, name, abbreviation }) => (
-    <Link href={`/city/${params.cityId}/category/${abbreviation}`} key={category_id} className="flex gap-4">
-      <div>{category_id}</div>
-      <div>{name}</div>
-    </Link>
-  ));
+  return (
+    <>
+      <Nav />
+      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
+        <AuthHeader title="Сategories" subTitle="раздел" />
+        <Categories cityId={params.cityId} />
+      </div>
+    </>
+  );
 }

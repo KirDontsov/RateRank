@@ -4,7 +4,7 @@ function safeJsonParse(obj: string) {
   try {
     json = JSON.parse(obj);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     return json;
   }
 }
@@ -20,7 +20,7 @@ let b64DecodeUnicode = (str?: string) =>
 //     parsed = JSON.parse(b64DecodeUnicode(token?.split('.')[1].replace('-', '+').replace('_', '/')));
 //     return parsed;
 //   } catch (e) {
-//     console.log(e);
+//     console.warn(e);
 //     parsed = { sub: '', role: '', iat: 0, exp: 0 };
 //     return parsed;
 //   }

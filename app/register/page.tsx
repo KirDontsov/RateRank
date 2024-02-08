@@ -1,5 +1,5 @@
 'use client';
-import { RegisterForm, AuthHeader } from '@/containers';
+import { RegisterForm, AuthHeader } from '@/features';
 
 export default function Page() {
   return (

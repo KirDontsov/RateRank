@@ -1,15 +1,21 @@
 'use client';
-import { $categories, $city } from '@/api';
-import { useList, useUnit } from 'effector-react';
-import Link from 'next/link';
+import { Nav } from '@/widgets';
+import { AuthHeader, Categories } from '@/features';
 
-export default function Page() {
-  const { city } = useUnit({
-    city: $city,
-  });
-  return useList($categories, ({ category_id, name, abbreviation }) => (
-    <Link href={`/city/${city?.abbreviation}/category/${abbreviation}`} key={category_id}>
-      {name}
-    </Link>
-  ));
+export default function Page({
+  params,
+}: {
+  params: {
+    cityId: string;
+  };
+}) {
+  return (
+    <>
+      <Nav />
+      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
+        <AuthHeader title="Сategories" subTitle="раздел" />
+        <Categories cityId={params.cityId} />
+      </div>
+    </>
+  );
 }

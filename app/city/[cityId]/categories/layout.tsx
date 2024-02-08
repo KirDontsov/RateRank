@@ -1,5 +1,5 @@
 'use client';
-import { CategoriesGate } from '@/api';
+import { CategoriesGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { useGate } from 'effector-react';
 

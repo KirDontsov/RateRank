@@ -1,7 +1,7 @@
 'use client';
-import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
-import { Footer, Pagination } from '@/components';
-import { AuthHeader, FirmsList } from '@/containers';
+import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/shared';
+import { Footer, Nav, Pagination } from '@/widgets';
+import { AuthHeader, FirmsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useUnit } from 'effector-react';
 
@@ -14,14 +14,17 @@ export default function Page() {
 
   return (
     <>
-      <AuthHeader title="RateRank" subTitle="Firms" />
-      {firmsCount ? <FirmsList /> : <AuthHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
+      <Nav />
+      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
+        <AuthHeader title="RateRank" subTitle="Firms" />
+        {firmsCount ? <FirmsList /> : <AuthHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
 
-      <div className="flex flex-col items-center gap-4 pt-4 w-full">
-        {firmsCount && (
-          <Pagination current={page} onChange={setPage} total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)} />
-        )}
-        <Footer />
+        <div className="flex flex-col items-center gap-4 pt-4 w-full">
+          {firmsCount && (
+            <Pagination current={page} onChange={setPage} total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)} />
+          )}
+          <Footer />
+        </div>
       </div>
     </>
   );

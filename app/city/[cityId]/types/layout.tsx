@@ -1,5 +1,5 @@
 'use client';
-import { TypesGate } from '@/api';
+import { TypesGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { useGate } from 'effector-react';
 

@@ -1,4 +1,4 @@
-import { CenteredContainer, HeroSection } from '@/components';
+import { CenteredContainer, HeroSection } from '@/widgets';
 import { CommonProps } from '@/shared/types';
 
 export default function RegisterLayout({ children }: CommonProps) {

@@ -1,5 +1,5 @@
 'use client';
-import { CenteredContainer, HeroSection, Nav, ThemeProvider } from '@/components';
+import { CenteredContainer, HeroSection, Nav, ThemeProvider } from '@/widgets';
 import { AuthPageGateProvider, PageGateProvider } from '@/context';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,7 +1,6 @@
 'use client';
-import { $types } from '@/api';
-import { useList } from 'effector-react';
-import Link from 'next/link';
+import { Nav } from '@/widgets';
+import { Types } from '@/features';
 
 export default function Page({
   params,
@@ -13,9 +12,12 @@ export default function Page({
 }) {
   const { cityId, categoryId } = params;
 
-  return useList($types, ({ type_id, name, abbreviation }) => (
-    <Link href={`/city/${cityId}/category/${categoryId}/type/${abbreviation}`} key={type_id}>
-      {name}
-    </Link>
-  ));
+  return (
+    <>
+      <Nav />
+      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
+        <Types cityId={cityId} categoryId={categoryId} />
+      </div>
+    </>
+  );
 }
