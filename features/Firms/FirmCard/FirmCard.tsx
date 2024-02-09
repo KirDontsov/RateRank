@@ -8,9 +8,10 @@ export interface FirmsCardProps {
   category_id?: string;
   name?: string;
   address?: string;
+  descriptioin?: string;
 }
 
-export const FirmCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, address }) => {
+export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
   const router = useRouter();
   const { city, type, category } = useUnit({
     city: $city,
@@ -37,9 +38,7 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, category_id, name, addre
           className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
           tabIndex={0}
           role="button"
-        >
-          {category_id}
-        </a>
+        ></a>
       </div>
 
       <div className="mt-2">

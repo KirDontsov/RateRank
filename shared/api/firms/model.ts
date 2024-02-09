@@ -8,26 +8,19 @@ export const FirmGate = createGate<{ firmId: string }>('FirmGate');
 
 export const firmsD = createDomain('firms');
 
-export interface Firm {
+export interface ExtFirmWithOaiDescription {
   firm_id: string;
-  two_gis_firm_id: string;
-  category_id: string;
-  type_id: string;
   name: string;
-  description: string;
   address: string;
-  floor: string;
   site: string;
-  default_email: string;
   default_phone: string;
-  created_ts: string;
-  updated_ts: string;
+  oai_description_value: string;
 }
 
 export interface FirmsQueryResult {
   status: string;
   data: {
-    firms: Firm[];
+    firms: ExtFirmWithOaiDescription[];
     firms_count: number;
   };
 }
@@ -35,11 +28,11 @@ export interface FirmsQueryResult {
 export interface FirmQueryResult {
   status: string;
   data: {
-    firm: Firm;
+    firm: ExtFirmWithOaiDescription;
   };
 }
 
-export const $firms = firmsD.createStore<Firm[]>([]);
+export const $firms = firmsD.createStore<ExtFirmWithOaiDescription[]>([]);
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
 export const fetchFirms = firmsD.createEvent<{ firmId: string }>();
@@ -86,7 +79,7 @@ sample({
 
 export const firmD = createDomain('firm');
 
-export const $firm = firmD.createStore<Firm | null>(null);
+export const $firm = firmD.createStore<ExtFirmWithOaiDescription | null>(null);
 export const fetchFirmEvt = firmD.createEvent<{ firmId: string }>();
 
 export const getFirm = firmD.createEffect({
