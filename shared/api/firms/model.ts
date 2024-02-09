@@ -1,7 +1,6 @@
 import { PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
-import { fetchOaiReviewsEvt, fetchReviewsEvt } from '..';
 
 export const FirmsGate = createGate('FirmsGate');
 export const FirmGate = createGate<{ firmId: string }>('FirmGate');
