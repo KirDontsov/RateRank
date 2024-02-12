@@ -1,5 +1,5 @@
 'use client';
-import { AuthHeader } from '@/containers';
+import { AuthHeader } from '@/features';
 import { useUserAuth } from '@/context';
 
 export default function Page() {

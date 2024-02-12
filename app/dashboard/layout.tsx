@@ -1,17 +1,17 @@
 'use client';
-import { CenteredContainer, HeroSection, Nav } from '@/components';
-import { PageGateProvider } from '@/context';
+import { CenteredContainer, HeroSection, Nav } from '@/widgets';
+import { AuthPageGateProvider } from '@/context';
 import { CommonProps } from '@/shared/types';
 
 export default function DashboardLayout({ children }: CommonProps) {
   return (
     <>
-      <PageGateProvider>
+      <AuthPageGateProvider>
         <HeroSection>
           <Nav />
           <CenteredContainer h="screen">{children}</CenteredContainer>
         </HeroSection>
-      </PageGateProvider>
+      </AuthPageGateProvider>
     </>
   );
 }

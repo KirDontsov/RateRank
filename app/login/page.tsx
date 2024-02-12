@@ -1,5 +1,5 @@
 'use client';
-import { LoginForm, AuthHeader } from '@/containers';
+import { LoginForm, AuthHeader } from '@/features';
 
 export default function Page() {
   return (

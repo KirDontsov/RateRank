@@ -1,10 +1,17 @@
 'use client';
-import { FirmsGate } from '@/api';
-import { CenteredContainer, HeroSection, Nav } from '@/components';
+import { FirmGate, ReviewsGate } from '@/shared';
+import { OaiReviewsGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
+import { useGate } from 'effector-react';
 
-export default function FirmLayout({ children }: CommonProps) {
-  // TODO: запросить инфо по firm_id
-  // useGate(FirmGate)
+export interface FirmPageParams {
+  params: {
+    firmId: string;
+  };
+}
+
+export default function FirmLayout({ children, params }: CommonProps & FirmPageParams) {
+  useGate(FirmGate, { firmId: params.firmId });
+
   return <>{children}</>;
 }

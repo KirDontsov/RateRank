@@ -1,5 +1,5 @@
 'use client';
-import { AuthHeader } from '@/containers';
+import { AuthHeader } from '@/features';
 import { $loading, useUserAuth } from '@/context';
 import { useUnit } from 'effector-react';
 import { redirect } from 'next/navigation';
