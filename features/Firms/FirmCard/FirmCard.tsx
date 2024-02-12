@@ -1,4 +1,4 @@
-import { $category, $city, $type } from '@/shared';
+import { $categoryAbbreviation, $city, $typeAbbreviation } from '@/shared';
 import { useUnit } from 'effector-react';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback } from 'react';
@@ -13,17 +13,17 @@ export interface FirmsCardProps {
 
 export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
   const router = useRouter();
-  const { city, type, category } = useUnit({
+  const { city, categoryAbbreviation, typeAbbreviation } = useUnit({
     city: $city,
-    category: $category,
-    type: $type,
+    categoryAbbreviation: $categoryAbbreviation,
+    typeAbbreviation: $typeAbbreviation,
   });
 
   const handleClick = useCallback(() => {
     router.push(
-      `/city/${city?.abbreviation}/category/${category?.abbreviation}/type/${type?.abbreviation}/firm/${firm_id}`,
+      `/city/${city?.abbreviation}/category/${categoryAbbreviation}/type/${typeAbbreviation}/firm/${firm_id}`,
     );
-  }, [firm_id, city, category, type]);
+  }, [firm_id, city, categoryAbbreviation, typeAbbreviation]);
 
   return (
     <div

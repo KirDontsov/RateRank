@@ -82,7 +82,7 @@ export default function Page({ params }: FirmPageParams) {
               {reviewsCount ? <ReviewsList /> : <AuthHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
             </div>
             <div className="flex flex-col items-center gap-4 pt-4 w-full">
-              {reviewsCount && (
+              {(reviewsCount ?? 1) > 10 && (
                 <Pagination current={page} onChange={setPage} total={Math.ceil((reviewsCount ?? 0) / FETCH_LIMIT)} />
               )}
               <Footer />
