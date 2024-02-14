@@ -57,7 +57,9 @@ export default function Page({ params }: FirmPageParams) {
                 <div className="w-full flex gap-8">
                   <div className="w-1/2 flex flex-col gap-4">
                     <h3>Описание</h3>
-                    <div className={`${styles.myCustomStyle} list-disc`}>{firm?.oai_description_value}</div>
+                    <div className={`${styles.myCustomStyle} list-disc`}>
+                      {firm?.oai_description_value !== '' ? firm?.oai_description_value : firm?.description}
+                    </div>
                   </div>
                   <div className="w-1/2 flex flex-col gap-4">
                     <h3>Контакты</h3>

@@ -14,6 +14,7 @@ export interface ExtFirmWithOaiDescription {
   site: string;
   default_phone: string;
   oai_description_value: string;
+  description: string;
 }
 
 export interface FirmsQueryResult {
