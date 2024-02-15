@@ -9,7 +9,7 @@ export interface ReviewCardProps {
 
 export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text }) => {
   return (
-    <div key={review_id} className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div key={review_id} className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
       <div className="flex items-center w-full">
         <img
           className="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"
@@ -29,7 +29,7 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text 
         </div>
       </div>
 
-      <div className="mt-2">
+      <div className="my-2">
         <p className="mt-2 text-gray-600 dark:text-gray-300">{text}</p>
       </div>
     </div>

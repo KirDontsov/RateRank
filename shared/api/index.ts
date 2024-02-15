@@ -6,3 +6,4 @@ export * from './cities';
 export * from './categories';
 export * from './types';
 export * from './shared';
+export * from './images';
