@@ -7,15 +7,14 @@ import {
   ReviewsGate,
   ImagesGate,
   $images,
-  $imagesLoading,
+  PricesGate,
 } from '@/shared';
 import { $oaiReviews, OaiReviewsGate } from '@/shared';
 import { Footer, Nav, Pagination, CommonHeader } from '@/widgets';
-import { ReviewsList } from '@/features';
+import { Images, Prices, ReviewsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useGate, useUnit } from 'effector-react';
 import styles from './oaiReviewStyles.module.scss';
-import Image from 'next/image';
 
 export interface FirmPageParams {
   params: {
@@ -27,18 +26,16 @@ export default function Page({ params }: FirmPageParams) {
   useGate(ReviewsGate, { firmId: params.firmId });
   useGate(OaiReviewsGate, { firmId: params.firmId });
   useGate(ImagesGate, { firmId: params.firmId });
+  useGate(PricesGate, { firmId: params.firmId });
 
-  const { firm, reviewsCount, setPage, page, oaiReviews, images, imagesLoading } = useUnit({
+  const { firm, reviewsCount, setPage, page, oaiReviews, images } = useUnit({
     firm: $firm,
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
     oaiReviews: $oaiReviews,
     images: $images,
-    imagesLoading: $imagesLoading,
   });
-
-  console.log(images);
 
   return (
     <>
@@ -71,19 +68,7 @@ export default function Page({ params }: FirmPageParams) {
             <div className="w-full flex flex-col items-center gap-4 min-h-[500px]">
               <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-900">
                 <div className="w-full flex gap-8">
-                  <div className="w-1/2 flex flex-col gap-4">
-                    {images?.length ? (
-                      images.map((img) => {
-                        return (
-                          <div key={img?.img_id} className="aspect-video relative">
-                            <Image src={`/output/${firm?.firm_id}/${img?.img_id}.jpg`} fill alt={img?.img_alt} />
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Нет фото</h2>
-                    )}
-                  </div>
+                  <Images />
                   <div className="w-1/2 flex flex-col gap-4">
                     <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Контакты</h2>
                     <div>{firm?.address}</div>
@@ -91,8 +76,11 @@ export default function Page({ params }: FirmPageParams) {
                     <div>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</div>
                     <h3 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Описание</h3>
                     <div className={`${styles.myCustomStyle} list-disc`}>
-                      {firm?.oai_description_value !== '' ? firm?.oai_description_value : firm?.description}
+                      {firm?.oai_description_value !== ''
+                        ? firm?.oai_description_value.replaceAll('*', '').replaceAll('#', '')
+                        : firm?.description}
                     </div>
+                    <Prices />
                   </div>
                 </div>
               </div>

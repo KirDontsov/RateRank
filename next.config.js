@@ -16,9 +16,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'flowbite.s3.amazonaws.com',
-        port: '',
-        pathname: '/blocks/marketing-ui/hero/**',
+        hostname: "**",
       },
     ],
   },
