@@ -1,16 +1,15 @@
 'use client';
-import { $firmsCount, $firmsPage, $types, setFirmsPageEvt } from '@/shared';
+import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/shared';
 import { Footer, Nav, Pagination, CommonHeader } from '@/widgets';
 import { FirmsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useUnit } from 'effector-react';
 
 export default function Page() {
-  const { firmsCount, setPage, page, types } = useUnit({
+  const { firmsCount, setPage, page } = useUnit({
     page: $firmsPage,
     setPage: setFirmsPageEvt,
     firmsCount: $firmsCount,
-    types: $types,
   });
 
   return (

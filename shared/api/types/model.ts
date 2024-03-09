@@ -1,6 +1,7 @@
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
+import { persist } from 'effector-storage/local';
 
 export interface Type {
   type_id: string;
@@ -28,6 +29,8 @@ export const $type = typeD.createStore<Type | null>({
   name: 'Выберите город',
   abbreviation: 'Выберите город',
 });
+
+persist({ store: $type, key: 'type' });
 export const setTypeEvt = typeD.createEvent<string>();
 
 export const $types = typesD.createStore<Type[]>([]);
@@ -36,13 +39,13 @@ export const $typesCount = typesD.createStore<number | null>(null);
 sample({
   clock: setTypeEvt,
   source: $types,
-  fn: (s, c) => s.find((city) => city.type_id === c) || null,
+  fn: (s, c) => s.find((type) => type.type_id === c) || null,
   target: $type,
 });
 
 export const getTypes = typesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ types: TypesQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/types?page=${page}&limit=${limit}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/types?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -54,8 +57,8 @@ export const getTypes = typesD.createEffect({
 
 sample({
   clock: TypesGate.open,
-  source: $types,
-  filter: (c) => !c?.length,
+  // source: $types,
+  // filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getTypes,
 });
@@ -72,7 +75,7 @@ sample({
   target: $typesCount,
 });
 
-// === CITY ===
+// === TYPE ===
 
 sample({
   clock: TypeGate.open,
@@ -89,9 +92,14 @@ sample({
 });
 
 sample({
-  clock: getTypes.doneData,
-  source: $typeAbbreviation,
-  filter: (s, c) => s !== '',
-  fn: (s, c) => c?.types?.data.types?.find((type) => type?.abbreviation === s) || null,
+  source: [$typeAbbreviation, $types],
+  // @ts-ignore
+  fn: ([s, c]) => c?.find((type) => type?.abbreviation === s) || null,
   target: $type,
 });
+
+// sample({
+//   clock: TypeGate.close,
+//   fn: () => null,
+//   target: $type,
+// });

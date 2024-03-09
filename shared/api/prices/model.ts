@@ -1,6 +1,6 @@
 import { createGate } from 'effector-react';
 import { createDomain, sample } from 'effector';
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
 export const PricesGate = createGate<{ firmId: string }>('PricesGate');
@@ -46,7 +46,7 @@ export const getPrices = pricesD.createEffect({
     page,
     limit,
   }: PaginationOptions & PricesOptions): Promise<{ prices: PricesQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/prices/${firmId}?page=${page}&limit=${limit}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/prices/${firmId}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });

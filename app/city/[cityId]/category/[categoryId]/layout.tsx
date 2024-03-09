@@ -1,6 +1,7 @@
 'use client';
 import { CategoryGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
+import { EffectorNext } from '@effector/next';
 import { useGate } from 'effector-react';
 
 export default function CategoryLayout({
@@ -14,5 +15,5 @@ export default function CategoryLayout({
   const { categoryId } = params;
 
   useGate(CategoryGate, { categoryId });
-  return <>{children}</>;
+  return <EffectorNext>{children}</EffectorNext>;
 }

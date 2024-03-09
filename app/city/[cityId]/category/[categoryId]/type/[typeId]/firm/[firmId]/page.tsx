@@ -22,6 +22,12 @@ export interface FirmPageParams {
   };
 }
 
+export const HeroBackground = {
+  '3ebc7206-6fed-4ea7-a000-27a74e867c9a': "url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=5070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center / cover no-repeat",
+  '565ad1cb-b891-4185-ac75-24ab3898cf22': "url('https://images.unsplash.com/photo-1486496572940-2bb2341fdbdf?q=80&w=5070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center / cover no-repeat",
+
+}
+
 export default function Page({ params }: FirmPageParams) {
   useGate(ReviewsGate, { firmId: params.firmId });
   useGate(OaiReviewsGate, { firmId: params.firmId });
@@ -51,12 +57,12 @@ export default function Page({ params }: FirmPageParams) {
                 style={{
                   background: images?.length
                     ? `url('/output/${firm?.firm_id}/${images[0]?.img_id}.jpg') center / cover no-repeat`
-                    : "url('https://images.unsplash.com/photo-1486496572940-2bb2341fdbdf?q=80&w=5070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center / cover no-repeat",
+                    : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground],
                 }}
               >
                 <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                   <div className="text-center">
-                    <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`Автосервис ${firm?.name}`}</h1>
+                    <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${firm?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a' ? 'Ресторан' : 'Автосервис'} ${firm?.name}`}</h1>
                     <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                       Позвонить
                     </button>

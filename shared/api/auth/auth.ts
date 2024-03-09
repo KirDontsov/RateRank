@@ -1,3 +1,5 @@
+import { BACKEND_PORT } from "@/shared";
+
 export interface UserLoginResponse {
   status: string;
   token: string | null;
@@ -34,7 +36,7 @@ export async function api_login(user_data: {
   email: string;
   password: string;
 }): Promise<UserLoginResponse | undefined> {
-  const response = await fetch('http://localhost:8080/api/auth/login', {
+  const response = await fetch(`${BACKEND_PORT}/api/auth/login`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
     credentials: 'include',
@@ -55,7 +57,7 @@ export async function api_auth(user_data: {
   email: string;
   password: string;
 }): Promise<UserRegisterResult | undefined> {
-  const response = await fetch('http://localhost:8080/api/auth/register', {
+  const response = await fetch(`${BACKEND_PORT}/api/auth/register`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
     body: JSON.stringify(user_data),
@@ -73,7 +75,7 @@ export async function api_auth(user_data: {
 }
 
 export async function api_user_info(): Promise<UserInfoResult | undefined> {
-  const response = await fetch('http://localhost:8080/api/users/me', {
+  const response = await fetch(`${BACKEND_PORT}/api/users/me`, {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     method: 'GET',

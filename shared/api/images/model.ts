@@ -1,3 +1,4 @@
+import { BACKEND_PORT } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 
@@ -36,7 +37,7 @@ export const setImagesPageEvt = imagesD.createEvent<number>();
 
 export const getImages = imagesD.createEffect({
   handler: async ({ firmId }: { firmId: string }): Promise<{ images: ImagesQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/images/${firmId}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/images/${firmId}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -90,7 +91,7 @@ export const fetchImageEvt = imageD.createEvent<{ imageId: string }>();
 
 export const getImage = imageD.createEffect({
   handler: async ({ imageId }: { imageId: string }): Promise<{ image: ImageQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/image/${imageId}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/image/${imageId}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });

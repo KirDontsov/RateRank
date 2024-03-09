@@ -24,6 +24,11 @@
   resolved "https://registry.npmjs.org/@effector/next/-/next-0.7.0.tgz"
   integrity sha512-8KrtdGr/mYboIM5rq5r39j2gX9lXWu/AC/+Iyp882Y0G2WO6cr8opamdOlZaVaNdJYBJQ6IyuBslhmoI2TBAOw==
 
+"@effector/redux-devtools-adapter@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@effector/redux-devtools-adapter/-/redux-devtools-adapter-0.2.0.tgz#d0aa4daedcbaa6f28db536a2e69400535a946199"
+  integrity sha512-zSucKMLWImvFtD6nQIT6EO5pxdXdqvUkmUTvps1QfFvUzps/6wScBz9k28TsnSIebvfL+K+fLphEK2VoQ7r+cw==
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"
@@ -766,6 +771,11 @@ effector-react@^23.1.0:
   integrity sha512-RrCyu45zhxzIwzy6azjgPjXENRM2AM4y3TJF4faj5vN6z0u8ItR9W91wokHu5+BwFj6MKg2NxQkL4r4jWtIRoQ==
   dependencies:
     use-sync-external-store "^1.0.0"
+
+effector-storage@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/effector-storage/-/effector-storage-7.0.0.tgz#e4326d66a39ef4c67bdc7b512eb294bc0f70a123"
+  integrity sha512-iTwpZotNaEesliP/3jSE5eXGajBSci0Q7oCaTfgenNAwnZBrudwwifTxKU9+eI08QRh78AyS+Z6UfHX3aD+zOg==
 
 effector@^23.1.0:
   version "23.1.0"
