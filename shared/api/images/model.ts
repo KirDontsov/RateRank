@@ -52,12 +52,12 @@ sample({
   target: getImages,
 });
 
-sample({
-  clock: ImagesGate.close,
-  source: $images,
-  fn: (_, c) => [],
-  target: $images,
-});
+// sample({
+//   clock: ImagesGate.close,
+//   source: $images,
+//   fn: (_, c) => [],
+//   target: $images,
+// });
 
 sample({
   clock: getImages.doneData,

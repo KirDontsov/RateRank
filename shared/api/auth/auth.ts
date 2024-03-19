@@ -1,4 +1,4 @@
-import { BACKEND_PORT } from "@/shared";
+import { BACKEND_PORT } from '@/shared';
 
 export interface UserLoginResponse {
   status: string;
@@ -60,6 +60,7 @@ export async function api_auth(user_data: {
   const response = await fetch(`${BACKEND_PORT}/api/auth/register`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify(user_data),
   });
 

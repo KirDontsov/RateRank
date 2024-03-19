@@ -1,4 +1,4 @@
-import { $firm, $images } from '@/shared';
+import { $firm, $images, DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
 
@@ -17,7 +17,12 @@ export const Images = () => {
             images.map((img) => {
               return (
                 <div key={img?.img_id} className="aspect-video relative">
-                  <Image src={`/output/${firm?.firm_id}/${img?.img_id}.jpg`} fill alt={img?.img_alt} />
+                  <Image
+                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                    fill
+                    alt={img?.img_alt}
+                    style={{ objectFit: 'cover' }}
+                  />
                 </div>
               );
             })

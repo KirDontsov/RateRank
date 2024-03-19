@@ -12,10 +12,10 @@ export const Nav = () => {
   });
 
   return (
-    <nav className="relative">
+    <nav className="w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%] dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)] ">
       <div className="container px-6 py-2 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
-          <Link href="/">RateRank</Link>
+          <Link href="/">ТОП ВЫБОР</Link>
 
           <div className="flex lg:hidden">
             <button
@@ -50,7 +50,7 @@ export const Nav = () => {
           </div>
         </div>
 
-        <div className="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center">
+        <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white md:mt-0 md:p-0 md:top-0 md:relative md:bg-transparent md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center">
           <div className="flex flex-col md:flex-row md:mx-6 items-center">
             <CityDropdown />
             <Link

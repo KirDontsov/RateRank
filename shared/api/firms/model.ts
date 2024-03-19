@@ -1,5 +1,5 @@
 import { BACKEND_PORT, PaginationOptions } from '@/shared';
-import { $city, getCities } from '../cities';
+import { $city, DEFAULT_DROPDOWN_VALUE, getCities } from '../cities';
 import { $category, getCategories } from '../categories';
 import { $type, getTypes } from '../types';
 import { createDomain, sample } from 'effector';
@@ -39,7 +39,6 @@ export interface FirmQueryResult {
 export interface FirmsParams {
   city_id: string;
   category_id: string;
-  type_id: string;
 }
 
 export interface FirmParamsWithPage extends FirmsParams {
@@ -58,11 +57,9 @@ export const getFirms = firmsD.createEffect({
     limit,
     city_id,
     category_id,
-    type_id,
   }: PaginationOptions & FirmsParams): Promise<{ firms: FirmsQueryResult }> => {
-    console.log('page, limit, city_id, category_id, type_id', page, limit, city_id, category_id, type_id);
     const res = await fetch(
-      `${BACKEND_PORT}/api/firms?city_id=${city_id}&category_id=${category_id}&type_id=${type_id}&page=${page}&limit=${limit}`,
+      `${BACKEND_PORT}/api/firms?city_id=${city_id}&category_id=${category_id}&page=${page}&limit=${limit}`,
       {
         headers: { 'Content-Type': 'application/json' },
         method: 'GET',
@@ -74,38 +71,17 @@ export const getFirms = firmsD.createEffect({
   },
 });
 
-export const getAllFirms = firmsD.createEffect({
-  handler: async ({ page, limit }: PaginationOptions): Promise<{ firms: FirmsQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/firms?page=${page}&limit=${limit}`, {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    });
-    const firms = await res.json();
-
-    return { firms };
+sample({
+  clock: FirmsGate.open,
+  source: [$city, $category],
+  // @ts-ignore
+  filter: ([city, category]) => !!city?.city_id && !!category?.category_id,
+  fn: ([city, category]) => {
+    // @ts-ignore
+    return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
   },
+  target: getFirms,
 });
-
-// sample({
-//   clock: FirmsGate.open,
-//   source: [$city, $category, $type],
-//   // @ts-ignore
-//   filter: ([city, category, type]) => city !== null || category !== null || type !== null,
-//   fn: ([city, category, type]) => {
-//     console.log('city_id', city?.city_id);
-//     console.log('category_id', category?.category_id);
-//     console.log('type_id', type?.type_id);
-//     // @ts-ignore
-//     return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id, type_id: type?.type_id };
-//   },
-//   target: getFirms,
-// });
-
-// sample({
-//   clock: FirmsGate.close,
-//   fn: () => [],
-//   target: $firms,
-// });
 
 sample({
   clock: getFirms.doneData,
@@ -157,29 +133,23 @@ sample({
 // Pagination by city, category, type
 sample({
   clock: setFirmsPageEvt,
-  source: [$city, $category, $type],
-  fn: ([city, category, type], page) => {
+  source: [$city, $category],
+  fn: ([city, category], page) => {
     // @ts-ignore
-    return { page, limit: 10, city_id: city?.city_id, category_id: category?.category_id, type_id: type?.type_id };
+    return { page, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
   },
   target: getFirms,
 });
 
-// // Pagination all firms
-// sample({
-//   clock: setFirmsPageEvt,
-//   fn: (page) => ({ page, limit: 10 }),
-//   target: getAllFirms,
-// });
-
 sample({
   clock: [getCities.doneData, getCategories.doneData, getTypes.doneData],
-  source: [$city, $category, $type],
-  // @ts-ignore
-  filter: ([city, category, type]) => !!city && !!category && !!type,
-  fn: ([city, category, type]) => {
+  source: [$city, $category],
+  filter: ([city, category]) =>
     // @ts-ignore
-    return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id, type_id: type?.type_id };
+    !!city?.city_id && !!category?.category_id,
+  fn: ([city, category]) => {
+    // @ts-ignore
+    return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
   },
   target: getFirms,
 });

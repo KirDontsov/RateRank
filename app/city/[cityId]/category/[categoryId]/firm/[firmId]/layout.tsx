@@ -1,6 +1,5 @@
 'use client';
-import { FirmGate, ReviewsGate } from '@/shared';
-import { OaiReviewsGate } from '@/shared';
+import { FirmGate } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { EffectorNext } from '@effector/next';
 import { useGate } from 'effector-react';

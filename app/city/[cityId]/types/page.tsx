@@ -15,7 +15,7 @@ export default function Page({
   return (
     <>
       <Nav />
-      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
+      <div className="h-[100vh] w-full flex flex-col items-center overflow-auto gap-4">
         <Types cityId={cityId} categoryId={categoryId} />
       </div>
     </>

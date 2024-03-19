@@ -1,7 +1,7 @@
 import { $pricesCategories, $pricesItems } from '@/shared';
 import { useUnit } from 'effector-react';
 import groupBy from 'lodash/groupBy';
-import styles from '../../app/city/[cityId]/category/[categoryId]/type/[typeId]/firm/[firmId]/oaiReviewStyles.module.scss';
+import styles from '../../app/city/[cityId]/category/[categoryId]/firm/[firmId]/oaiReviewStyles.module.scss';
 
 export const Prices = () => {
   const { pricesItems, pricesCategories } = useUnit({

@@ -19,7 +19,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-4">
-      <CommonHeader title="RateRank" subTitle="Админ Панель" />
+      <CommonHeader title="ТОП ВЫБОР" subTitle="Админ Панель" />
     </div>
   );
 }

@@ -3,188 +3,133 @@ export const Footer = () => {
     <footer className="bg-white dark:bg-gray-900 w-full">
       <div className="container px-6 py-12 mx-auto">
         <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Let’s get started on something great</h2>
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Помогаем людям выбрать лучшие места</h2>
 
-          <p className="max-w-md mx-auto mt-2 text-gray-500 dark:text-gray-400">
-            Join over 4,000+ startups already growing with Meraki UI.
-          </p>
-
-          <div className="flex flex-col mt-6 sm:flex-row sm:items-center sm:justify-center">
-            <button className="w-full px-5 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mx-2 sm:order-2 sm:w-auto hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-              Get started
-            </button>
-          </div>
+          <p className="max-w-md mx-auto mt-2 text-gray-500 dark:text-gray-400">На основе анализа реальных отзывов</p>
         </div>
 
         <div className="grid grid-cols-2 gap-6 mt-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
           <div>
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Product</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Сервис</h3>
 
             <div className="flex flex-col items-start mt-4 space-y-4">
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Overview
+                Главная
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Features
+                Каталог
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Solutions
+                Тарифы
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Tutorials
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Pricing
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Releases
+                Помощь
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Company</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Компания</h3>
 
             <div className="flex flex-col items-start mt-4 space-y-4">
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                About us
+                О Нас
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Careers
+                Вакансии
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Press
+                Статьи
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                News
+                Новости
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Media kit
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Contact
+                Контакты
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Resources</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Ресурсы</h3>
 
             <div className="flex flex-col items-start mt-4 space-y-4">
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Blog
+                Блог
+              </a>
+
+              <a
+                href="#"
+                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
+              >
+                События
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Newsletter
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Events
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Help center
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Tutorials
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Supports
+                Помощь
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Use cases</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Кейсы</h3>
 
             <div className="flex flex-col items-start mt-4 space-y-4">
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Startups
+                Малый бизнес
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Enterprise
+                Средний бизнес
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Government
+                Отчетность
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Saas
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Marketplaces
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Ecommerce
+                Аналитика
               </a>
             </div>
           </div>
@@ -197,19 +142,13 @@ export const Footer = () => {
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Twitter
+                VK
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                LinkedIn
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Github
+                Instagram
               </a>
               <a
                 href="#"
@@ -221,32 +160,26 @@ export const Footer = () => {
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                AngelList
-              </a>
-              <a
-                href="#"
-                className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
-              >
-                Dribble
+                LinkedIn
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Legal</h3>
+            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Юр. информация</h3>
 
             <div className="flex flex-col items-start mt-4 space-y-4">
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Terms
+                Публичная оферта
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Privacy
+                Политика безопастности
               </a>
               <a
                 href="#"
@@ -258,19 +191,19 @@ export const Footer = () => {
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Licenses
+                Лицензии
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Settings
+                Пользовательское соглашение
               </a>
               <a
                 href="#"
                 className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"
               >
-                Contact
+                Реквизиты
               </a>
             </div>
           </div>
@@ -279,13 +212,9 @@ export const Footer = () => {
         <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-700" />
 
         <div className="flex flex-col items-center justify-between sm:flex-row">
-          <a href="#">
-            <img className="w-auto h-7" src="https://merakiui.com/images/full-logo.svg" alt="" />
-          </a>
+          <a href="#">ТОП ВЫБОР</a>
 
-          <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">
-            © Copyright 2023. All Rights Reserved.
-          </p>
+          <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">{`© Все права защищены 2023-${new Date().getFullYear()}`}</p>
         </div>
       </div>
     </footer>

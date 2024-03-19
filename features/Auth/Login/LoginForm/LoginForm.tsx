@@ -8,7 +8,7 @@ import { api_login } from '@/shared';
 import { toast } from 'react-toastify';
 import { parseJwt } from '@/shared';
 import { useUnit } from 'effector-react';
-import { setStore } from '@/context';
+import { setStoreEvt } from '@/context';
 
 export const MAX_VALUE = 50;
 export const EMAIL_INPUT_REG_EXP = /^\S+@\S+\.\S+$/;
@@ -31,7 +31,7 @@ export interface LoginValues {
 
 export const LoginForm = () => {
   const router = useRouter();
-  const setUserData = useUnit(setStore);
+  const setUserData = useUnit(setStoreEvt);
 
   const form = useForm<LoginValues>({
     defaultValues: DEFAULT_LOGIN_FORM_VALUES,
