@@ -72,7 +72,7 @@ export default function Page({ params }: FirmPageParams) {
     const values = getValues();
     console.log('values', values);
     addReview({ ...values, firm_id: firm?.firm_id ?? '' });
-  }, [firm]);
+  }, [firm, addReview, getValues]);
 
   return (
     <Curve>
