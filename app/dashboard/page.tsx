@@ -1,5 +1,5 @@
 'use client';
-import { AuthHeader } from '@/features';
+import { CommonHeader } from '@/widgets';
 import { useUserAuth } from '@/context';
 
 export default function Page() {
@@ -7,7 +7,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-4">
-      <AuthHeader title="RateRank" subTitle="Личный кабинет" />
+      <CommonHeader title="ТОП ВЫБОР" subTitle="Личный кабинет" />
     </div>
   );
 }

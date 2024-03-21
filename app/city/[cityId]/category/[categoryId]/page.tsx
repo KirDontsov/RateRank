@@ -1,27 +1,31 @@
 'use client';
-import { $types } from '@/shared';
-import { Nav } from '@/widgets';
-import { AuthHeader, Types } from '@/features';
-import { useList } from 'effector-react';
-import Link from 'next/link';
+import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/shared';
+import { Footer, Nav, Pagination, CommonHeader, Section } from '@/widgets';
+import { Curve, FirmsList } from '@/features';
+import { FETCH_LIMIT } from '@/shared';
+import { useUnit } from 'effector-react';
 
-export default function Page({
-  params,
-}: {
-  params: {
-    cityId: string;
-    categoryId: string;
-  };
-}) {
-  const { cityId, categoryId } = params;
+export default function Page() {
+  const { firmsCount, setPage, page } = useUnit({
+    page: $firmsPage,
+    setPage: setFirmsPageEvt,
+    firmsCount: $firmsCount,
+  });
 
   return (
-    <>
+    <Curve>
       <Nav />
-      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
-        <AuthHeader title="Types" subTitle="раздел" />
-        <Types cityId={cityId} categoryId={categoryId} />
-      </div>
-    </>
+      <Section>
+        <CommonHeader title="Компании" subTitle="раздел" />
+        {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
+
+        <div className="flex flex-col items-center gap-4 pt-4 w-full">
+          {firmsCount && (
+            <Pagination current={page} onChange={setPage} total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)} />
+          )}
+          <Footer />
+        </div>
+      </Section>
+    </Curve>
   );
 }

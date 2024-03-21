@@ -1,4 +1,7 @@
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
+import { $city, DEFAULT_DROPDOWN_VALUE, getCities } from '../cities';
+import { $category, getCategories } from '../categories';
+import { $type, getTypes } from '../types';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 
@@ -14,6 +17,8 @@ export interface ExtFirmWithOaiDescription {
   site: string;
   default_phone: string;
   oai_description_value: string;
+  description: string;
+  category_id: string;
 }
 
 export interface FirmsQueryResult {
@@ -31,6 +36,15 @@ export interface FirmQueryResult {
   };
 }
 
+export interface FirmsParams {
+  city_id: string;
+  category_id: string;
+}
+
+export interface FirmParamsWithPage extends FirmsParams {
+  page: number;
+}
+
 export const $firms = firmsD.createStore<ExtFirmWithOaiDescription[]>([]);
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
@@ -38,11 +52,19 @@ export const fetchFirms = firmsD.createEvent<{ firmId: string }>();
 export const setFirmsPageEvt = firmsD.createEvent<number>();
 
 export const getFirms = firmsD.createEffect({
-  handler: async ({ page, limit }: PaginationOptions): Promise<{ firms: FirmsQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/firms?page=${page}&limit=${limit}`, {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    });
+  handler: async ({
+    page,
+    limit,
+    city_id,
+    category_id,
+  }: PaginationOptions & FirmsParams): Promise<{ firms: FirmsQueryResult }> => {
+    const res = await fetch(
+      `${BACKEND_PORT}/api/firms?city_id=${city_id}&category_id=${category_id}&page=${page}&limit=${limit}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'GET',
+      },
+    );
     const firms = await res.json();
 
     return { firms };
@@ -51,9 +73,13 @@ export const getFirms = firmsD.createEffect({
 
 sample({
   clock: FirmsGate.open,
-  source: $firms,
-  filter: (s) => !s?.length,
-  fn: () => ({ page: 1, limit: 10 }),
+  source: [$city, $category],
+  // @ts-ignore
+  filter: ([city, category]) => !!city?.city_id && !!category?.category_id,
+  fn: ([city, category]) => {
+    // @ts-ignore
+    return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+  },
   target: getFirms,
 });
 
@@ -83,7 +109,7 @@ export const fetchFirmEvt = firmD.createEvent<{ firmId: string }>();
 
 export const getFirm = firmD.createEffect({
   handler: async ({ firmId }: { firmId: string }): Promise<{ firm: FirmQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/firm/${firmId}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/firm/${firmId}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -104,11 +130,26 @@ sample({
   target: $firm,
 });
 
-// Pagination
+// Pagination by city, category, type
 sample({
   clock: setFirmsPageEvt,
-  source: $firm,
-  filter: (firm) => firm !== null,
-  fn: (firm, page) => ({ firmId: firm?.firm_id ?? '', page, limit: 10 }),
+  source: [$city, $category],
+  fn: ([city, category], page) => {
+    // @ts-ignore
+    return { page, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+  },
+  target: getFirms,
+});
+
+sample({
+  clock: [getCities.doneData, getCategories.doneData, getTypes.doneData],
+  source: [$city, $category],
+  filter: ([city, category]) =>
+    // @ts-ignore
+    !!city?.city_id && !!category?.category_id,
+  fn: ([city, category]) => {
+    // @ts-ignore
+    return { page: 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+  },
   target: getFirms,
 });

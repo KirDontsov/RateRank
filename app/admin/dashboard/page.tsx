@@ -1,5 +1,5 @@
 'use client';
-import { AuthHeader } from '@/features';
+import { CommonHeader } from '@/widgets';
 import { $loading, useUserAuth } from '@/context';
 import { useUnit } from 'effector-react';
 import { redirect } from 'next/navigation';
@@ -19,7 +19,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-4">
-      <AuthHeader title="RateRank" subTitle="Админ Панель" />
+      <CommonHeader title="ТОП ВЫБОР" subTitle="Админ Панель" />
     </div>
   );
 }

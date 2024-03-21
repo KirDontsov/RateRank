@@ -4,3 +4,6 @@ export * from './Reviews';
 export * from './CityDropdown';
 export * from './Categories';
 export * from './Types';
+export * from './Prices';
+export * from './Images';
+export * from './Curve';

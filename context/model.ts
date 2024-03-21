@@ -13,15 +13,15 @@ export interface StorageData {
 export const PageGate = createGate<StorageData>('PageGate');
 export const LoadingGate = createGate<boolean>('LoadingGate');
 
-export const setStore = createEvent<StorageData>();
+export const setStoreEvt = createEvent<StorageData>();
 export const $userAuth = createStore<StorageData | null>(null);
 
-export const setLoading = createEvent<boolean>();
+export const setLoadingEvt = createEvent<boolean>();
 export const $loading = createStore<boolean>(true);
 
 // При логине добавляю токен в сторейдж и стейт
 sample({
-  clock: setStore,
+  clock: setStoreEvt,
   fn: (v) => v,
   target: $userAuth,
 });

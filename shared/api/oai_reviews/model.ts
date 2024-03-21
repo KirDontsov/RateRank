@@ -1,6 +1,6 @@
 import { createGate } from 'effector-react';
 import { createDomain, sample } from 'effector';
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
 export const OaiReviewsGate = createGate<{ firmId: string }>('OaiReviewsGate');
@@ -35,7 +35,7 @@ export const getOaiReviews = oaiReviewsD.createEffect({
     page,
     limit,
   }: PaginationOptions & OaiReviewOptions): Promise<{ oai_reviews: OaiReviewsQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/oai_reviews/${firmId}?page=${page}&limit=${limit}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/oai_reviews/${firmId}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });

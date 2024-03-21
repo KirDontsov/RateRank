@@ -1,6 +1,6 @@
 'use client';
 import { CommonProps } from '@/shared';
-import { $userAuth, setStore } from '.';
+import { $userAuth, setStoreEvt } from '.';
 import { useUnit } from 'effector-react';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
@@ -8,7 +8,7 @@ import { FC } from 'react';
 export const AccessChecker: FC<CommonProps> = ({ children }) => {
   const { value } = useUnit({
     value: $userAuth,
-    setValue: setStore,
+    setValue: setStoreEvt,
   });
 
   // TODO: 403

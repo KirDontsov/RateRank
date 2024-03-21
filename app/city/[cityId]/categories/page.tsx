@@ -1,6 +1,6 @@
 'use client';
-import { Nav } from '@/widgets';
-import { AuthHeader, Categories } from '@/features';
+import { Nav, CommonHeader, Section } from '@/widgets';
+import { Categories, Curve } from '@/features';
 
 export default function Page({
   params,
@@ -10,12 +10,12 @@ export default function Page({
   };
 }) {
   return (
-    <>
+    <Curve>
       <Nav />
-      <div className="h-[calc(100vh-54px)] w-full flex flex-col items-center overflow-auto gap-4">
-        <AuthHeader title="Сategories" subTitle="раздел" />
+      <Section>
+        <CommonHeader title="Сategories" subTitle="раздел" />
         <Categories cityId={params.cityId} />
-      </div>
-    </>
+      </Section>
+    </Curve>
   );
 }

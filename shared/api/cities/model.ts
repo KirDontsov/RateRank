@@ -1,6 +1,7 @@
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
+import { persist } from 'effector-storage/local';
 
 export const DEFAULT_DROPDOWN_VALUE = {
   city_id: 'Выберите город',
@@ -30,6 +31,7 @@ export const CitiesGate = createGate('CitiesGate');
 export const $cityAbbreviation = cityD.createStore<string | null>(null);
 
 export const $city = cityD.createStore<City | null>(DEFAULT_DROPDOWN_VALUE);
+persist({ store: $city, key: 'city' });
 export const fetchCitiesEvt = cityD.createEvent<string>();
 export const setCityEvt = cityD.createEvent<string>();
 
@@ -45,7 +47,7 @@ sample({
 
 export const getCities = citiesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ cities: CitiesQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/cities?page=${page}&limit=${limit}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/cities?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -57,8 +59,8 @@ export const getCities = citiesD.createEffect({
 
 sample({
   clock: CitiesGate.open,
-  source: $cities,
-  filter: (c) => !c?.length,
+  // source: $cities,
+  // filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCities,
 });
@@ -79,8 +81,8 @@ sample({
 
 sample({
   clock: CityGate.open,
-  source: $cities,
-  filter: (s) => !s.length,
+  // source: $cities,
+  // filter: (s) => !s.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCities,
 });
@@ -92,9 +94,15 @@ sample({
 });
 
 sample({
-  clock: getCities.doneData,
-  source: $cityAbbreviation,
-  filter: (s, c) => s !== '',
-  fn: (s, c) => c?.cities?.data.cities?.find((city) => city?.abbreviation === s) || DEFAULT_DROPDOWN_VALUE,
+  source: [$cityAbbreviation, $cities],
+  // filter: (s, c) => s !== '',
+  // @ts-ignore
+  fn: ([s, c]) => c?.find((city) => city?.abbreviation === s) || DEFAULT_DROPDOWN_VALUE,
   target: $city,
 });
+
+// sample({
+//   clock: CityGate.close,
+//   fn: () => null,
+//   target: $city,
+// });

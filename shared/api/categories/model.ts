@@ -1,6 +1,7 @@
-import { PaginationOptions } from '@/shared';
+import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
+import { persist } from 'effector-storage/local'
 
 export interface Category {
   category_id: string;
@@ -28,6 +29,7 @@ export const $category = categoryD.createStore<Category | null>({
   name: '',
   abbreviation: '',
 });
+persist({ store: $category, key: 'category' });
 export const setCategoryEvt = categoryD.createEvent<string>();
 
 export const $categories = categoriesD.createStore<Category[]>([]);
@@ -42,7 +44,7 @@ sample({
 
 export const getCategories = categoriesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ categories: CategoriesQueryResult }> => {
-    const res = await fetch(`http://localhost:8080/api/categories?page=${page}&limit=${limit}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/categories?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -76,8 +78,6 @@ sample({
 
 sample({
   clock: CategoryGate.open,
-  source: $categories,
-  filter: (s) => !s.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCategories,
 });
@@ -89,9 +89,8 @@ sample({
 });
 
 sample({
-  clock: getCategories.doneData,
-  source: $categoryAbbreviation,
-  filter: (s, c) => s !== '',
-  fn: (s, c) => c?.categories?.data.categories?.find((category) => category?.abbreviation === s) || null,
+  source: [$categoryAbbreviation, $categories],
+  // @ts-ignore
+  fn: ([s, c]) => c?.find((category) => category?.abbreviation === s) || null,
   target: $category,
 });

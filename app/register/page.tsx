@@ -1,10 +1,11 @@
 'use client';
-import { RegisterForm, AuthHeader } from '@/features';
+import { RegisterForm } from '@/features';
+import { CommonHeader } from '@/widgets';
 
 export default function Page() {
   return (
     <div className="flex flex-col gap-4">
-      <AuthHeader title="RateRank" subTitle="Зарегистрируйтесь, чтобы начать" />
+      <CommonHeader title="ТОП ВЫБОР" subTitle="Зарегистрируйтесь, чтобы начать" />
       <RegisterForm />
     </div>
   );
