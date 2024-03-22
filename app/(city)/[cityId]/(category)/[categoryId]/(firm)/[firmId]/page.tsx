@@ -1,7 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next/types';
-import { FirmsPage } from './FirmsPage';
-import { transliterate } from '@/shared';
-import { FirmsQueryResult } from '@/api';
+import { FirmIdPage } from './FirmIdPage';
+import { CategoryQueryResult, FirmQueryResult } from '@/api';
 
 type Props = {
   params: { cityId: string; categoryId: string; firmId: string };
@@ -10,21 +9,35 @@ type Props = {
 
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
-  const cityId = `${prevPage?.other?.cityId || ''}`;
   const cityName = `${prevPage?.other?.city || ''}`;
-  const categoryId = `${prevPage?.other?.categoryId || ''}`;
-  const categoryName = `${prevPage?.other?.category || ''}`;
-  const firmId = params.firmId;
+  const firmId = searchParams?.firmId ?? '';
 
-  const firms: FirmsQueryResult = await fetch(
-    `https://xn--90ab9accji9e.xn--p1ai/api/firms?city_id=${cityId}&category_id=${categoryId}&page=${searchParams?.page || 1}&limit=${10}`,
+  const category: CategoryQueryResult = await fetch(
+    `https://xn--90ab9accji9e.xn--p1ai/api/category/3ebc7206-6fed-4ea7-a000-27a74e867c9a`,
     {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
+      cache: 'force-cache',
     },
-  ).then((res) => res.json());
+  )
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
 
-  const firmName = firms?.data?.firms?.find((firm) => transliterate(firm?.name) === decodeURI(firmId))?.name ?? '';
+  const categoryName = category?.data?.category?.name ?? '';
+
+  const firm: FirmQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/firm/${firmId}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+    cache: 'force-cache',
+  })
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
+
+  const firmName = firm?.data?.firm?.name ?? '';
 
   return {
     title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, онлайн бронирование столиков, цены, меню, телефон и адрес - Рестораны, бары и кафе - ${cityName} - Топ выбор`,
@@ -32,10 +45,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   };
 }
 
+/** Страница фирмы с отзывами */
 export default function Page() {
-  return (
-    <>
-      <FirmsPage />
-    </>
-  );
+  return <FirmIdPage />;
 }

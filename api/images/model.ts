@@ -35,7 +35,7 @@ export const $imagesCount = imagesD.createStore<number | null>(null);
 export const fetchImages = imagesD.createEvent<{ firmId: string }>();
 export const setImagesPageEvt = imagesD.createEvent<number>();
 
-export const getImages = imagesD.createEffect({
+export const getImagesFx = imagesD.createEffect({
   handler: async ({ firmId }: { firmId: string }): Promise<{ images: ImagesQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/images/${firmId}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -49,7 +49,7 @@ export const getImages = imagesD.createEffect({
 
 sample({
   clock: ImagesGate.open,
-  target: getImages,
+  target: getImagesFx,
 });
 
 // sample({
@@ -60,19 +60,19 @@ sample({
 // });
 
 sample({
-  clock: getImages.doneData,
+  clock: getImagesFx.doneData,
   fn: (c) => c.images.data.images || [],
   target: $images,
 });
 
 sample({
-  clock: getImages.pending,
+  clock: getImagesFx.pending,
   fn: (c) => true,
   target: $imagesLoading,
 });
 
 sample({
-  clock: getImages.doneData,
+  clock: getImagesFx.doneData,
   fn: (c) => c.images.data.images_count || null,
   target: $imagesCount,
 });
@@ -89,7 +89,7 @@ export const imageD = createDomain('image');
 export const $image = imageD.createStore<Image | null>(null);
 export const fetchImageEvt = imageD.createEvent<{ imageId: string }>();
 
-export const getImage = imageD.createEffect({
+export const getImageFx = imageD.createEffect({
   handler: async ({ imageId }: { imageId: string }): Promise<{ image: ImageQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/image/${imageId}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -103,11 +103,11 @@ export const getImage = imageD.createEffect({
 
 sample({
   clock: ImageGate.open,
-  target: getImage,
+  target: getImageFx,
 });
 
 sample({
-  clock: getImage.doneData,
+  clock: getImageFx.doneData,
   fn: (c) => c.image.data.image || null,
   target: $image,
 });

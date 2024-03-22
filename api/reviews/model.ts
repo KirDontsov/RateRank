@@ -4,6 +4,7 @@ import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
 export const ReviewsGate = createGate<{ firmId: string }>('ReviewsGate');
+export const ReviewsPageGate = createGate<number>('ReviewsPageGate');
 export const reviewsD = createDomain('reviews');
 
 export interface ReviewOptions {
@@ -58,10 +59,15 @@ export const getReviewsFx = reviewsD.createEffect({
 });
 
 sample({
+  // @ts-ignore
   clock: ReviewsGate.open,
-  source: $reviews,
-  filter: (s) => !s?.length,
-  fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
+  source: [$reviews, $reviewsPage],
+  // @ts-ignore
+  filter: ([s]) => !s?.length,
+  fn: ([_, reviewsPage], c) => {
+    console.log('reviewsPage', reviewsPage);
+    return { firmId: c?.firmId, page: reviewsPage || 1, limit: 10 };
+  },
   target: getReviewsFx,
 });
 
@@ -75,11 +81,6 @@ sample({
   clock: getReviewsFx.doneData,
   fn: (c) => c.reviews.data.reviews_count || null,
   target: $reviewsCount,
-});
-
-sample({
-  clock: setReviewsPageEvt,
-  target: $reviewsPage,
 });
 
 sample({
@@ -99,8 +100,12 @@ sample({
 });
 
 sample({
-  clock: ReviewsGate.close,
-  fn: () => 1,
+  clock: setReviewsPageEvt,
+  target: $reviewsPage,
+});
+
+sample({
+  clock: ReviewsPageGate.open,
   target: $reviewsPage,
 });
 

@@ -43,7 +43,7 @@ sample({
   target: $type,
 });
 
-export const getTypes = typesD.createEffect({
+export const getTypesFx = typesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ types: TypesQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/types?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -60,17 +60,17 @@ sample({
   // source: $types,
   // filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
-  target: getTypes,
+  target: getTypesFx,
 });
 
 sample({
-  clock: getTypes.doneData,
+  clock: getTypesFx.doneData,
   fn: (c) => c.types.data.types || [],
   target: $types,
 });
 
 sample({
-  clock: getTypes.doneData,
+  clock: getTypesFx.doneData,
   fn: (c) => c.types.data.types_count || null,
   target: $typesCount,
 });
@@ -82,7 +82,7 @@ sample({
   source: $types,
   filter: (s) => !s.length,
   fn: () => ({ page: 1, limit: 10 }),
-  target: getTypes,
+  target: getTypesFx,
 });
 
 sample({

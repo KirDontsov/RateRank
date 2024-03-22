@@ -1,7 +1,7 @@
-import { $categoryAbbreviation, $city, $firmName, $typeAbbreviation, fetchFirmEvt } from '@/api';
+import { $category, $city, $firmName, $firmsPage, $typeAbbreviation, fetchFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 export interface FirmsCardProps {
@@ -14,15 +14,19 @@ export interface FirmsCardProps {
 
 export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
   const router = useRouter();
-  const { city, categoryAbbreviation } = useUnit({
+  const searchParams = useSearchParams();
+  const { city, category, page } = useUnit({
     city: $city,
-    categoryAbbreviation: $categoryAbbreviation,
+    category: $category,
+    page: $firmsPage,
   });
 
   const handleClick = useCallback(() => {
     fetchFirmEvt({ firmId: firm_id });
-    router.push(`/${city?.abbreviation}/${categoryAbbreviation}/${transliterate(name ?? '')}?page=1`);
-  }, [city, categoryAbbreviation, firm_id, name]);
+    router.push(
+      `/${city?.abbreviation}/${category?.abbreviation}/${transliterate(name ?? '')}?firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`,
+    );
+  }, [city, category, firm_id, name]);
 
   return (
     <div

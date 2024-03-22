@@ -53,7 +53,7 @@ sample({
   target: $city,
 });
 
-export const getCities = citiesD.createEffect({
+export const getCitiesFx = citiesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ cities: CitiesQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/cities?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -70,17 +70,17 @@ sample({
   // source: $cities,
   // filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
-  target: getCities,
+  target: getCitiesFx,
 });
 
 sample({
-  clock: getCities.doneData,
+  clock: getCitiesFx.doneData,
   fn: (c) => c.cities.data.cities || [],
   target: $cities,
 });
 
 sample({
-  clock: getCities.doneData,
+  clock: getCitiesFx.doneData,
   fn: (c) => c.cities.data.cities_count || null,
   target: $citiesCount,
 });
@@ -92,7 +92,7 @@ sample({
   // source: $cities,
   // filter: (s) => !s.length,
   fn: () => ({ page: 1, limit: 10 }),
-  target: getCities,
+  target: getCitiesFx,
 });
 
 sample({

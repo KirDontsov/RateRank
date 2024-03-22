@@ -8,6 +8,7 @@ export interface CityPageProps {
   };
 }
 
+/** Список категорий внутри города */
 export default function Page({ params }: CityPageProps) {
   const cityId = params.cityId ?? '';
   return (

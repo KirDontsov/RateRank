@@ -29,8 +29,6 @@ export const categoriesD = createDomain('categories');
 export const CategoryGate = createGate<{ categoryId: string }>('CategoryGate');
 export const CategoriesGate = createGate('CategoriesGate');
 
-export const $categoryAbbreviation = categoryD.createStore<string | null>(null);
-
 export const $category = categoryD.createStore<Category | null>({
   category_id: '',
   name: '',
@@ -50,7 +48,7 @@ sample({
   target: $category,
 });
 
-export const getCategories = categoriesD.createEffect({
+export const getCategoriesFx = categoriesD.createEffect({
   handler: async ({ page, limit }: PaginationOptions): Promise<{ categories: CategoriesQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/categories?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -67,38 +65,42 @@ sample({
   source: $categories,
   filter: (c) => !c?.length,
   fn: () => ({ page: 1, limit: 10 }),
-  target: getCategories,
+  target: getCategoriesFx,
 });
 
 sample({
-  clock: getCategories.doneData,
+  clock: getCategoriesFx.doneData,
   fn: (c) => c.categories.data.categories || [],
   target: $categories,
 });
 
 sample({
-  clock: getCategories.doneData,
+  clock: getCategoriesFx.doneData,
   fn: (c) => c.categories.data.categories_count || null,
   target: $categoriesCount,
 });
 
 // === Category ===
 
-sample({
-  clock: CategoryGate.open,
-  fn: () => ({ page: 1, limit: 10 }),
-  target: getCategories,
+export const getCategoryFx = categoriesD.createEffect({
+  handler: async ({ categoryId }: { categoryId: string }): Promise<{ category: CategoryQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    });
+    const category = await res.json();
+
+    return { category };
+  },
 });
 
 sample({
   clock: CategoryGate.open,
-  fn: (c) => c?.categoryId,
-  target: $categoryAbbreviation,
+  target: getCategoryFx,
 });
 
 sample({
-  source: [$categoryAbbreviation, $categories],
-  // @ts-ignore
-  fn: ([s, c]) => c?.find((category) => category?.abbreviation === s) || null,
+  clock: getCategoryFx.doneData,
+  fn: (c) => c?.category?.data?.category,
   target: $category,
 });

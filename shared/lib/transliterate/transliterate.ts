@@ -41,7 +41,7 @@ export function transliterate(word: string) {
     .map((letter) => {
       const lowLetter = letter.toLowerCase();
       const en = ruKeys[lowLetter] ?? letter;
-      return lowLetter === letter ? en : en.slice(0, 1) + en.slice(1);
+      return lowLetter === letter ? en.toLowerCase() : en.slice(0, 1).toLowerCase() + en.slice(1).toLowerCase();
     })
     .join('');
 }

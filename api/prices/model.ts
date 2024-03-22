@@ -40,7 +40,7 @@ export const $pricesCount = pricesD.createStore<number | null>(null);
 export const fetchPricesEvt = pricesD.createEvent<{ firmId: string }>();
 export const setPricesPageEvt = pricesD.createEvent<number>();
 
-export const getPrices = pricesD.createEffect({
+export const getPricesFx = pricesD.createEffect({
   handler: async ({
     firmId,
     page,
@@ -61,7 +61,7 @@ sample({
   source: $pricesItems,
   filter: (s) => !s?.length,
   fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
-  target: getPrices,
+  target: getPricesFx,
 });
 
 sample({
@@ -72,19 +72,19 @@ sample({
 });
 
 sample({
-  clock: getPrices.doneData,
+  clock: getPricesFx.doneData,
   fn: (c) => c.prices.data.prices_items || [],
   target: $pricesItems,
 });
 
 sample({
-  clock: getPrices.doneData,
+  clock: getPricesFx.doneData,
   fn: (c) => c.prices.data.prices_categories || [],
   target: $pricesCategories,
 });
 
 sample({
-  clock: getPrices.doneData,
+  clock: getPricesFx.doneData,
   fn: (c) => c.prices.data.prices_count || null,
   target: $pricesCount,
 });
@@ -100,7 +100,7 @@ sample({
   source: $firm,
   filter: (firm) => firm !== null,
   fn: (firm, page) => ({ firmId: firm?.firm_id ?? '', page, limit: 10 }),
-  target: getPrices,
+  target: getPricesFx,
 });
 
 sample({

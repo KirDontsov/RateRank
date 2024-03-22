@@ -8,7 +8,7 @@ export interface CategoriesProps {
 }
 export const Categories: FC<CategoriesProps> = ({ cityId }) => {
   return useList($categories, ({ category_id, name, abbreviation }) => (
-    <Link href={`/${cityId}/${abbreviation}?page=1`} key={category_id} className="flex gap-4">
+    <Link key={category_id} href={`/${cityId}/${abbreviation}?categoryId=${category_id}`} className="flex gap-4">
       <div>{name}</div>
     </Link>
   ));

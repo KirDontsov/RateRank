@@ -4,7 +4,7 @@ import { Curve, FirmId, FirmIdGateProvider } from '@/features';
 import { $firm } from '@/api';
 import { useUnit } from 'effector-react';
 
-export const FirmsPage = () => {
+export const FirmIdPage = () => {
   const firmId = useUnit($firm)?.firm_id ?? '';
 
   return (

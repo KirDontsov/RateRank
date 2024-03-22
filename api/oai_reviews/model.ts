@@ -29,7 +29,7 @@ export const $oaiReviewsCount = oaiReviewsD.createStore<number | null>(null);
 export const fetchOaiReviewsEvt = oaiReviewsD.createEvent<{ firmId: string }>();
 export const setOaiReviewsPageEvt = oaiReviewsD.createEvent<number>();
 
-export const getOaiReviews = oaiReviewsD.createEffect({
+export const getOaiReviewsFx = oaiReviewsD.createEffect({
   handler: async ({
     firmId,
     page,
@@ -50,7 +50,7 @@ sample({
   source: $oaiReviews,
   filter: (s) => !s?.length,
   fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
-  target: getOaiReviews,
+  target: getOaiReviewsFx,
 });
 
 sample({
@@ -61,13 +61,13 @@ sample({
 });
 
 sample({
-  clock: getOaiReviews.doneData,
+  clock: getOaiReviewsFx.doneData,
   fn: (c) => c.oai_reviews.data.oai_reviews || [],
   target: $oaiReviews,
 });
 
 sample({
-  clock: getOaiReviews.doneData,
+  clock: getOaiReviewsFx.doneData,
   fn: (c) => c.oai_reviews.data.oai_reviews_count || null,
   target: $oaiReviewsCount,
 });

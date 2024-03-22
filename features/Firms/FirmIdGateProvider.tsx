@@ -9,6 +9,6 @@ export interface FirmIdGateProviderProps {
 }
 
 export const FirmIdGateProvider: FC<FirmIdGateProviderProps & CommonProps> = ({ children, firmId }) => {
-  // useGate(FirmGate, { firmId });
+  useGate(FirmGate, { firmId });
   return <>{children}</>;
 };

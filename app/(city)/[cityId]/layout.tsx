@@ -3,6 +3,7 @@ import { CommonProps } from '@/shared/types';
 import { Metadata } from 'next/types';
 
 import { CitiesQueryResult } from '@/api';
+import { BACKEND_PORT } from '@/shared';
 
 type CityIdProps = {
   params: { cityId: string };
@@ -11,10 +12,14 @@ type CityIdProps = {
 export async function generateMetadata({ params }: CityIdProps): Promise<Metadata> {
   const cityId = params.cityId;
 
-  const cities: CitiesQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/cities?page=${1}&limit=${10}`, {
+  const cities: CitiesQueryResult = await fetch(`${BACKEND_PORT}/api/cities?page=${1}&limit=${10}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
 
   const city = cities?.data?.cities?.find((city) => city?.abbreviation === cityId);
   const cityName = city?.name;
