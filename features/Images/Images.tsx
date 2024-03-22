@@ -1,4 +1,5 @@
-import { $firm, $images, DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
+import { $firm, $images } from '@/api';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
 
@@ -20,7 +21,7 @@ export const Images = () => {
                   <Image
                     src={`${DEFAULT_PHOTOS_ENDPOINT}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                     fill
-                    alt={img?.img_alt}
+                    alt={firm?.name ?? ''}
                     style={{ objectFit: 'cover' }}
                   />
                 </div>

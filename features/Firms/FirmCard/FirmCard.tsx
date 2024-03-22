@@ -1,4 +1,5 @@
-import { $categoryAbbreviation, $city, $typeAbbreviation } from '@/shared';
+import { $categoryAbbreviation, $city, $firmName, $typeAbbreviation, fetchFirmEvt } from '@/api';
+import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback } from 'react';
@@ -19,8 +20,9 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
   });
 
   const handleClick = useCallback(() => {
-    router.push(`/city/${city?.abbreviation}/category/${categoryAbbreviation}/firm/${firm_id}`);
-  }, [firm_id, city, categoryAbbreviation]);
+    fetchFirmEvt({ firmId: firm_id });
+    router.push(`/${city?.abbreviation}/${categoryAbbreviation}/${transliterate(name ?? '')}?page=1`);
+  }, [city, categoryAbbreviation, firm_id, name]);
 
   return (
     <div

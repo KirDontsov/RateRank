@@ -1,7 +1,5 @@
 'use client';
-import { $city } from '@/shared';
-import { useOnClickOutside } from '@/shared';
-import { useUnit } from 'effector-react';
+import { useOnClickOutside } from '@/hooks';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, MouseEvent, useRef, useCallback, FC } from 'react';
 
@@ -20,36 +18,33 @@ export interface FormDropdownProps {
 export const FormDropdown: FC<FormDropdownProps> = ({ options, value, setValue }) => {
   const [open, setOpen] = useState(false);
 
-  const { city } = useUnit({
-    city: $city,
-  });
-
   const router = useRouter();
   const path = usePathname();
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleOpen = () => setOpen((prev) => !prev);
+
   const handleSelect = useCallback(
-    (e: MouseEvent<HTMLAnchorElement>) => {
+    (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
       setValue(e?.currentTarget?.id);
       setOpen(false);
 
-      const currentCity = city?.abbreviation || '';
+      // const currentCity = city?.abbreviation || '';
       const targetCity = e.currentTarget.getAttribute('data-route');
-      const link = path.split('/');
-      const index = link.indexOf(currentCity || 'spb');
-      if (index !== -1) {
-        link[index] = targetCity || 'spb';
-      }
-      const url = link.join('/');
-      // router.push(url === '/' ? `/city/${targetCity}` : url);
-      router.push(`/city/${targetCity}`);
+      // const link = path.split('/');
+      // const index = link.indexOf(currentCity || 'spb');
+      // if (index !== -1) {
+      //   link[index] = targetCity || 'spb';
+      // }
+      // // const url = link.join('/');
+      // // router.push(url === '/' ? `/${targetCity}` : url);
+      router.push(`/${targetCity}`);
     },
-    [setValue, router, city, path],
+    [setValue, router, path],
   );
 
   const handleClickOutside = () => {
@@ -79,6 +74,7 @@ export const FormDropdown: FC<FormDropdownProps> = ({ options, value, setValue }
         <div className="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
           {options.map(({ id, name, abbreviation }) => (
             <span
+              suppressHydrationWarning
               id={id}
               key={id}
               data-route={abbreviation}

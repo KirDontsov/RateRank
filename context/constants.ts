@@ -1,4 +1,4 @@
-import { User } from '@/shared';
+import { User } from '@/api';
 import noop from 'lodash/noop';
 
 export interface CookieUserData {

@@ -4,7 +4,7 @@ import { ErrorTypes } from '@/shared/types';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { api_login } from '@/shared';
+import { api_login } from '@/api';
 import { toast } from 'react-toastify';
 import { parseJwt } from '@/shared';
 import { useUnit } from 'effector-react';

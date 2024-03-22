@@ -1,4 +1,4 @@
-import { $firms } from '@/shared';
+import { $firms } from '@/api';
 import { useList } from 'effector-react';
 import { FirmCard } from '../FirmCard';
 
