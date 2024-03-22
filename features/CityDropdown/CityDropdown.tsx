@@ -1,4 +1,5 @@
-import { $cities, $city, setCityEvt } from '@/shared';
+'use client';
+import { $cities, $city, setCityEvt } from '@/api';
 import { FormDropdown } from '@/widgets';
 import { useUnit } from 'effector-react';
 

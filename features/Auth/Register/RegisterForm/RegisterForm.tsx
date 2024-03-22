@@ -4,7 +4,7 @@ import { ErrorTypes } from '@/shared/types';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { api_auth } from '@/shared';
+import { api_auth } from '@/api';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 
