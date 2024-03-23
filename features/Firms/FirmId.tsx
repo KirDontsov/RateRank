@@ -70,7 +70,7 @@ export const FirmId = () => {
                 className="w-full h-[38rem] absolute z-[-1]"
                 src={
                   images?.length
-                    ? `${DEFAULT_PHOTOS_ENDPOINT}/${firm?.firm_id}/${images[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
+                    ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
                     : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
                 }
                 fill
