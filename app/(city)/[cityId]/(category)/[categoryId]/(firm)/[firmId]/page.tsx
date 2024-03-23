@@ -17,7 +17,6 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
-      cache: 'force-cache',
     },
   )
     .then((res) => res.json())
@@ -30,7 +29,6 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   const firm: FirmQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/firm/${firmId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
-    cache: 'force-cache',
   })
     .then((res) => res.json())
     .catch(() => {

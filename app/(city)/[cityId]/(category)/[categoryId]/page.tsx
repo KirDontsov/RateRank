@@ -23,7 +23,6 @@ export async function generateMetadata(
   const category: CategoryQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/category/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
-    cache: 'force-cache',
   })
     .then((res) => res.json())
     .catch(() => {
