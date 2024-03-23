@@ -7,18 +7,16 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
   const cityName = `${prevPage?.other?.city || ''}`;
   const firmId = searchParams?.firmId ?? '';
+  const categoryId = searchParams?.categoryId ?? '';
 
-  const category: CategoryQueryResult = await fetch(
-    `https://xn--90ab9accji9e.xn--p1ai/api/category/3ebc7206-6fed-4ea7-a000-27a74e867c9a`,
-    {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    },
-  )
+  const category: CategoryQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/category/${categoryId}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  })
     .then((res) => res.json())
     .catch(() => {
       console.warn('error');

@@ -1,6 +1,6 @@
 'use client';
 import { Nav, CommonHeader, Section } from '@/widgets';
-import { Categories, CategoriesGateProvider, Curve } from '@/features';
+import { CategoriesList, CategoriesGateProvider, Curve } from '@/features';
 
 export default function Page({
   params,
@@ -15,7 +15,7 @@ export default function Page({
         <Nav />
         <Section>
           <CommonHeader title="Все категории" subTitle="раздел" />
-          <Categories cityId={params.cityId} />
+          <CategoriesList cityId={params.cityId} />
         </Section>
       </Curve>
     </CategoriesGateProvider>

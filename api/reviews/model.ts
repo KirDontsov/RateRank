@@ -65,7 +65,6 @@ sample({
   // @ts-ignore
   filter: ([s]) => !s?.length,
   fn: ([_, reviewsPage], c) => {
-    console.log('reviewsPage', reviewsPage);
     return { firmId: c?.firmId, page: reviewsPage || 1, limit: 10 };
   },
   target: getReviewsFx,

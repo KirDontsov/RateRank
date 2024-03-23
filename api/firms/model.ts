@@ -78,7 +78,7 @@ sample({
   clock: FirmsGate.open,
   source: [$city, $category, $firmsPage],
   // @ts-ignore
-  // filter: ([city, category]) => !!city?.city_id && !!category?.category_id,
+  filter: ([city, category]) => !!city?.city_id && !!category?.category_id,
   fn: ([city, category, firmsPage]) => {
     // @ts-ignore
     return { page: firmsPage || 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
@@ -112,7 +112,7 @@ persist({
   key: 'firm',
 });
 export const $firmName = firmD.createStore<string | null>(null);
-export const fetchFirmEvt = firmD.createEvent<FirmId>();
+export const setFirmEvt = firmD.createEvent<FirmId>();
 
 export const getFirmFx = firmD.createEffect({
   handler: async ({ firmId }: FirmId): Promise<{ firm: FirmQueryResult }> => {
@@ -121,18 +121,18 @@ export const getFirmFx = firmD.createEffect({
       method: 'GET',
     });
     const firm = await res.json();
-
+    console.log('firm', firm);
     return { firm };
   },
 });
 
-// sample({
-//   clock: FirmGate.open,
-//   target: getFirm,
-// });
+sample({
+  clock: FirmGate.open,
+  target: getFirmFx,
+});
 
 sample({
-  clock: fetchFirmEvt,
+  clock: setFirmEvt,
   fn: (c) => c,
   target: getFirmFx,
 });

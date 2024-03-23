@@ -1,6 +1,6 @@
 'use client';
 import { Nav, CommonHeader, Section } from '@/widgets';
-import { Categories, CityIdGateProvider, Curve } from '@/features';
+import { CategoriesList, CityIdGateProvider, Curve } from '@/features';
 
 export interface CityPageProps {
   params: {
@@ -17,7 +17,9 @@ export default function Page({ params }: CityPageProps) {
         <Nav />
         <Section>
           <CommonHeader title="Категории" subTitle="раздел" />
-          <Categories cityId={cityId} />
+          <div className="container flex flex-col gap-4 items-center">
+            <CategoriesList cityId={cityId} />
+          </div>
         </Section>
       </Curve>
     </CityIdGateProvider>
