@@ -1,6 +1,7 @@
-import { $category, $city, $firmName, $firmsPage, $typeAbbreviation, fetchFirmEvt } from '@/api';
+import { $category, $city, $firmsPage, setFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
@@ -13,26 +14,23 @@ export interface FirmsCardProps {
 }
 
 export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const { city, category, page } = useUnit({
+  const { city, category, page, setFirm } = useUnit({
     city: $city,
     category: $category,
     page: $firmsPage,
+    setFirm: setFirmEvt,
   });
 
   const handleClick = useCallback(() => {
-    fetchFirmEvt({ firmId: firm_id });
-    router.push(
-      `/${city?.abbreviation}/${category?.abbreviation}/${transliterate(name ?? '')}?firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`,
-    );
-  }, [city, category, firm_id, name]);
+    setFirm({ firmId: firm_id });
+  }, [setFirm, firm_id]);
 
   return (
-    <div
+    <Link
       key={firm_id}
+      href={`/${city?.abbreviation}/${category?.abbreviation}/${transliterate(name ?? '')}?categoryId=${category?.category_id}&firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
-      role="button"
       className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
     >
       <div className="mt-2">
@@ -47,6 +45,6 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
           Подробнее
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

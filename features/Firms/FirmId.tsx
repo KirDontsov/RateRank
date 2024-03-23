@@ -40,7 +40,7 @@ export const FirmId = () => {
     firmName: $firmName,
   });
 
-  const firmId = firm?.firm_id ?? '';
+  const firmId = searchParams.get('firmId') || firm?.firm_id || '';
 
   useGate(OaiReviewsGate, { firmId });
   useGate(ImagesGate, { firmId });
