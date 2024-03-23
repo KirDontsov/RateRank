@@ -1,11 +1,13 @@
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
-import { $firm, $images } from '@/api';
+import { $category, $city, $firm, $images } from '@/api';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
 
 export const Images = () => {
-  const { firm, images } = useUnit({
+  const { firm, city, category, images } = useUnit({
     firm: $firm,
+    city: $city,
+    category: $category,
     images: $images,
   });
 
@@ -19,7 +21,7 @@ export const Images = () => {
               return (
                 <div key={img?.img_id} className="aspect-video relative">
                   <Image
-                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                     fill
                     alt={firm?.name ?? ''}
                     style={{ objectFit: 'cover' }}
