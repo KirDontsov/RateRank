@@ -37,7 +37,7 @@ export const FirmsPage = () => {
             <CommonHeader title="Компании" subTitle="раздел" />
             {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
 
-            <div className="flex flex-col items-center gap-4 pt-4 w-full">
+            <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
               {firmsCount && (
                 <Pagination
                   current={Number(searchParams.get('firmsPage')) || page}

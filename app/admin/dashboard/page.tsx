@@ -3,6 +3,7 @@ import { CommonHeader } from '@/widgets';
 import { $loading, useUserAuth } from '@/context';
 import { useUnit } from 'effector-react';
 import { redirect } from 'next/navigation';
+import { COMMON_TITLE } from '@/shared';
 
 export default function Page() {
   const value = useUserAuth();
@@ -19,7 +20,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col gap-4">
-      <CommonHeader title="ТОП ВЫБОР" subTitle="Админ Панель" />
+      <CommonHeader title={COMMON_TITLE} subTitle="Админ Панель" />
     </div>
   );
 }

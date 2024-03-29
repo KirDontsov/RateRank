@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next/types';
 
 import { CategoriesQueryResult, CategoryQueryResult } from '@/api';
 import { FirmsPage } from './FirmsPage';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 
 export interface CategoryPageProps {
   params: { categoryId: string };
@@ -32,9 +33,8 @@ export async function generateMetadata(
   const categoryName = category?.data?.category?.name;
 
   return {
-    title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - Топ выбор`,
-    description:
-      'Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на Топвыбор.рф. Фотографии, отзывы, акции, скидки, фильтры для поиска.',
+    title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
+    description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
   };
 }
 

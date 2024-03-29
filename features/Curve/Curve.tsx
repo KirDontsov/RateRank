@@ -3,7 +3,7 @@ import React, { FC, useLayoutEffect, useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 import { text, curve, translate } from './anim';
 import styles from './curve.module.scss';
-import { CommonProps } from '@/shared';
+import { COMMON_TITLE, CommonProps } from '@/shared';
 
 export interface WindowDimensions {
   width: number | null;
@@ -43,7 +43,7 @@ export const Curve: FC<CommonProps> = ({ children }) => {
     <div className={`${styles.curve} page`}>
       <div style={{ opacity: dimensions.width == null ? 1 : 0 }} className={styles.background} />
       <motion.p className={styles.route} {...anim(text)}>
-        ТОП ВЫБОР
+        {COMMON_TITLE.toUpperCase()}
       </motion.p>
       {dimensions.width != null && (
         // @ts-ignore

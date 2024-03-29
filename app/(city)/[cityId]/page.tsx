@@ -1,6 +1,6 @@
 'use client';
-import { Nav, CommonHeader, Section } from '@/widgets';
-import { CategoriesList, CityIdGateProvider, Curve } from '@/features';
+import { Nav, CommonHeader, Section, Footer } from '@/widgets';
+import { CategoriesGateProvider, CategoriesList, CityIdGateProvider, Curve } from '@/features';
 
 export interface CityPageProps {
   params: {
@@ -13,15 +13,20 @@ export default function Page({ params }: CityPageProps) {
   const cityId = params.cityId ?? '';
   return (
     <CityIdGateProvider cityId={cityId}>
-      <Curve>
-        <Nav />
-        <Section>
-          <CommonHeader title="Категории" subTitle="раздел" />
-          <div className="container flex flex-col gap-4 items-center">
-            <CategoriesList cityId={cityId} />
-          </div>
-        </Section>
-      </Curve>
+      <CategoriesGateProvider>
+        <Curve>
+          <Nav />
+          <Section>
+            <CommonHeader title="Категории" subTitle="раздел" />
+            <div className="container flex flex-col gap-4 items-center mb-auto">
+              <CategoriesList cityId={cityId} />
+            </div>
+            <div className="flex w-full">
+              <Footer />
+            </div>
+          </Section>
+        </Curve>
+      </CategoriesGateProvider>
     </CityIdGateProvider>
   );
 }

@@ -3,7 +3,7 @@ import { CommonProps } from '@/shared/types';
 import { Metadata } from 'next/types';
 
 import { CitiesQueryResult } from '@/api';
-import { BACKEND_PORT } from '@/shared';
+import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 
 type CityIdProps = {
   params: { cityId: string };
@@ -25,9 +25,8 @@ export async function generateMetadata({ params }: CityIdProps): Promise<Metadat
   const cityName = city?.name;
 
   return {
-    title: `Лучшие компании города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - Zoon.ru — Топ выбор`,
-    description:
-      'Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на Топвыбор.рф. Фотографии, отзывы, акции, скидки, фильтры для поиска.',
+    title: `Лучшие компании города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы — ${COMMON_TITLE}`,
+    description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
     other: {
       cityId: city?.city_id ?? '',
       city: cityName ?? '',

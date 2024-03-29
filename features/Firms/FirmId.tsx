@@ -14,14 +14,13 @@ import {
   $category,
 } from '@/api';
 import { DEFAULT_PHOTOS_EXT, DEFAULT_PHOTOS_ENDPOINT, HeroBackground, transliterate } from '@/shared';
-import { Footer, Pagination, CommonHeader, Button } from '@/widgets';
+import { Footer, Pagination, CommonHeader, Button, ImageWithFallback } from '@/widgets';
 import { Images, Prices, ReviewsGateProvider, ReviewsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useGate, useUnit } from 'effector-react';
 import styles from './oaiReviewStyles.module.scss';
 import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import Image from 'next/image';
 
 export const FirmId = () => {
   const router = useRouter();
@@ -66,13 +65,10 @@ export const FirmId = () => {
         <div className="w-full flex flex-col gap-8">
           <header>
             <div className="w-full bg-center bg-cover h-[38rem] relative">
-              <Image
+              <ImageWithFallback
                 className="w-full h-[38rem] absolute z-[-1]"
-                src={
-                  images?.length
-                    ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
-                    : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
-                }
+                src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                 fill
                 alt={firm?.name || ''}
                 style={{ objectFit: 'cover' }}
@@ -82,7 +78,7 @@ export const FirmId = () => {
               />
               <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                 <div className="text-center">
-                  <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${firm?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a' ? 'Ресторан' : 'Автосервис'} ${firm?.name}`}</h1>
+                  <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${category?.name?.slice(0, -1)} ${firm?.name}`}</h1>
                   <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                     Позвонить
                   </button>
@@ -102,9 +98,9 @@ export const FirmId = () => {
                   <div>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</div>
                   <h3 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Описание</h3>
                   <div className={`${styles.myCustomStyle} list-disc`}>
-                    {firm?.oai_description_value !== ''
-                      ? firm?.oai_description_value.replaceAll('*', '').replaceAll('#', '')
-                      : firm?.description}
+                    {!firm?.oai_description_value || firm?.oai_description_value === ''
+                      ? firm?.description
+                      : firm?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')}
                   </div>
                   <Prices />
                 </div>
@@ -140,7 +136,7 @@ export const FirmId = () => {
               </>
             )}
           </div>
-          <div className="flex flex-col items-center gap-4 pt-4 w-full">
+          <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
             {(reviewsCount ?? 1) > 10 && (
               <Pagination
                 current={Number(searchParams.get('reviewsPage')) || page}
