@@ -1,7 +1,7 @@
 'use client';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, ErrorTypes, HeroBackground } from '@/shared';
 import { $firm, $images, addReviewEvt } from '@/api';
-import { Footer, Nav, FormInput, FormTextArea } from '@/widgets';
+import { Footer, Nav, FormInput, FormTextArea, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useCallback, useEffect } from 'react';
@@ -53,7 +53,7 @@ export default function Page() {
     <FirmIdGateProvider firmId={firmId}>
       <Curve>
         <Nav />
-        <div className="h-[100vh] w-full flex flex-col items-center overflow-auto gap-4">
+        <Section pt={0}>
           <div className="h-screen w-full flex flex-col gap-4">
             <div className="w-full flex flex-col gap-8">
               <header>
@@ -172,7 +172,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </div>
+        </Section>
       </Curve>
     </FirmIdGateProvider>
   );

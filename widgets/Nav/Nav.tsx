@@ -6,6 +6,7 @@ import { CityDropdown } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { useCallback, useState } from 'react';
 import cn from 'classnames';
+import { COMMON_TITLE } from '@/shared';
 
 export const Nav = () => {
   const value = useUserAuth();
@@ -33,7 +34,7 @@ export const Nav = () => {
         })}
       >
         <div className="flex items-center justify-between">
-          <Link href="/">ТОП ВЫБОР</Link>
+          <Link href="/">{COMMON_TITLE.toLocaleUpperCase()}</Link>
 
           {tablet && (
             <div className="flex lg:hidden">

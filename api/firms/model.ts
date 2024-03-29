@@ -121,7 +121,6 @@ export const getFirmFx = firmD.createEffect({
       method: 'GET',
     });
     const firm = await res.json();
-    console.log('firm', firm);
     return { firm };
   },
 });

@@ -2,7 +2,7 @@
 import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
 import { Footer, Nav, Pagination, CommonHeader, Section } from '@/widgets';
 import { Curve, FirmsGateProvider, FirmsList } from '@/features';
-import { FETCH_LIMIT } from '@/shared';
+import { COMMON_TITLE, FETCH_LIMIT } from '@/shared';
 import { useUnit } from 'effector-react';
 
 export default function Page() {
@@ -17,7 +17,7 @@ export default function Page() {
       <Curve>
         <Nav />
         <Section>
-          <CommonHeader title="ТОП ВЫБОР" subTitle="Firms" />
+          <CommonHeader title={COMMON_TITLE} subTitle="Фирмы" />
           {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
 
           <div className="flex flex-col items-center gap-4 pt-4 w-full">
