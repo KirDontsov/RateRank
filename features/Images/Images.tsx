@@ -1,23 +1,36 @@
-import { $images } from '@/api';
+import { $category, $firm, $images } from '@/api';
 import { useUnit } from 'effector-react';
 import { ImagesList } from './ImagesList';
+import { SectionHeader } from '@/widgets';
+import { useMediaQuery } from '@/hooks';
+import cn from 'classnames';
 
 export const Images = () => {
-  const images = useUnit($images);
+  const { firm, category, images } = useUnit({
+    firm: $firm,
+    category: $category,
+    images: $images,
+  });
+
+  const tablet = useMediaQuery('(max-width: 768px)');
 
   return (
     <>
-      <div className="flex flex-col gap-4 w-1/2">
+      <div
+        className={cn('flex flex-col gap-4 w-1/2', {
+          'w-full': tablet,
+        })}
+      >
         {images?.length ? (
           <>
-            <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Фото</h2>
+            <SectionHeader title={`Фотографии ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
 
             <div className="w-full flex flex-col gap-4">
               <ImagesList />
             </div>
           </>
         ) : (
-          <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Нет фото</h2>
+          <SectionHeader title={`У ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name} нет фотографий`} />
         )}
       </div>
     </>
