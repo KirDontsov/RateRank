@@ -6,7 +6,7 @@ import { FOOTER_LINKS } from './constants';
 export const Footer = () => {
   return (
     <footer className="bg-white dark:bg-gray-900 w-full">
-      <div className="flex flex-col gap- pt-12 p-8">
+      <div className="container flex flex-col pt-12 p-8">
         <BreadCrumbs />
       </div>
 
