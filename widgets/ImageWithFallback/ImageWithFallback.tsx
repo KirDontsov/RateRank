@@ -3,7 +3,7 @@ import Image, { ImageProps } from 'next/image';
 import { useState } from 'react';
 
 interface ImageWithFallbackProps extends ImageProps {
-  fallbackSrc: string;
+  fallbackSrc?: string;
 }
 
 export const ImageWithFallback = (props: ImageWithFallbackProps) => {
@@ -15,7 +15,7 @@ export const ImageWithFallback = (props: ImageWithFallbackProps) => {
       {...rest}
       src={imgSrc}
       onError={() => {
-        setImgSrc(fallbackSrc);
+        if (fallbackSrc) setImgSrc(fallbackSrc);
       }}
     />
   );
