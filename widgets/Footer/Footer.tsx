@@ -1,5 +1,6 @@
 'use client';
 import { COMMON_TITLE } from '@/shared';
+
 import { BreadCrumbs } from '..';
 import { FOOTER_LINKS } from './constants';
 
@@ -19,12 +20,13 @@ export const Footer = () => {
         <div className="grid grid-cols-2 gap-6 mt-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           {Array.from(FOOTER_LINKS).map(([key, value]: [a: string, b: { title: string; href: string }[]]) => {
             return (
-              <div>
+              <div key={key}>
                 <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">{key}</h3>
 
                 <div className="flex flex-col items-start mt-4 space-y-4">
                   {value.map(({ title, href }) => (
                     <a
+                      key={title}
                       href={href}
                       rel="nofollow"
                       className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600"

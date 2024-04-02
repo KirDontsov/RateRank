@@ -8,7 +8,6 @@ export * from './CommonHeader';
 export * from './SectionHeader';
 export * from './Section';
 export * from './ImageWithFallback';
-export * from './Button';
 export * from './BreadCrumbs';
 
 export * from './formControls';
