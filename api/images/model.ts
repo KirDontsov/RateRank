@@ -78,6 +78,12 @@ sample({
 });
 
 sample({
+  clock: getImagesFx.doneData,
+  fn: (c) => false,
+  target: $imagesLoading,
+});
+
+sample({
   clock: setImagesPageEvt,
   target: $imagePage,
 });

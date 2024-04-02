@@ -9,6 +9,8 @@ import {
   $firmName,
   $oaiReviews,
   $category,
+  $imagesLoading,
+  $firmLoading,
 } from '@/api';
 import { DEFAULT_PHOTOS_EXT, DEFAULT_PHOTOS_ENDPOINT, HeroBackground, transliterate } from '@/shared';
 import { Footer, Pagination, ImageWithFallback, SectionHeader, Button, Accordion } from '@/widgets';
@@ -18,7 +20,6 @@ import { useUnit } from 'effector-react';
 import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMediaQuery } from '@/hooks';
-import Image from 'next/image';
 import cn from 'classnames';
 
 import styles from './oaiReviewStyles.module.scss';
@@ -28,16 +29,30 @@ export const FirmId = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { firm, reviewsCount, setPage, page, oaiReviews, images, city, category, firmName } = useUnit({
+  const {
+    firm,
+    reviewsCount,
+    setPage,
+    page,
+    oaiReviews,
+    images,
+    imagesLoading,
+    city,
+    category,
+    firmName,
+    firmLoading,
+  } = useUnit({
     firm: $firm,
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
     oaiReviews: $oaiReviews,
     images: $images,
+    imagesLoading: $imagesLoading,
     city: $city,
     category: $category,
     firmName: $firmName,
+    firmLoading: $firmLoading,
   });
 
   const handleAddReview = useCallback(() => {
@@ -56,15 +71,20 @@ export const FirmId = () => {
 
   const tablet = useMediaQuery('(max-width: 768px)');
 
+  if (firmLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="h-screen w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-8">
         <header>
           <div className="w-full bg-center bg-cover h-[38rem] relative">
-            {!!images?.length && (
-              <Image
+            {!imagesLoading && !!images?.length && (
+              <ImageWithFallback
                 className="w-full h-[38rem] absolute z-[-1]"
                 src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                 fill
                 alt={firm?.name || ''}
                 style={{ objectFit: 'cover' }}
