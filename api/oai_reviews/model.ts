@@ -1,9 +1,9 @@
 import { createGate } from 'effector-react';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, PaginationOptions } from '@/shared';
+import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
-export const OaiReviewsGate = createGate<{ firmId: string }>('OaiReviewsGate');
+export const OaiReviewsGate = createGate<FirmId>('OaiReviewsGate');
 export const oaiReviewsD = createDomain('reviews');
 
 export interface OaiReviewOptions {
@@ -26,7 +26,7 @@ export interface OaiReviewsQueryResult {
 export const $oaiReviews = oaiReviewsD.createStore<OaiReview[]>([]);
 export const $oaiReviewsPage = oaiReviewsD.createStore<number>(1);
 export const $oaiReviewsCount = oaiReviewsD.createStore<number | null>(null);
-export const fetchOaiReviewsEvt = oaiReviewsD.createEvent<{ firmId: string }>();
+export const fetchOaiReviewsEvt = oaiReviewsD.createEvent<FirmId>();
 export const setOaiReviewsPageEvt = oaiReviewsD.createEvent<number>();
 
 export const getOaiReviewsFx = oaiReviewsD.createEffect({

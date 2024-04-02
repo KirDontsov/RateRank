@@ -1,17 +1,17 @@
 'use client';
-import { Fragment, useMemo, useState } from 'react';
+import { FC, Fragment, useMemo, useState } from 'react';
 import { useUnit } from 'effector-react';
-import { $category, $firm } from '@/api';
+import { $category, $firm, Category, ExtFirmWithOaiDescription } from '@/api';
 import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
 
-export const Accordion = () => {
-  const [open, setOpen] = useState<number | null>(null);
+export interface AccordionProps {
+  firm: ExtFirmWithOaiDescription | null;
+  category: Category | null;
+}
 
-  const { firm, category } = useUnit({
-    firm: $firm,
-    category: $category,
-  });
+export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
+  const [open, setOpen] = useState<number | null>(null);
 
   const items = useMemo(() => {
     const items = [

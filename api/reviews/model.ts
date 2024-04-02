@@ -1,9 +1,9 @@
 import { createGate } from 'effector-react';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, PaginationOptions } from '@/shared';
+import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
-export const ReviewsGate = createGate<{ firmId: string }>('ReviewsGate');
+export const ReviewsGate = createGate<FirmId>('ReviewsGate');
 export const ReviewsPageGate = createGate<number>('ReviewsPageGate');
 export const reviewsD = createDomain('reviews');
 
@@ -38,7 +38,7 @@ export interface ReviewsQueryResult {
 export const $reviews = reviewsD.createStore<Review[]>([]);
 export const $reviewsPage = reviewsD.createStore<number>(1);
 export const $reviewsCount = reviewsD.createStore<number | null>(null);
-export const fetchReviewsEvt = reviewsD.createEvent<{ firmId: string }>();
+export const fetchReviewsEvt = reviewsD.createEvent<FirmId>();
 export const setReviewsPageEvt = reviewsD.createEvent<number>();
 export const addReviewEvt = reviewsD.createEvent<AddReview>();
 
@@ -63,7 +63,7 @@ sample({
   clock: ReviewsGate.open,
   source: [$reviews, $reviewsPage],
   // @ts-ignore
-  filter: ([s]) => !s?.length,
+  filter: ([s], c) => !s?.length && !!c?.firmId,
   fn: ([_, reviewsPage], c) => {
     return { firmId: c?.firmId, page: reviewsPage || 1, limit: 10 };
   },

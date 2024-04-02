@@ -1,9 +1,9 @@
 import { createGate } from 'effector-react';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, PaginationOptions } from '@/shared';
+import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
 import { $firm } from '..';
 
-export const PricesGate = createGate<{ firmId: string }>('PricesGate');
+export const PricesGate = createGate<FirmId>('PricesGate');
 export const pricesD = createDomain('reviews');
 
 export interface PricesOptions {
@@ -37,7 +37,7 @@ export const $pricesItems = pricesD.createStore<PriceItem[]>([]);
 export const $pricesCategories = pricesD.createStore<PriceCategory[]>([]);
 export const $pricesPage = pricesD.createStore<number>(1);
 export const $pricesCount = pricesD.createStore<number | null>(null);
-export const fetchPricesEvt = pricesD.createEvent<{ firmId: string }>();
+export const fetchPricesEvt = pricesD.createEvent<FirmId>();
 export const setPricesPageEvt = pricesD.createEvent<number>();
 
 export const getPricesFx = pricesD.createEffect({

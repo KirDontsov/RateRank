@@ -3,7 +3,6 @@ export * from './cities';
 export * from './categories';
 export * from './firms';
 export * from './types';
-export * from './shared';
 export * from './reviews';
 export * from './oai_reviews';
 export * from './images';

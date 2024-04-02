@@ -1,12 +1,18 @@
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmIdPage } from './FirmIdPage';
 import { CategoryQueryResult, FirmQueryResult } from '@/api';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 
 type Props = {
   params: { cityId: string; categoryId: string; firmId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export interface CityPageProps {
+  params: {
+    cityId: string;
+  };
+}
 
 export async function generateMetadata({ searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
@@ -14,7 +20,7 @@ export async function generateMetadata({ searchParams }: Props, parent: Resolvin
   const firmId = searchParams?.firmId ?? '';
   const categoryId = searchParams?.categoryId ?? '';
 
-  const category: CategoryQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/category/${categoryId}`, {
+  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })
@@ -25,7 +31,7 @@ export async function generateMetadata({ searchParams }: Props, parent: Resolvin
 
   const categoryName = category?.data?.category?.name ?? '';
 
-  const firm: FirmQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/firm/${firmId}`, {
+  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm/${firmId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })
@@ -43,6 +49,8 @@ export async function generateMetadata({ searchParams }: Props, parent: Resolvin
 }
 
 /** Страница фирмы с отзывами */
-export default function Page() {
-  return <FirmIdPage />;
+export default function Page({ params }: CityPageProps) {
+  const cityId = params.cityId ?? '';
+
+  return <FirmIdPage cityId={cityId} />;
 }
