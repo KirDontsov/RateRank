@@ -14,15 +14,17 @@ import {
   $category,
 } from '@/api';
 import { DEFAULT_PHOTOS_EXT, DEFAULT_PHOTOS_ENDPOINT, HeroBackground, transliterate } from '@/shared';
-import { Footer, Pagination, Button, ImageWithFallback, SectionHeader } from '@/widgets';
+import { Footer, Pagination, ImageWithFallback, SectionHeader } from '@/widgets';
 import { Images, Prices, ReviewsGateProvider, ReviewsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useGate, useUnit } from 'effector-react';
-import styles from './oaiReviewStyles.module.scss';
 import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMediaQuery } from '@/hooks';
+import { Accordion, Button } from '@/shared/components';
 import cn from 'classnames';
+
+import styles from './oaiReviewStyles.module.scss';
 
 export const FirmId = () => {
   const router = useRouter();
@@ -85,16 +87,14 @@ export const FirmId = () => {
               <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                 <div className="text-center">
                   <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${category?.name?.slice(0, -1)} ${firm?.name}`}</h1>
-                  <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    Позвонить
-                  </button>
+                  <Button onClick={() => {}}>Позвонить</Button>
                 </div>
               </div>
             </div>
           </header>
 
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px]">
-            <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-900">
+            <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
               <div
                 className={cn('w-full flex gap-8', {
                   'flex-col flex-col-reverse': tablet,
@@ -107,11 +107,68 @@ export const FirmId = () => {
                   })}
                 >
                   <SectionHeader title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
-                  <div>{firm?.address}</div>
-                  <a href={`tel:${firm?.default_phone}`} className="dark:text-blue-400 text-blue-400">
-                    {firm?.default_phone}
-                  </a>
-                  <div>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</div>
+                  <div className="flex flex-col gap-4">
+                    <p className="flex gap-2 text-gray-500">
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Адрес:
+                    </p>
+                    <p>{firm?.address}</p>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <p className="flex items-center gap-2 text-gray-500">
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M7.978 4a2.553 2.553 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572 1.68 1.679 3.577 3.018 5.57 3.459 2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.689 2.689 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.692 2.692 0 0 0 0-3.803l-1.21-1.211A2.555 2.555 0 0 0 7.978 4Z" />
+                      </svg>
+                      Телефон:
+                    </p>
+                    <a href={`tel:${firm?.default_phone}`} className="dark:text-blue-400 text-blue-400">
+                      {firm?.default_phone}
+                    </a>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <p className="flex items-center gap-2 text-gray-500">
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-width="2"
+                          d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                      Сайт:
+                    </p>
+                    <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
+                  </div>
                   <SectionHeader title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
                   <div className={`${styles.myCustomStyle} list-disc`}>
                     {!firm?.oai_description_value || firm?.oai_description_value === ''
@@ -119,12 +176,18 @@ export const FirmId = () => {
                       : firm?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')}
                   </div>
                   <Prices />
+                  <div className="flex flex-col gap-4 my-4">
+                    <SectionHeader
+                      title={`Часто задаваемые вопросы о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
+                    />
+                    <Accordion />
+                  </div>
                 </div>
               </div>
             </div>
             {oaiReviews.length ? (
               <>
-                <div className="container my-4 px-8">
+                <div className="container my-4 px-8 lg:px-0">
                   <SectionHeader
                     title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                     subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
@@ -139,7 +202,7 @@ export const FirmId = () => {
             )}
             {reviewsCount ? (
               <>
-                <div className="container flex items-center justify-between my-4 px-8">
+                <div className="container flex items-center justify-between my-4 px-8 lg:px-0">
                   <SectionHeader
                     title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                   />
@@ -158,7 +221,7 @@ export const FirmId = () => {
             )}
           </div>
           <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
-            {(reviewsCount ?? 1) > 10 && (
+            {(reviewsCount ?? 1) > 11 && (
               <Pagination
                 current={Number(searchParams.get('reviewsPage')) || page}
                 onChange={handleChangePage}

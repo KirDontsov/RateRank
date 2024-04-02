@@ -1,9 +1,9 @@
 'use client';
 import React, { FC, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useUnit } from 'effector-react';
 import { usePathname } from 'next/navigation';
 import { $category, $city, $firm } from '@/api';
-import { useUnit } from 'effector-react';
+import Link from 'next/link';
 
 /**
  * Takes an URL String and removes query params and hash params
@@ -81,7 +81,7 @@ export interface BreadcrumbsProps {
 }
 
 export const BreadCrumbs: FC<BreadcrumbsProps> = ({
-  rootLabel = 'Главная',
+  rootLabel = 'Топ выбор',
   omitRootLabel = false,
   labelsToUppercase = false,
   replaceCharacterList = [
@@ -94,8 +94,6 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
 }) => {
   const router = usePathname();
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null);
-
-  console.log('breadcrumbs', breadcrumbs);
 
   const { firm, city, category } = useUnit({
     firm: $firm,
@@ -155,7 +153,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
               >
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
               </svg>
-              {convertBreadcrumb(rootLabel || 'Главная', labelsToUppercase, replaceCharacterList)}
+              {convertBreadcrumb(rootLabel || 'Топ выбор', labelsToUppercase, replaceCharacterList)}
             </Link>
           </li>
         )}

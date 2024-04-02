@@ -4,7 +4,7 @@ import { Footer, Nav, Pagination, CommonHeader, Section } from '@/widgets';
 import { CategoryIdGateProvider, Curve, FirmsGateProvider, FirmsList } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { useUnit } from 'effector-react';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const FirmsPage = () => {
