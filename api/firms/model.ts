@@ -103,6 +103,7 @@ sample({
 export const firmD = createDomain('firm');
 
 export const $firm = firmD.createStore<ExtFirmWithOaiDescription | null>(null);
+export const $firmLoading = firmD.createStore(false);
 persist({
   store: $firm,
   key: 'firm',
@@ -133,9 +134,21 @@ sample({
 });
 
 sample({
+  clock: getFirmFx.pending,
+  fn: (c) => true,
+  target: $firmLoading,
+});
+
+sample({
   clock: getFirmFx.doneData,
   fn: (c) => c.firm.data.firm || null,
   target: $firm,
+});
+
+sample({
+  clock: getFirmFx.doneData,
+  fn: (c) => false,
+  target: $firmLoading,
 });
 
 sample({
