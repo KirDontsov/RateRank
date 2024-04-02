@@ -8,12 +8,18 @@ interface ImageWithFallbackProps extends ImageProps {
 
 export const ImageWithFallback = (props: ImageWithFallbackProps) => {
   const { src, fallbackSrc, ...rest } = props;
-  const [imgSrc, setImgSrc] = useState(src);
+  const [imgSrc, setImgSrc] = useState(() => src);
 
   return (
     <Image
       {...rest}
       src={imgSrc}
+      onLoadingComplete={(result) => {
+        if (result.naturalWidth === 0) {
+          // Broken image
+          if (fallbackSrc) setImgSrc(fallbackSrc);
+        }
+      }}
       onError={() => {
         if (fallbackSrc) setImgSrc(fallbackSrc);
       }}

@@ -1,21 +1,22 @@
 'use client';
-import { $firm, ReviewsGate, ReviewsPageGate } from '@/api';
+import { $firm, OaiReviewsGate, ReviewsGate, ReviewsPageGate } from '@/api';
 import { CommonProps } from '@/shared';
 import { useGate, useUnit } from 'effector-react';
-import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
 
-export const ReviewsGateProvider: FC<CommonProps> = ({ children }) => {
-  const searchParams = useSearchParams();
+export interface ReviewsGateProviderProps {
+  firmId: string;
+  reviewsPage: number;
+}
 
+export const ReviewsGateProvider: FC<ReviewsGateProviderProps & CommonProps> = ({ children, firmId, reviewsPage }) => {
   const { firm } = useUnit({
     firm: $firm,
   });
 
-  const firmId = firm?.firm_id ?? '';
-
-  useGate(ReviewsPageGate, Number(searchParams.get('reviewsPage')) || 1);
-  useGate(ReviewsGate, { firmId });
+  useGate(ReviewsGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(ReviewsPageGate, reviewsPage);
+  useGate(OaiReviewsGate, { firmId: firmId ?? firm?.firm_id });
 
   return <>{children}</>;
 };

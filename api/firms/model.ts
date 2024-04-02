@@ -1,4 +1,4 @@
-import { BACKEND_PORT, PaginationOptions, transliterate } from '@/shared';
+import { BACKEND_PORT, FirmId, PaginationOptions, transliterate } from '@/shared';
 import { $city, getCitiesFx } from '../cities';
 import { $category, getCategoriesFx } from '../categories';
 import { getTypesFx } from '../types';
@@ -101,10 +101,6 @@ sample({
 // === FIRM ===
 
 export const firmD = createDomain('firm');
-
-export interface FirmId {
-  firmId: string;
-}
 
 export const $firm = firmD.createStore<ExtFirmWithOaiDescription | null>(null);
 persist({

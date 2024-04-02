@@ -2,7 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next/types';
 
 import { CategoriesQueryResult, CategoryQueryResult } from '@/api';
 import { FirmsPage } from './FirmsPage';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 
 export interface CategoryPageProps {
   params: { categoryId: string };
@@ -21,7 +21,7 @@ export async function generateMetadata(
   const cityName = prevPage?.other?.city;
   const categoryId = searchParams.categoryId;
 
-  const category: CategoryQueryResult = await fetch(`https://xn--90ab9accji9e.xn--p1ai/api/category/${categoryId}`, {
+  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })

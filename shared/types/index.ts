@@ -16,3 +16,7 @@ export interface PaginationOptions {
   page: number;
   limit: number;
 }
+
+export interface FirmId {
+  firmId: string;
+}

@@ -1,7 +1,7 @@
 import { $category, $city, $firm, $images } from '@/api';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
-import { ImageWithFallback } from '@/widgets';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
 import { useList, useUnit } from 'effector-react';
+import Image from 'next/image';
 
 export const ImagesList = () => {
   const { firm, city, category } = useUnit({
@@ -12,9 +12,8 @@ export const ImagesList = () => {
 
   return useList($images, (img) => (
     <div key={img?.img_id} className="aspect-video relative">
-      <ImageWithFallback
+      <Image
         src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
-        fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
         fill
         alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
         style={{ objectFit: 'cover' }}

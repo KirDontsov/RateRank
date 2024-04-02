@@ -1,13 +1,13 @@
-import { BACKEND_PORT } from '@/shared';
+import { BACKEND_PORT, FirmId } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 
-export const ImagesGate = createGate<{ firmId: string }>('ImagesGate');
+export const ImagesGate = createGate<FirmId>('ImagesGate');
 export const ImageGate = createGate<{ imageId: string }>('ImageGate');
 
 export const imagesD = createDomain('images');
 
-export interface Image {
+export interface ImageType {
   img_id: string;
   firm_id: string;
   img_alt: string;
@@ -16,7 +16,7 @@ export interface Image {
 export interface ImagesQueryResult {
   status: string;
   data: {
-    images: Image[];
+    images: ImageType[];
     images_count: number;
   };
 }
@@ -24,19 +24,19 @@ export interface ImagesQueryResult {
 export interface ImageQueryResult {
   status: string;
   data: {
-    image: Image;
+    image: ImageType;
   };
 }
 
-export const $images = imagesD.createStore<Image[]>([]);
+export const $images = imagesD.createStore<ImageType[]>([]);
 export const $imagePage = imagesD.createStore<number>(1);
 export const $imagesLoading = imagesD.createStore(false);
 export const $imagesCount = imagesD.createStore<number | null>(null);
-export const fetchImages = imagesD.createEvent<{ firmId: string }>();
+export const fetchImages = imagesD.createEvent<FirmId>();
 export const setImagesPageEvt = imagesD.createEvent<number>();
 
 export const getImagesFx = imagesD.createEffect({
-  handler: async ({ firmId }: { firmId: string }): Promise<{ images: ImagesQueryResult }> => {
+  handler: async ({ firmId }: FirmId): Promise<{ images: ImagesQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/images/${firmId}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
@@ -86,7 +86,7 @@ sample({
 
 export const imageD = createDomain('image');
 
-export const $image = imageD.createStore<Image | null>(null);
+export const $image = imageD.createStore<ImageType | null>(null);
 export const fetchImageEvt = imageD.createEvent<{ imageId: string }>();
 
 export const getImageFx = imageD.createEffect({
