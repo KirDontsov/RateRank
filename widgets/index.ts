@@ -9,5 +9,7 @@ export * from './SectionHeader';
 export * from './Section';
 export * from './ImageWithFallback';
 export * from './BreadCrumbs';
+export * from './Accordion';
+export * from './Button';
 
 export * from './formControls';

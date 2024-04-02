@@ -1,3 +1,4 @@
+'use client';
 import { Fragment, useMemo, useState } from 'react';
 import { useUnit } from 'effector-react';
 import { $category, $firm } from '@/api';
@@ -51,7 +52,7 @@ export const Accordion = () => {
             <button
               onClick={() => setOpen(index !== open ? index : null)}
               type="button"
-              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-white gap-3 hover:text-blue-400"
+              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-white gap-3 hover:text-blue-400 cursor-pointer"
             >
               <span className="flex items-center justify-between gap-3">
                 <svg
@@ -64,9 +65,9 @@ export const Accordion = () => {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.008-3.018a1.502 1.502 0 0 1 2.522 1.159v.024a1.44 1.44 0 0 1-1.493 1.418 1 1 0 0 0-1.037.999V14a1 1 0 1 0 2 0v-.539a3.44 3.44 0 0 0 2.529-3.256 3.502 3.502 0 0 0-7-.255 1 1 0 0 0 2 .076c.014-.398.187-.774.48-1.044Zm.982 7.026a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2h-.01Z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
                 {title}
