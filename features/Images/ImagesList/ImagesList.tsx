@@ -11,11 +11,7 @@ export const ImagesList = () => {
     imagesLoading: $imagesLoading,
   });
 
-  if (imagesLoading) {
-    return <div>Loading...</div>;
-  }
-
-  return useList($images, (img) => (
+  const list = useList($images, (img) => (
     <div key={img?.img_id} className="aspect-video relative">
       <ImageWithFallback
         src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
@@ -26,4 +22,10 @@ export const ImagesList = () => {
       />
     </div>
   ));
+
+  if (imagesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return list;
 };
