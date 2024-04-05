@@ -1,9 +1,8 @@
-'use client';
-import React, { FC, useLayoutEffect, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
-import { text, curve, translate } from './anim';
-import styles from './curve.module.scss';
 import { COMMON_TITLE, CommonProps } from '@/shared';
+import { Variants, motion } from 'framer-motion';
+import React, { FC, useLayoutEffect, useState } from 'react';
+import { curve, text, translate } from './anim';
+import styles from './curve.module.scss';
 
 export interface WindowDimensions {
   width: number | null;
@@ -17,6 +16,30 @@ const anim = (variants: Variants) => {
     animate: 'enter',
     exit: 'exit',
   };
+};
+
+const SVG = ({ height, width }: { height: number; width: number }) => {
+  const initialPath = `
+        M0 300
+        Q${width / 2} 0 ${width} 300
+        L${width} ${height + 300}
+        Q${width / 2} ${height + 600} 0 ${height + 300}
+        L0 0
+    `;
+
+  const targetPath = `
+        M0 300
+        Q${width / 2} 0 ${width} 300
+        L${width} ${height}
+        Q${width / 2} ${height} 0 ${height}
+        L0 0
+    `;
+
+  return (
+    <motion.svg className={styles.slide} {...anim(translate)}>
+      <motion.path {...anim(curve(initialPath, targetPath))} />
+    </motion.svg>
+  );
 };
 
 export const Curve: FC<CommonProps> = ({ children }) => {
@@ -51,29 +74,5 @@ export const Curve: FC<CommonProps> = ({ children }) => {
       )}
       {children}
     </div>
-  );
-};
-
-const SVG = ({ height, width }: { height: number; width: number }) => {
-  const initialPath = `
-        M0 300 
-        Q${width / 2} 0 ${width} 300
-        L${width} ${height + 300}
-        Q${width / 2} ${height + 600} 0 ${height + 300}
-        L0 0
-    `;
-
-  const targetPath = `
-        M0 300
-        Q${width / 2} 0 ${width} 300
-        L${width} ${height}
-        Q${width / 2} ${height} 0 ${height}
-        L0 0
-    `;
-
-  return (
-    <motion.svg className={styles.slide} {...anim(translate)}>
-      <motion.path {...anim(curve(initialPath, targetPath))} />
-    </motion.svg>
   );
 };

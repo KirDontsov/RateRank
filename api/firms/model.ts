@@ -1,10 +1,10 @@
 import { BACKEND_PORT, FirmId, PaginationOptions, transliterate } from '@/shared';
-import { $city, getCitiesFx } from '../cities';
-import { $category, getCategoriesFx } from '../categories';
-import { getTypesFx } from '../types';
 import { createDomain, sample } from 'effector';
-import { createGate } from 'effector-react';
 import persist from 'effector-localstorage';
+import { createGate } from 'effector-react';
+import { $category, getCategoriesFx } from '../categories';
+import { $city, getCitiesFx } from '../cities';
+import { getTypesFx } from '../types';
 
 export const FirmsGate = createGate('FirmsGate');
 export const FirmsPageGate = createGate<number>('FirmsPageGate');
@@ -48,6 +48,10 @@ export interface FirmParamsWithPage extends FirmsParams {
 }
 
 export const $firms = firmsD.createStore<ExtFirmWithOaiDescription[]>([]);
+persist({
+  store: $firms,
+  key: 'firms',
+});
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
 export const fetchFirms = firmsD.createEvent<FirmId>();
@@ -110,6 +114,7 @@ persist({
 });
 export const $firmName = firmD.createStore<string | null>(null);
 export const setFirmEvt = firmD.createEvent<FirmId>();
+export const setFirmLoadingEvt = firmD.createEvent<boolean>();
 
 export const getFirmFx = firmD.createEffect({
   handler: async ({ firmId }: FirmId): Promise<{ firm: FirmQueryResult }> => {
@@ -140,6 +145,12 @@ sample({
 });
 
 sample({
+  clock: setFirmLoadingEvt,
+  fn: () => true,
+  target: $firmLoading,
+});
+
+sample({
   clock: getFirmFx.doneData,
   fn: (c) => c.firm.data.firm || null,
   target: $firm,
@@ -147,7 +158,7 @@ sample({
 
 sample({
   clock: getFirmFx.doneData,
-  fn: (c) => false,
+  fn: () => false,
   target: $firmLoading,
 });
 

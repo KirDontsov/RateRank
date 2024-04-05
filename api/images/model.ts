@@ -1,6 +1,7 @@
 import { BACKEND_PORT, FirmId } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
+import { $firms } from '..';
 
 export const ImagesGate = createGate<FirmId>('ImagesGate');
 export const ImageGate = createGate<{ imageId: string }>('ImageGate');
@@ -126,3 +127,51 @@ sample({
 //   fn: (firm, page) => ({ firmId: firm?.firm_id ?? '', page, limit: 10 }),
 //   target: getImages,
 // });
+
+export const SimilarImagesGate = createGate<FirmId[]>('SimilarImagesGate');
+export const $similarFirmsImages = imagesD.createStore<ImagesQueryResult[]>([]);
+export const $similarFirmsImagesLoading = imagesD.createStore(false);
+
+export const getSimilarImagesFx = imagesD.createEffect({
+  handler: async (firmIds: string[]): Promise<{ similarImages: ImagesQueryResult[] }> => {
+    const requests: Promise<ImagesQueryResult>[] = [];
+
+    firmIds.forEach((id: string) => {
+      requests.push(
+        fetch(`${BACKEND_PORT}/api/images/${id}`, {
+          headers: { 'Content-Type': 'application/json' },
+          method: 'GET',
+        }).then((res) => res.json()),
+      );
+    });
+
+    const similarImages = await Promise.all(requests);
+
+    return { similarImages };
+  },
+});
+
+sample({
+  clock: SimilarImagesGate.open,
+  source: $firms,
+  fn: (s) => s?.map((firm) => firm?.firm_id),
+  target: getSimilarImagesFx,
+});
+
+sample({
+  clock: getSimilarImagesFx.doneData,
+  fn: (c) => c?.similarImages,
+  target: $similarFirmsImages,
+});
+
+sample({
+  clock: getSimilarImagesFx.pending,
+  fn: () => true,
+  target: $similarFirmsImagesLoading,
+});
+
+sample({
+  clock: getSimilarImagesFx.doneData,
+  fn: () => false,
+  target: $similarFirmsImagesLoading,
+});
