@@ -1,26 +1,25 @@
 'use client';
 import {
-  $firm,
-  $reviewsPage,
-  $reviewsCount,
-  setReviewsPageEvt,
-  $images,
-  $city,
-  $firmName,
-  $oaiReviews,
   $category,
-  $imagesLoading,
+  $city,
+  $firm,
   $firmLoading,
+  $firmName,
+  $images,
+  $imagesLoading,
+  $oaiReviews,
+  $reviewsCount,
+  $reviewsPage,
+  setReviewsPageEvt,
 } from '@/api';
-import { DEFAULT_PHOTOS_EXT, DEFAULT_PHOTOS_ENDPOINT, HeroBackground, transliterate } from '@/shared';
-import { Footer, Pagination, ImageWithFallback, SectionHeader, Button, Accordion } from '@/widgets';
-import { Images, Prices, ReviewsList } from '@/features';
-import { FETCH_LIMIT } from '@/shared';
-import { useUnit } from 'effector-react';
-import { useCallback } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
+import { Accordion, Button, Footer, ImageWithFallback, Pagination, SectionHeader } from '@/widgets';
 import cn from 'classnames';
+import { useUnit } from 'effector-react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
 
 import styles from './oaiReviewStyles.module.scss';
 
@@ -71,10 +70,6 @@ export const FirmId = () => {
 
   const tablet = useMediaQuery('(max-width: 768px)');
 
-  if (firmLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="h-screen w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-8">
@@ -86,7 +81,7 @@ export const FirmId = () => {
                 src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                 fill
-                alt={firm?.name || ''}
+                alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
                 style={{ objectFit: 'cover' }}
                 placeholder="blur"
                 blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -156,28 +151,31 @@ export const FirmId = () => {
                     {firm?.default_phone}
                   </a>
                 </div>
-                <div className="flex flex-col gap-4">
-                  <p className="flex items-center gap-2 text-gray-500">
-                    <svg
-                      className="w-6 h-6 text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeWidth="2"
-                        d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    Сайт:
-                  </p>
-                  <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
-                </div>
+                {firm?.site !== '' && firm?.site?.indexOf('WhatsApp') === -1 && (
+                  <div className="flex flex-col gap-4">
+                    <p className="flex items-center gap-2 text-gray-500">
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                          d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                      Сайт:
+                    </p>
+                    <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
+                  </div>
+                )}
+
                 <SectionHeader title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
                 <div className={`${styles.myCustomStyle} list-disc`}>
                   {!firm?.oai_description_value || firm?.oai_description_value === ''
@@ -240,6 +238,7 @@ export const FirmId = () => {
               total={Math.ceil(((reviewsCount ?? 0) - 1) / FETCH_LIMIT)}
             />
           )}
+          <SimilarFirms />
           <Footer />
         </div>
       </div>
