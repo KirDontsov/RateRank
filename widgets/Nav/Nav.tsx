@@ -1,12 +1,12 @@
 'use client';
-import { useCallback, useState } from 'react';
-import { useUnit } from 'effector-react';
 import { $loading, useUserAuth } from '@/context';
 import { CityDropdown } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { COMMON_TITLE } from '@/shared';
-import Link from 'next/link';
 import cn from 'classnames';
+import { useUnit } from 'effector-react';
+import Link from 'next/link';
+import { useCallback, useState } from 'react';
 
 export const Nav = () => {
   const value = useUserAuth();
@@ -120,12 +120,12 @@ export const Nav = () => {
                 </Link>
               )}
 
-              <Link
+              {/* <Link
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
                 href="/dashboard"
               >
                 Dashboard
-              </Link>
+              </Link> */}
             </div>
           </div>
         )}

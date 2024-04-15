@@ -1,9 +1,9 @@
 'use client';
-import React, { FC, useEffect, useState } from 'react';
-import { useUnit } from 'effector-react';
-import { usePathname } from 'next/navigation';
 import { $category, $city, $firm } from '@/api';
+import { useUnit } from 'effector-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { FC, ReactNode, useEffect, useState } from 'react';
 
 /**
  * Takes an URL String and removes query params and hash params
@@ -28,7 +28,7 @@ const convertBreadcrumb = (
   title: string,
   toUpperCase: boolean | undefined,
   replaceCharacterList: Array<CharacterMap> | undefined,
-): React.ReactNode => {
+): ReactNode => {
   let transformedTitle = getPathFromUrl(title);
 
   if (replaceCharacterList) {

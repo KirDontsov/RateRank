@@ -1,6 +1,6 @@
 import type { CommonProps } from '@/shared/types';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { Inter } from 'next/font/google';
+// import { Inter } from 'next/font/google';
 import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
