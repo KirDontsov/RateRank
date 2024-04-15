@@ -15,7 +15,7 @@ import {
 import { Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
-import { Accordion, Button, Footer, ImageWithFallback, Pagination, SectionHeader } from '@/widgets';
+import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, SectionHeader } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -110,7 +110,11 @@ export const FirmId = () => {
                   'w-full': tablet,
                 })}
               >
-                <SectionHeader title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
+                <Anchors />
+                <SectionHeader
+                  id="contacts"
+                  title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
+                />
                 <div className="flex flex-col gap-4">
                   <p className="flex gap-2 text-gray-500">
                     <svg
@@ -176,7 +180,10 @@ export const FirmId = () => {
                   </div>
                 )}
 
-                <SectionHeader title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
+                <SectionHeader
+                  id="description"
+                  title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
+                />
                 <div className={`${styles.myCustomStyle} list-disc`}>
                   {!firm?.oai_description_value || firm?.oai_description_value === ''
                     ? firm?.description
@@ -188,6 +195,7 @@ export const FirmId = () => {
                 <Prices />
                 <div className="flex flex-col gap-4 my-4">
                   <SectionHeader
+                    id="faq"
                     title={`Часто задаваемые вопросы о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                   />
                   <Accordion firm={firm} category={category} />
@@ -199,6 +207,7 @@ export const FirmId = () => {
             <>
               <div className="container my-4 px-8 lg:px-0">
                 <SectionHeader
+                  {...(oaiReviews.length ? { id: 'reviews' } : {})}
                   title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                   subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                 />
@@ -214,6 +223,7 @@ export const FirmId = () => {
             <>
               <div className="container flex items-center justify-between my-4 px-8 lg:px-0">
                 <SectionHeader
+                  {...(reviewsCount && !oaiReviews.length ? { id: 'reviews' } : {})}
                   title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
                 />
                 <Button onClick={handleAddReview}>Написать отзыв</Button>
@@ -238,6 +248,9 @@ export const FirmId = () => {
               total={Math.ceil(((reviewsCount ?? 0) - 1) / FETCH_LIMIT)}
             />
           )}
+          <div className="container mt-8">
+            <SectionHeader title={`Похожие ${category?.name}:`} />
+          </div>
           <SimilarFirms />
           <Footer />
         </div>

@@ -1,8 +1,8 @@
 import { $category, $firm, $pricesCategories, $pricesItems } from '@/api';
+import { SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import groupBy from 'lodash/groupBy';
 import styles from './prices.module.scss';
-import { SectionHeader } from '@/widgets';
 
 export const Prices = () => {
   const { firm, category, pricesItems, pricesCategories } = useUnit({
@@ -18,7 +18,7 @@ export const Prices = () => {
   }
   return (
     <>
-      <SectionHeader title={`Цены ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
+      <SectionHeader id="prices" title={`Цены ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
       <div className={`${styles.myCustomStyle} list-disc`}>
         {Object.entries(itemsByCategories)?.map(([category, items]) => (
           <div key={category}>
