@@ -1,12 +1,11 @@
 'use client';
-import { FC, Fragment, useMemo, useState } from 'react';
-import { useUnit } from 'effector-react';
-import { $category, $firm, Category, ExtFirmWithOaiDescription } from '@/api';
+import { Category, Firm } from '@/api';
 import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
+import { FC, Fragment, useMemo, useState } from 'react';
 
 export interface AccordionProps {
-  firm: ExtFirmWithOaiDescription | null;
+  firm: Firm | null;
   category: Category | null;
 }
 

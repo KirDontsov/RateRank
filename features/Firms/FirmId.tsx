@@ -7,6 +7,7 @@ import {
   $firmName,
   $images,
   $imagesLoading,
+  $oaiDescription,
   $oaiReviews,
   $reviewsCount,
   $reviewsPage,
@@ -34,6 +35,7 @@ export const FirmId = () => {
     setPage,
     page,
     oaiReviews,
+    oaiDescription,
     images,
     imagesLoading,
     city,
@@ -46,6 +48,7 @@ export const FirmId = () => {
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
     oaiReviews: $oaiReviews,
+    oaiDescription: $oaiDescription,
     images: $images,
     imagesLoading: $imagesLoading,
     city: $city,
@@ -180,18 +183,22 @@ export const FirmId = () => {
                   </div>
                 )}
 
-                <SectionHeader
-                  id="description"
-                  title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
-                />
-                <div className={`${styles.myCustomStyle} list-disc`}>
-                  {!firm?.oai_description_value || firm?.oai_description_value === ''
-                    ? firm?.description
-                    : firm?.oai_description_value
-                        ?.replaceAll('*', '')
-                        ?.replaceAll('#', '')
-                        ?.replaceAll(',,,', ', доб. ')}
-                </div>
+                {(firm?.description || oaiDescription?.oai_description_value) && (
+                  <>
+                    <SectionHeader
+                      id="description"
+                      title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
+                    />
+                    <div className={`${styles.myCustomStyle} list-disc`}>
+                      {!oaiDescription?.oai_description_value || oaiDescription?.oai_description_value === ''
+                        ? firm?.description
+                        : oaiDescription?.oai_description_value
+                            ?.replaceAll('*', '')
+                            ?.replaceAll('#', '')
+                            ?.replaceAll(',,,', ', доб. ')}
+                    </div>
+                  </>
+                )}
                 <Prices />
                 <div className="flex flex-col gap-4 my-4">
                   <SectionHeader

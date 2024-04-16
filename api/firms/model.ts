@@ -12,13 +12,12 @@ export const FirmGate = createGate<FirmId>('FirmGate');
 
 export const firmsD = createDomain('firms');
 
-export interface ExtFirmWithOaiDescription {
+export interface Firm {
   firm_id: string;
   name: string;
   address: string;
   site: string;
   default_phone: string;
-  oai_description_value: string;
   description: string;
   category_id: string;
 }
@@ -26,7 +25,7 @@ export interface ExtFirmWithOaiDescription {
 export interface FirmsQueryResult {
   status: string;
   data: {
-    firms: ExtFirmWithOaiDescription[];
+    firms: Firm[];
     firms_count: number;
   };
 }
@@ -34,7 +33,7 @@ export interface FirmsQueryResult {
 export interface FirmQueryResult {
   status: string;
   data: {
-    firm: ExtFirmWithOaiDescription;
+    firm: Firm;
   };
 }
 
@@ -47,7 +46,7 @@ export interface FirmParamsWithPage extends FirmsParams {
   page: number;
 }
 
-export const $firms = firmsD.createStore<ExtFirmWithOaiDescription[]>([]);
+export const $firms = firmsD.createStore<Firm[]>([]);
 persist({
   store: $firms,
   key: 'firms',
@@ -106,7 +105,7 @@ sample({
 
 export const firmD = createDomain('firm');
 
-export const $firm = firmD.createStore<ExtFirmWithOaiDescription | null>(null);
+export const $firm = firmD.createStore<Firm | null>(null);
 export const $firmLoading = firmD.createStore(false);
 persist({
   store: $firm,

@@ -44,12 +44,13 @@ export const Anchors = () => {
   return (
     <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
       <ul className="flex flex-wrap -mb-px">
-        {ANCHORS.map(({ id, title }) => (
+        {ANCHORS.map(({ id, title }, index) => (
           <li key={id} className="me-2">
             <a
               href={`#${id}`}
               className={cn('inline-block p-4 border-b-2 border-transparent rounded-t-lg', {
-                'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500 active': hash === id,
+                'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500 active':
+                  hash === id || (hash === '' && index === 0),
               })}
               aria-current="page"
             >
