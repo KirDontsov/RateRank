@@ -8,6 +8,7 @@ import {
   FirmIdGateProvider,
   FirmsGateProvider,
   ImagesGateProvider,
+  OaiDescriptionGateProvider,
   PricesGateProvider,
   ReviewsGateProvider,
   SimilarImagesGateProvider,
@@ -39,12 +40,14 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId }) => {
               <SimilarImagesGateProvider>
                 <PricesGateProvider firmId={firmId}>
                   <ReviewsGateProvider firmId={firmId} reviewsPage={Number(searchParams.get('reviewsPage')) || 1}>
-                    <Curve>
-                      <Nav />
-                      <Section pt={0}>
-                        <FirmId />
-                      </Section>
-                    </Curve>
+                    <OaiDescriptionGateProvider firmId={firmId}>
+                      <Curve>
+                        <Nav />
+                        <Section pt={0}>
+                          <FirmId />
+                        </Section>
+                      </Curve>
+                    </OaiDescriptionGateProvider>
                   </ReviewsGateProvider>
                 </PricesGateProvider>
               </SimilarImagesGateProvider>
