@@ -54,7 +54,7 @@ sample({
 
 sample({
   clock: getOaiDescriptionFx.doneData,
-  fn: (c) => c.oai_description.data.oai_description || null,
+  fn: (c) => c?.oai_description?.data?.oai_description || null,
   target: $oaiDescription,
 });
 

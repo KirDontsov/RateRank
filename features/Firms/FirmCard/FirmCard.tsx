@@ -2,18 +2,19 @@ import { $category, $city, $firmsPage, setFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 export interface FirmsCardProps {
   firm_id: string;
+  url: string;
   category_id?: string;
   name?: string;
   address?: string;
   descriptioin?: string;
 }
 
-export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
+export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address }) => {
   const searchParams = useSearchParams();
   const { city, category, page, setFirm } = useUnit({
     city: $city,
@@ -29,7 +30,7 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, name, address }) => {
   return (
     <Link
       key={firm_id}
-      href={`/${city?.abbreviation}/${category?.abbreviation}/${transliterate(name ?? '')}?categoryId=${category?.category_id}&firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
+      href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?categoryId=${category?.category_id}&firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
       className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
     >

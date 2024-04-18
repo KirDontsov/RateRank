@@ -1,5 +1,5 @@
 'use client';
-import { $firm, ImagesGate, ReviewsGate, ReviewsPageGate } from '@/api';
+import { $firm, ImagesGate } from '@/api';
 import { CommonProps } from '@/shared';
 import { useGate, useUnit } from 'effector-react';
 import { FC } from 'react';
