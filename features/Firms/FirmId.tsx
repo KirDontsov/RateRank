@@ -4,7 +4,6 @@ import {
   $city,
   $firm,
   $firmLoading,
-  $firmName,
   $images,
   $imagesLoading,
   $oaiDescription,
@@ -40,7 +39,6 @@ export const FirmId = () => {
     imagesLoading,
     city,
     category,
-    firmName,
     firmLoading,
   } = useUnit({
     firm: $firm,
@@ -53,13 +51,14 @@ export const FirmId = () => {
     imagesLoading: $imagesLoading,
     city: $city,
     category: $category,
-    firmName: $firmName,
     firmLoading: $firmLoading,
   });
 
   const handleAddReview = useCallback(() => {
-    router.push(`/${city?.abbreviation}/${category?.abbreviation}/${transliterate(firm?.name ?? '')}/add_review`);
-  }, [router, city, category, firmName]);
+    router.push(
+      `/${city?.abbreviation}/${category?.abbreviation}/${firm?.url ?? transliterate(firm?.name ?? '')}/add_review`,
+    );
+  }, [router, city, category, firm]);
 
   const handleChangePage = useCallback(
     (e: number) => {

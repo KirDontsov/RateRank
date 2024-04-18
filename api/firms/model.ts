@@ -14,6 +14,7 @@ export const firmsD = createDomain('firms');
 
 export interface Firm {
   firm_id: string;
+  url: string;
   name: string;
   address: string;
   site: string;
@@ -164,7 +165,7 @@ sample({
 sample({
   clock: FirmGate.open,
   source: $firms,
-  fn: (s, c) => transliterate(s?.find((firm) => firm?.firm_id === c?.firmId)?.name || ''),
+  fn: (s, c) => s?.find((firm) => firm?.firm_id === c?.firmId)?.url || '',
   target: $firmName,
 });
 

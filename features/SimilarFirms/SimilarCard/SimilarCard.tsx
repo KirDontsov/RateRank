@@ -15,9 +15,10 @@ export interface SimilarCardProps {
   subTitle: string;
   address: string;
   firmId: string;
+  url: string;
 }
 
-export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, alt, title, subTitle, address }) => {
+export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, alt, title, subTitle, address, url }) => {
   const searchParams = useSearchParams();
   const { city, category, page, setFirm, setFirmLoading } = useUnit({
     city: $city,
@@ -35,7 +36,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, al
   return (
     <Link
       key={firmId}
-      href={`/${city?.abbreviation}/${category?.abbreviation}/${transliterate(title ?? '')}?categoryId=${category?.category_id}&firmId=${firmId}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
+      href={`/${city?.abbreviation}/${category?.abbreviation}/${url ?? transliterate(title ?? '')}?categoryId=${category?.category_id}&firmId=${firmId}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
       className="max-w-sm min-w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative cursor-pointer"
     >

@@ -1,17 +1,17 @@
 'use client';
-import { $firm, $firmLoading } from '@/api';
+import { $firm } from '@/api';
 import {
-  CategoryIdGateProvider,
-  CityIdGateProvider,
-  Curve,
-  FirmId,
-  FirmIdGateProvider,
-  FirmsGateProvider,
-  ImagesGateProvider,
-  OaiDescriptionGateProvider,
-  PricesGateProvider,
-  ReviewsGateProvider,
-  SimilarImagesGateProvider,
+    CategoryIdGateProvider,
+    CityIdGateProvider,
+    Curve,
+    FirmId,
+    FirmIdGateProvider,
+    FirmsGateProvider,
+    ImagesGateProvider,
+    OaiDescriptionGateProvider,
+    PricesGateProvider,
+    ReviewsGateProvider,
+    SimilarImagesGateProvider,
 } from '@/features';
 import { Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
@@ -24,10 +24,7 @@ export interface FirmIdPageProps {
 
 export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId }) => {
   const searchParams = useSearchParams();
-  const { firm, firmLoading } = useUnit({
-    firm: $firm,
-    firmLoading: $firmLoading,
-  });
+  const firm = useUnit($firm);
 
   const firmId = searchParams.get('firmId') || firm?.firm_id || '';
 
