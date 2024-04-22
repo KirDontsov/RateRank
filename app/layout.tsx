@@ -14,7 +14,6 @@ import './globals.css';
 export const metadata: Metadata = {
   title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
   description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-  other: { 'yandex-verification': '61ebb7661e245e64' },
 };
 
 export default function RootLayout({ children }: CommonProps) {
