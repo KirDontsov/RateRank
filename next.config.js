@@ -20,6 +20,12 @@ const nextConfig = {
       },
     ],
   },
+  rewrites: async () => [
+    {
+      source: '/',
+      destination: '/yandex_cde14065ca884149.html',
+    },
+  ],
   // effector swc нужен для серверных компонентов
   // experimental: {
   //   swcPlugins: [
