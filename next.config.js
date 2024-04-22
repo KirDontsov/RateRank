@@ -25,6 +25,10 @@ const nextConfig = {
       source: '/',
       destination: '/yandex_cde14065ca884149.html',
     },
+    {
+      source: '/',
+      destination: '/yandex_cd50f689e0fff974.html',
+    },
   ],
   // effector swc нужен для серверных компонентов
   // experimental: {
