@@ -1,14 +1,14 @@
-import { BACKEND_PORT, FirmId, PaginationOptions, transliterate } from '@/shared';
+import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import persist from 'effector-localstorage';
 import { createGate } from 'effector-react';
-import { $category, getCategoriesFx } from '../categories';
-import { $city, getCitiesFx } from '../cities';
+import { $categories, $category, getCategoriesFx } from '../categories';
+import { $cities, $city, getCitiesFx } from '../cities';
 import { getTypesFx } from '../types';
 
-export const FirmsGate = createGate('FirmsGate');
+export const FirmsGate = createGate<{ cityAbbr: string; categoryAbbr: string }>('FirmsGate');
 export const FirmsPageGate = createGate<number>('FirmsPageGate');
-export const FirmGate = createGate<FirmId>('FirmGate');
+export const FirmGate = createGate<FirmUrl>('FirmGate');
 
 export const firmsD = createDomain('firms');
 
@@ -54,7 +54,7 @@ persist({
 });
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
-export const fetchFirms = firmsD.createEvent<FirmId>();
+
 export const setFirmsPageEvt = firmsD.createEvent<number>();
 
 export const getFirmsFx = firmsD.createEffect({
@@ -65,7 +65,7 @@ export const getFirmsFx = firmsD.createEffect({
     category_id,
   }: PaginationOptions & FirmsParams): Promise<{ firms: FirmsQueryResult }> => {
     const res = await fetch(
-      `${BACKEND_PORT}/api/firms?city_id=${city_id}&category_id=${category_id}&page=${page}&limit=${limit}`,
+      `${BACKEND_PORT}/api/firms_by_abbr?city_id=${city_id}&category_id=${category_id}&page=${page}&limit=${limit}`,
       {
         headers: { 'Content-Type': 'application/json' },
         method: 'GET',
@@ -80,12 +80,16 @@ export const getFirmsFx = firmsD.createEffect({
 sample({
   // @ts-ignore
   clock: FirmsGate.open,
-  source: [$city, $category, $firmsPage],
-  // @ts-ignore
-  filter: ([city, category]) => !!city?.city_id && !!category?.category_id,
-  fn: ([city, category, firmsPage]) => {
-    // @ts-ignore
-    return { page: firmsPage || 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+  source: [$city, $category, $firmsPage, $cities, $categories],
+  fn: ([city, category, firmsPage, cities, categories], c) => {
+    return {
+      page: firmsPage || 1,
+      limit: 10,
+      // @ts-ignore
+      city_id: c?.cityAbbr,
+      // @ts-ignore
+      category_id: c?.categoryAbbr,
+    };
   },
   target: getFirmsFx,
 });
@@ -113,7 +117,7 @@ persist({
   key: 'firm',
 });
 export const $firmName = firmD.createStore<string | null>(null);
-export const setFirmEvt = firmD.createEvent<FirmId>();
+export const setFirmEvt = firmD.createEvent<FirmUrl>();
 export const setFirmLoadingEvt = firmD.createEvent<boolean>();
 
 export const getFirmFx = firmD.createEffect({
@@ -127,20 +131,31 @@ export const getFirmFx = firmD.createEffect({
   },
 });
 
+export const getFirmByUrlFx = firmD.createEffect({
+  handler: async ({ firmUrl }: FirmUrl): Promise<{ firm: FirmQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/firm_url/${firmUrl}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    });
+    const firm = await res.json();
+    return { firm };
+  },
+});
+
 sample({
   clock: FirmGate.open,
-  target: getFirmFx,
+  target: getFirmByUrlFx,
 });
 
 sample({
   clock: setFirmEvt,
   fn: (c) => c,
-  target: getFirmFx,
+  target: getFirmByUrlFx,
 });
 
 sample({
-  clock: getFirmFx.pending,
-  fn: (c) => true,
+  clock: getFirmByUrlFx.pending,
+  fn: () => true,
   target: $firmLoading,
 });
 
@@ -151,13 +166,13 @@ sample({
 });
 
 sample({
-  clock: getFirmFx.doneData,
+  clock: getFirmByUrlFx.doneData,
   fn: (c) => c.firm.data.firm || null,
   target: $firm,
 });
 
 sample({
-  clock: getFirmFx.doneData,
+  clock: getFirmByUrlFx.doneData,
   fn: () => false,
   target: $firmLoading,
 });
@@ -165,7 +180,7 @@ sample({
 sample({
   clock: FirmGate.open,
   source: $firms,
-  fn: (s, c) => s?.find((firm) => firm?.firm_id === c?.firmId)?.url || '',
+  fn: (s, c) => s?.find((firm) => firm?.url === c?.firmUrl)?.url || '',
   target: $firmName,
 });
 
@@ -179,19 +194,19 @@ sample({
   target: $firmsPage,
 });
 
-sample({
-  // @ts-ignore
-  clock: [getCitiesFx.doneData, getCategoriesFx.doneData, getTypesFx.doneData],
-  source: [$city, $category, $firmsPage],
-  filter: ([city, category]) =>
-    // @ts-ignore
-    !!city?.city_id && !!category?.category_id,
-  fn: ([city, category, firmsPage]) => {
-    // @ts-ignore
-    return { page: firmsPage || 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
-  },
-  target: getFirmsFx,
-});
+// sample({
+//   // @ts-ignore
+//   clock: [getCitiesFx.doneData, getCategoriesFx.doneData, getTypesFx.doneData],
+//   source: [$city, $category, $firmsPage],
+//   filter: ([city, category]) =>
+//     // @ts-ignore
+//     !!city?.city_id && !!category?.category_id,
+//   fn: ([city, category, firmsPage]) => {
+//     // @ts-ignore
+//     return { page: firmsPage || 1, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+//   },
+//   target: getFirmsFx,
+// });
 
 // Pagination by city, category, type
 sample({
@@ -199,7 +214,7 @@ sample({
   source: [$city, $category],
   fn: ([city, category], page) => {
     // @ts-ignore
-    return { page, limit: 10, city_id: city?.city_id, category_id: category?.category_id };
+    return { page, limit: 10, city_id: city?.abbreviation, category_id: category?.abbreviation };
   },
   target: getFirmsFx,
 });

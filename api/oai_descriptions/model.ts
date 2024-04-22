@@ -1,14 +1,10 @@
-import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
+import { BACKEND_PORT, FirmId, FirmUrl } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { $firm } from '..';
 
-export const OaiDescriptionGate = createGate<FirmId>('OaiDescriptionsGate');
+export const OaiDescriptionGate = createGate<FirmUrl>('OaiDescriptionsGate');
 export const oaiDescriptionD = createDomain('descriptions');
-
-export interface OaiDescriptionOption {
-  firmId: string;
-}
 
 export interface OaiDescription {
   oai_description_id: string;
@@ -25,9 +21,9 @@ export interface OaiDescriptionsQueryResult {
 export const $oaiDescription = oaiDescriptionD.createStore<OaiDescription | null>(null);
 export const fetchOaiDescriptionEvt = oaiDescriptionD.createEvent<FirmId>();
 
-export const getOaiDescriptionFx = oaiDescriptionD.createEffect({
-  handler: async ({ firmId }: OaiDescriptionOption): Promise<{ oai_description: OaiDescriptionsQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/oai_description_by_firm/${firmId}`, {
+export const getOaiDescriptionByUrlFx = oaiDescriptionD.createEffect({
+  handler: async ({ firmUrl }: FirmUrl): Promise<{ oai_description: OaiDescriptionsQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/oai_description_by_url/${firmUrl}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -41,8 +37,8 @@ sample({
   clock: OaiDescriptionGate.open,
   source: $oaiDescription,
   filter: (s) => !s,
-  fn: (_, c) => ({ firmId: c?.firmId }),
-  target: getOaiDescriptionFx,
+  fn: (_, c) => ({ firmUrl: c?.firmUrl }),
+  target: getOaiDescriptionByUrlFx,
 });
 
 sample({
@@ -53,7 +49,7 @@ sample({
 });
 
 sample({
-  clock: getOaiDescriptionFx.doneData,
+  clock: getOaiDescriptionByUrlFx.doneData,
   fn: (c) => c?.oai_description?.data?.oai_description || null,
   target: $oaiDescription,
 });

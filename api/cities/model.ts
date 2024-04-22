@@ -37,7 +37,7 @@ export const CitiesGate = createGate('CitiesGate');
 
 export const $cityAbbreviation = cityD.createStore<string | null>(null);
 
-export const $city = cityD.createStore<City | null>(DEFAULT_DROPDOWN_VALUE);
+export const $city = cityD.createStore<City | null>(null);
 persist({ store: $city, key: 'city' });
 export const fetchCitiesEvt = cityD.createEvent<string>();
 export const setCityEvt = cityD.createEvent<string>();

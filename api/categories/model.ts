@@ -26,7 +26,7 @@ export interface CategoryQueryResult {
 
 export const categoryD = createDomain('category');
 export const categoriesD = createDomain('categories');
-export const CategoryGate = createGate<{ categoryId: string }>('CategoryGate');
+export const CategoryGate = createGate<{ categoryAbbr: string }>('CategoryGate');
 export const CategoriesGate = createGate('CategoriesGate');
 
 export const $category = categoryD.createStore<Category | null>({
@@ -35,6 +35,9 @@ export const $category = categoryD.createStore<Category | null>({
   abbreviation: '',
 });
 persist({ store: $category, key: 'category' });
+
+export const $categoryAbbreviation = categoryD.createStore<string | null>(null);
+
 export const setCategoryEvt = categoryD.createEvent<string>();
 
 export const $categories = categoriesD.createStore<Category[]>([]);
@@ -82,9 +85,9 @@ sample({
 
 // === Category ===
 
-export const getCategoryFx = categoriesD.createEffect({
-  handler: async ({ categoryId }: { categoryId: string }): Promise<{ category: CategoryQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
+export const getCategoryByAbbreviationFx = categoriesD.createEffect({
+  handler: async ({ categoryAbbr }: { categoryAbbr: string }): Promise<{ category: CategoryQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryAbbr}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -96,11 +99,11 @@ export const getCategoryFx = categoriesD.createEffect({
 
 sample({
   clock: CategoryGate.open,
-  target: getCategoryFx,
+  target: getCategoryByAbbreviationFx,
 });
 
 sample({
-  clock: getCategoryFx.doneData,
+  clock: getCategoryByAbbreviationFx.doneData,
   fn: (c) => c?.category?.data?.category,
   target: $category,
 });

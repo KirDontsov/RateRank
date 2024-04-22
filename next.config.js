@@ -11,12 +11,12 @@ const nextConfig = {
   cssLoaderOptions: {
     importLoaders: 1,
   },
-  localIdentName: "[]",
+  localIdentName: '[]',
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: "**",
+        hostname: '**',
       },
     ],
   },
@@ -29,6 +29,6 @@ const nextConfig = {
   //       }
   //     ],
   // },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

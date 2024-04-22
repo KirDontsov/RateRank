@@ -1,57 +1,62 @@
 'use client';
-import { $firm } from '@/api';
 import {
-    CategoryIdGateProvider,
-    CityIdGateProvider,
-    Curve,
-    FirmId,
-    FirmIdGateProvider,
-    FirmsGateProvider,
-    ImagesGateProvider,
-    OaiDescriptionGateProvider,
-    PricesGateProvider,
-    ReviewsGateProvider,
-    SimilarImagesGateProvider,
+  CategoriesGateProvider,
+  CategoryIdGateProvider,
+  CitiesGateProvider,
+  CityIdGateProvider,
+  Curve,
+  FirmId,
+  FirmIdGateProvider,
+  FirmsGateProvider,
+  ImagesGateProvider,
+  OaiDescriptionGateProvider,
+  PricesGateProvider,
+  ReviewsGateProvider,
+  SimilarImagesGateProvider,
 } from '@/features';
 import { Nav, Section } from '@/widgets';
-import { useUnit } from 'effector-react';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
 
+// TODO: заменить во всех провайдерах firmId на firmUrl
+
 export interface FirmIdPageProps {
   cityId: string;
+  categoryAbbr: string;
+  firmUrl: string;
 }
 
-export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId }) => {
+export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId, categoryAbbr, firmUrl }) => {
   const searchParams = useSearchParams();
-  const firm = useUnit($firm);
-
-  const firmId = searchParams.get('firmId') || firm?.firm_id || '';
 
   return (
-    <CityIdGateProvider cityId={cityId}>
-      <CategoryIdGateProvider categoryId={searchParams.get('categoryId') ?? ''}>
-        <FirmsGateProvider>
-          <FirmIdGateProvider firmId={firmId}>
-            <ImagesGateProvider firmId={firmId}>
-              <SimilarImagesGateProvider>
-                <PricesGateProvider firmId={firmId}>
-                  <ReviewsGateProvider firmId={firmId} reviewsPage={Number(searchParams.get('reviewsPage')) || 1}>
-                    <OaiDescriptionGateProvider firmId={firmId}>
-                      <Curve>
-                        <Nav />
-                        <Section pt={0}>
-                          <FirmId />
-                        </Section>
-                      </Curve>
-                    </OaiDescriptionGateProvider>
-                  </ReviewsGateProvider>
-                </PricesGateProvider>
-              </SimilarImagesGateProvider>
-            </ImagesGateProvider>
-          </FirmIdGateProvider>
-        </FirmsGateProvider>
-      </CategoryIdGateProvider>
-    </CityIdGateProvider>
+    <CitiesGateProvider>
+      <CategoriesGateProvider>
+        <CityIdGateProvider cityId={cityId}>
+          <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
+            <FirmsGateProvider cityAbbr={cityId} categoryAbbr={categoryAbbr ?? ''}>
+              <FirmIdGateProvider firmUrl={firmUrl}>
+                <ImagesGateProvider firmUrl={firmUrl}>
+                  <PricesGateProvider firmUrl={firmUrl}>
+                    <ReviewsGateProvider firmUrl={firmUrl} reviewsPage={Number(searchParams.get('reviewsPage')) || 1}>
+                      <OaiDescriptionGateProvider firmUrl={firmUrl}>
+                        <SimilarImagesGateProvider key={firmUrl}>
+                          <Curve>
+                            <Nav />
+                            <Section pt={0}>
+                              <FirmId />
+                            </Section>
+                          </Curve>
+                        </SimilarImagesGateProvider>
+                      </OaiDescriptionGateProvider>
+                    </ReviewsGateProvider>
+                  </PricesGateProvider>
+                </ImagesGateProvider>
+              </FirmIdGateProvider>
+            </FirmsGateProvider>
+          </CategoryIdGateProvider>
+        </CityIdGateProvider>
+      </CategoriesGateProvider>
+    </CitiesGateProvider>
   );
 };

@@ -24,13 +24,13 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address }) =>
   });
 
   const handleClick = useCallback(() => {
-    setFirm({ firmId: firm_id });
-  }, [setFirm, firm_id]);
+    setFirm({ firmUrl: url });
+  }, [setFirm, url]);
 
   return (
     <Link
       key={firm_id}
-      href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?categoryId=${category?.category_id}&firmId=${firm_id}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
+      href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
       className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
     >

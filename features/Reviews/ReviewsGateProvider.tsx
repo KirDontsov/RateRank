@@ -5,18 +5,18 @@ import { useGate, useUnit } from 'effector-react';
 import { FC } from 'react';
 
 export interface ReviewsGateProviderProps {
-  firmId: string;
+  firmUrl: string;
   reviewsPage: number;
 }
 
-export const ReviewsGateProvider: FC<ReviewsGateProviderProps & CommonProps> = ({ children, firmId, reviewsPage }) => {
+export const ReviewsGateProvider: FC<ReviewsGateProviderProps & CommonProps> = ({ children, firmUrl, reviewsPage }) => {
   const { firm } = useUnit({
     firm: $firm,
   });
 
-  useGate(ReviewsGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(ReviewsGate, { firmUrl: firmUrl ?? firm?.url });
   useGate(ReviewsPageGate, reviewsPage);
-  useGate(OaiReviewsGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(OaiReviewsGate, { firmUrl: firmUrl ?? firm?.url });
 
   return <>{children}</>;
 };

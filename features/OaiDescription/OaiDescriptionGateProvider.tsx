@@ -5,15 +5,18 @@ import { useGate, useUnit } from 'effector-react';
 import { FC } from 'react';
 
 export interface OaiDescriptionGateProviderProps {
-  firmId: string;
+  firmUrl: string;
 }
 
-export const OaiDescriptionGateProvider: FC<OaiDescriptionGateProviderProps & CommonProps> = ({ children, firmId }) => {
+export const OaiDescriptionGateProvider: FC<OaiDescriptionGateProviderProps & CommonProps> = ({
+  children,
+  firmUrl,
+}) => {
   const { firm } = useUnit({
     firm: $firm,
   });
 
-  useGate(OaiDescriptionGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(OaiDescriptionGate, { firmUrl: firmUrl ?? firm?.url });
 
   return <>{children}</>;
 };

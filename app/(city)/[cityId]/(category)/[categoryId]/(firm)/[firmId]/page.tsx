@@ -1,26 +1,28 @@
-import { Metadata, ResolvingMetadata } from 'next/types';
-import { FirmIdPage } from './FirmIdPage';
 import { CategoryQueryResult, FirmQueryResult } from '@/api';
 import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { Metadata, ResolvingMetadata } from 'next/types';
+import { FirmIdPage } from './FirmIdPage';
 
 type Props = {
   params: { cityId: string; categoryId: string; firmId: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export interface CityPageProps {
+export interface FirmPageProps {
   params: {
     cityId: string;
+    categoryId: string;
+    firmId: string;
   };
 }
 
-export async function generateMetadata({ searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
   const cityName = `${prevPage?.other?.city || ''}`;
-  const firmId = searchParams?.firmId ?? '';
-  const categoryId = searchParams?.categoryId ?? '';
+  const firmUrl = params?.firmId ?? '';
+  const categoryId = params?.categoryId ?? '';
 
-  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
+  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })
@@ -31,7 +33,7 @@ export async function generateMetadata({ searchParams }: Props, parent: Resolvin
 
   const categoryName = category?.data?.category?.name ?? '';
 
-  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm/${firmId}`, {
+  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm_url/${firmUrl}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })
@@ -49,8 +51,10 @@ export async function generateMetadata({ searchParams }: Props, parent: Resolvin
 }
 
 /** Страница фирмы с отзывами */
-export default function Page({ params }: CityPageProps) {
-  const cityId = params.cityId ?? '';
+export default function Page({ params }: FirmPageProps) {
+  const cityAbbr = params.cityId ?? '';
+  const categoryAbbr = params.categoryId ?? '';
+  const firmUrl = params.firmId ?? '';
 
-  return <FirmIdPage cityId={cityId} />;
+  return <FirmIdPage cityId={cityAbbr} categoryAbbr={categoryAbbr} firmUrl={firmUrl} />;
 }

@@ -1,27 +1,23 @@
 import { Metadata, ResolvingMetadata } from 'next/types';
 
-import { CategoriesQueryResult, CategoryQueryResult } from '@/api';
-import { FirmsPage } from './FirmsPage';
+import { CategoryQueryResult } from '@/api';
 import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { FirmsPage } from './FirmsPage';
 
 export interface CategoryPageProps {
-  params: { categoryId: string };
+  params: { cityId: string; categoryId: string };
 }
 
 export type CategoryIdProps = {
   params: { cityId: string; categoryId: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata(
-  { params, searchParams }: CategoryIdProps,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: CategoryIdProps, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
   const cityName = prevPage?.other?.city;
-  const categoryId = searchParams.categoryId;
+  const categoryId = params.categoryId ?? '';
 
-  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category/${categoryId}`, {
+  const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })
@@ -39,6 +35,9 @@ export async function generateMetadata(
 }
 
 /** Список фирм внутри категории */
-export default function Page() {
-  return <FirmsPage />;
+export default function Page({ params }: CategoryPageProps) {
+  const categoryAbbr = params?.categoryId ?? '';
+  const cityAbbr = params?.cityId ?? '';
+
+  return <FirmsPage cityAbbr={cityAbbr} categoryAbbr={categoryAbbr} />;
 }

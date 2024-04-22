@@ -1,13 +1,25 @@
 'use client';
 import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
-import { Footer, Nav, Pagination, CommonHeader, Section } from '@/widgets';
-import { CategoryIdGateProvider, Curve, FirmsGateProvider, FirmsList } from '@/features';
+import {
+  CategoriesGateProvider,
+  CategoryIdGateProvider,
+  CitiesGateProvider,
+  Curve,
+  FirmsGateProvider,
+  FirmsList,
+} from '@/features';
 import { FETCH_LIMIT } from '@/shared';
+import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { FC, useCallback } from 'react';
 
-export const FirmsPage = () => {
+export interface FirmsPageProps {
+  categoryAbbr: string;
+  cityAbbr: string;
+}
+
+export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -29,27 +41,31 @@ export const FirmsPage = () => {
   );
 
   return (
-    <CategoryIdGateProvider categoryId={searchParams.get('categoryId') ?? ''}>
-      <FirmsGateProvider>
-        <Curve>
-          <Nav />
-          <Section>
-            <CommonHeader title="Компании" subTitle="раздел" />
-            {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
+    <CitiesGateProvider>
+      <CategoriesGateProvider>
+        <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
+          <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
+            <Curve>
+              <Nav />
+              <Section>
+                <CommonHeader title="Компании" subTitle="раздел" />
+                {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
 
-            <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
-              {firmsCount && (
-                <Pagination
-                  current={Number(searchParams.get('firmsPage')) || page}
-                  onChange={handleChangePage}
-                  total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)}
-                />
-              )}
-              <Footer />
-            </div>
-          </Section>
-        </Curve>
-      </FirmsGateProvider>
-    </CategoryIdGateProvider>
+                <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
+                  {firmsCount && (
+                    <Pagination
+                      current={Number(searchParams.get('firmsPage')) || page}
+                      onChange={handleChangePage}
+                      total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)}
+                    />
+                  )}
+                  <Footer />
+                </div>
+              </Section>
+            </Curve>
+          </FirmsGateProvider>
+        </CategoryIdGateProvider>
+      </CategoriesGateProvider>
+    </CitiesGateProvider>
   );
 };
