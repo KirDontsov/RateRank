@@ -20,3 +20,7 @@ export interface PaginationOptions {
 export interface FirmId {
   firmId: string;
 }
+
+export interface FirmUrl {
+  firmUrl: string;
+}

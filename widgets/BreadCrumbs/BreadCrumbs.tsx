@@ -129,7 +129,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
 
       setBreadcrumbs(pathArray);
     }
-  }, [router]);
+  }, [router, city, category, firm]);
 
   if (!breadcrumbs) {
     return null;

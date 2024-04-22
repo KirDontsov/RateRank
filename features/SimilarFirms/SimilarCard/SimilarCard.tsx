@@ -29,28 +29,26 @@ export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, al
   });
 
   const handleClick = useCallback(() => {
-    setFirm({ firmId });
+    setFirm({ firmUrl: url });
     setFirmLoading(true);
-  }, [setFirm, setFirmLoading, firmId]);
+  }, [setFirm, setFirmLoading, url]);
 
   return (
     <Link
       key={firmId}
-      href={`/${city?.abbreviation}/${category?.abbreviation}/${url ?? transliterate(title ?? '')}?categoryId=${category?.category_id}&firmId=${firmId}&firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
+      href={`/${city?.abbreviation}/${category?.abbreviation}/${url ?? transliterate(title ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
       className="max-w-sm min-w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative cursor-pointer"
     >
       <div className="relative w-full h-[15rem]">
         <ImageWithFallback
+          key={firmId}
           className="w-full h-[38rem]"
           src={src}
           fallbackSrc={fallbackSrc}
           fill
           alt={alt}
           style={{ objectFit: 'cover' }}
-          placeholder="blur"
-          blurDataURL={`data:image/jpeg;base64,${fallbackSrc}`}
-          priority={true}
         />
       </div>
       <div className="p-5">

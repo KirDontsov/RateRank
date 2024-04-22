@@ -5,15 +5,15 @@ import { useGate, useUnit } from 'effector-react';
 import { FC } from 'react';
 
 export interface ImagesGateProviderProps {
-  firmId: string;
+  firmUrl: string;
 }
 
-export const ImagesGateProvider: FC<ImagesGateProviderProps & CommonProps> = ({ children, firmId }) => {
+export const ImagesGateProvider: FC<ImagesGateProviderProps & CommonProps> = ({ children, firmUrl }) => {
   const { firm } = useUnit({
     firm: $firm,
   });
 
-  useGate(ImagesGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(ImagesGate, { firmUrl: firmUrl ?? firm?.url });
 
   return <>{children}</>;
 };

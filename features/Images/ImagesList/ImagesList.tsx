@@ -14,6 +14,7 @@ export const ImagesList = () => {
   const list = useList($images, (img) => (
     <div key={img?.img_id} className="aspect-video relative">
       <ImageWithFallback
+        key={img?.img_id}
         src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
         fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
         fill

@@ -1,9 +1,9 @@
-import { createGate } from 'effector-react';
+import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
+import { createGate } from 'effector-react';
 import { $firm } from '..';
 
-export const ReviewsGate = createGate<FirmId>('ReviewsGate');
+export const ReviewsGate = createGate<FirmUrl>('ReviewsGate');
 export const ReviewsPageGate = createGate<number>('ReviewsPageGate');
 export const reviewsD = createDomain('reviews');
 
@@ -38,17 +38,13 @@ export interface ReviewsQueryResult {
 export const $reviews = reviewsD.createStore<Review[]>([]);
 export const $reviewsPage = reviewsD.createStore<number>(1);
 export const $reviewsCount = reviewsD.createStore<number | null>(null);
-export const fetchReviewsEvt = reviewsD.createEvent<FirmId>();
+export const fetchReviewsEvt = reviewsD.createEvent<FirmUrl>();
 export const setReviewsPageEvt = reviewsD.createEvent<number>();
 export const addReviewEvt = reviewsD.createEvent<AddReview>();
 
-export const getReviewsFx = reviewsD.createEffect({
-  handler: async ({
-    firmId,
-    page,
-    limit,
-  }: PaginationOptions & ReviewOptions): Promise<{ reviews: ReviewsQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/reviews/${firmId}?page=${page}&limit=${limit}`, {
+export const getReviewsByUrlFx = reviewsD.createEffect({
+  handler: async ({ firmUrl, page, limit }: PaginationOptions & FirmUrl): Promise<{ reviews: ReviewsQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/reviews_by_url/${firmUrl}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -63,21 +59,21 @@ sample({
   clock: ReviewsGate.open,
   source: [$reviews, $reviewsPage],
   // @ts-ignore
-  filter: ([s], c) => !s?.length && !!c?.firmId,
+  filter: ([s], c) => !s?.length && !!c?.firmUrl,
   fn: ([_, reviewsPage], c) => {
-    return { firmId: c?.firmId, page: reviewsPage || 1, limit: 10 };
+    return { firmUrl: c?.firmUrl, page: reviewsPage || 1, limit: 10 };
   },
-  target: getReviewsFx,
+  target: getReviewsByUrlFx,
 });
 
 sample({
-  clock: getReviewsFx.doneData,
+  clock: getReviewsByUrlFx.doneData,
   fn: (c) => c.reviews.data.reviews || [],
   target: $reviews,
 });
 
 sample({
-  clock: getReviewsFx.doneData,
+  clock: getReviewsByUrlFx.doneData,
   fn: (c) => c.reviews.data.reviews_count || null,
   target: $reviewsCount,
 });
@@ -94,8 +90,8 @@ sample({
   clock: setReviewsPageEvt,
   source: $firm,
   filter: (firm) => firm !== null,
-  fn: (firm, page) => ({ firmId: firm?.firm_id ?? '', page, limit: 10 }),
-  target: getReviewsFx,
+  fn: (firm, page) => ({ firmUrl: firm?.url ?? '', page, limit: 10 }),
+  target: getReviewsByUrlFx,
 });
 
 sample({
@@ -110,7 +106,7 @@ sample({
 
 sample({
   source: $firm,
-  fn: (c) => ({ firmId: c?.firm_id || '' }),
+  fn: (c) => ({ firmUrl: c?.url || '' }),
   target: fetchReviewsEvt,
 });
 

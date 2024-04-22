@@ -5,15 +5,15 @@ import { useGate, useUnit } from 'effector-react';
 import { FC } from 'react';
 
 export interface PricesGateProvider {
-  firmId: string;
+  firmUrl: string;
 }
 
-export const PricesGateProvider: FC<PricesGateProvider & CommonProps> = ({ children, firmId }) => {
+export const PricesGateProvider: FC<PricesGateProvider & CommonProps> = ({ children, firmUrl }) => {
   const { firm } = useUnit({
     firm: $firm,
   });
 
-  useGate(PricesGate, { firmId: firmId ?? firm?.firm_id });
+  useGate(PricesGate, { firmUrl: firmUrl ?? firm?.url });
 
   return <>{children}</>;
 };

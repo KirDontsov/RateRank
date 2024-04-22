@@ -1,14 +1,10 @@
-import { createGate } from 'effector-react';
+import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
+import { createGate } from 'effector-react';
 import { $firm } from '..';
 
-export const PricesGate = createGate<FirmId>('PricesGate');
+export const PricesGate = createGate<FirmUrl>('PricesGate');
 export const pricesD = createDomain('reviews');
-
-export interface PricesOptions {
-  firmId: string;
-}
 
 export interface PriceItem {
   price_item_id: string;
@@ -37,16 +33,12 @@ export const $pricesItems = pricesD.createStore<PriceItem[]>([]);
 export const $pricesCategories = pricesD.createStore<PriceCategory[]>([]);
 export const $pricesPage = pricesD.createStore<number>(1);
 export const $pricesCount = pricesD.createStore<number | null>(null);
-export const fetchPricesEvt = pricesD.createEvent<FirmId>();
+export const fetchPricesEvt = pricesD.createEvent<FirmUrl>();
 export const setPricesPageEvt = pricesD.createEvent<number>();
 
-export const getPricesFx = pricesD.createEffect({
-  handler: async ({
-    firmId,
-    page,
-    limit,
-  }: PaginationOptions & PricesOptions): Promise<{ prices: PricesQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/prices/${firmId}?page=${page}&limit=${limit}`, {
+export const getPricesByUrlFx = pricesD.createEffect({
+  handler: async ({ firmUrl, page, limit }: PaginationOptions & FirmUrl): Promise<{ prices: PricesQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/prices_by_url/${firmUrl}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -60,8 +52,8 @@ sample({
   clock: PricesGate.open,
   source: $pricesItems,
   filter: (s) => !s?.length,
-  fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
-  target: getPricesFx,
+  fn: (_, c) => ({ firmUrl: c?.firmUrl, page: 1, limit: 10 }),
+  target: getPricesByUrlFx,
 });
 
 sample({
@@ -72,19 +64,19 @@ sample({
 });
 
 sample({
-  clock: getPricesFx.doneData,
+  clock: getPricesByUrlFx.doneData,
   fn: (c) => c.prices.data.prices_items || [],
   target: $pricesItems,
 });
 
 sample({
-  clock: getPricesFx.doneData,
+  clock: getPricesByUrlFx.doneData,
   fn: (c) => c.prices.data.prices_categories || [],
   target: $pricesCategories,
 });
 
 sample({
-  clock: getPricesFx.doneData,
+  clock: getPricesByUrlFx.doneData,
   fn: (c) => c.prices.data.prices_count || null,
   target: $pricesCount,
 });
@@ -99,12 +91,12 @@ sample({
   clock: setPricesPageEvt,
   source: $firm,
   filter: (firm) => firm !== null,
-  fn: (firm, page) => ({ firmId: firm?.firm_id ?? '', page, limit: 10 }),
-  target: getPricesFx,
+  fn: (firm, page) => ({ firmUrl: firm?.url ?? '', page, limit: 10 }),
+  target: getPricesByUrlFx,
 });
 
 sample({
   source: $firm,
-  fn: (c) => ({ firmId: c?.firm_id || '' }),
+  fn: (c) => ({ firmUrl: c?.url || '' }),
   target: fetchPricesEvt,
 });

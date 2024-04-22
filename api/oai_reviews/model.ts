@@ -1,9 +1,9 @@
-import { createGate } from 'effector-react';
+import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
-import { BACKEND_PORT, FirmId, PaginationOptions } from '@/shared';
+import { createGate } from 'effector-react';
 import { $firm } from '..';
 
-export const OaiReviewsGate = createGate<FirmId>('OaiReviewsGate');
+export const OaiReviewsGate = createGate<FirmUrl>('OaiReviewsGate');
 export const oaiReviewsD = createDomain('reviews');
 
 export interface OaiReviewOptions {
@@ -29,13 +29,13 @@ export const $oaiReviewsCount = oaiReviewsD.createStore<number | null>(null);
 export const fetchOaiReviewsEvt = oaiReviewsD.createEvent<FirmId>();
 export const setOaiReviewsPageEvt = oaiReviewsD.createEvent<number>();
 
-export const getOaiReviewsFx = oaiReviewsD.createEffect({
+export const getOaiReviewsByUrlFx = oaiReviewsD.createEffect({
   handler: async ({
-    firmId,
+    firmUrl,
     page,
     limit,
-  }: PaginationOptions & OaiReviewOptions): Promise<{ oai_reviews: OaiReviewsQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/oai_reviews/${firmId}?page=${page}&limit=${limit}`, {
+  }: PaginationOptions & FirmUrl): Promise<{ oai_reviews: OaiReviewsQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/oai_reviews_by_url/${firmUrl}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -49,8 +49,8 @@ sample({
   clock: OaiReviewsGate.open,
   source: $oaiReviews,
   filter: (s) => !s?.length,
-  fn: (_, c) => ({ firmId: c?.firmId, page: 1, limit: 10 }),
-  target: getOaiReviewsFx,
+  fn: (_, c) => ({ firmUrl: c?.firmUrl, page: 1, limit: 10 }),
+  target: getOaiReviewsByUrlFx,
 });
 
 sample({
@@ -61,13 +61,13 @@ sample({
 });
 
 sample({
-  clock: getOaiReviewsFx.doneData,
+  clock: getOaiReviewsByUrlFx.doneData,
   fn: (c) => c.oai_reviews.data.oai_reviews || [],
   target: $oaiReviews,
 });
 
 sample({
-  clock: getOaiReviewsFx.doneData,
+  clock: getOaiReviewsByUrlFx.doneData,
   fn: (c) => c.oai_reviews.data.oai_reviews_count || null,
   target: $oaiReviewsCount,
 });

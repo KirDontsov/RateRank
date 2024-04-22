@@ -4,10 +4,10 @@ import { useGate } from 'effector-react';
 import { FC } from 'react';
 
 export interface CategoryIdGateProviderProps {
-  categoryId: string;
+  categoryAbbr: string;
 }
 
-export const CategoryIdGateProvider: FC<CategoryIdGateProviderProps & CommonProps> = ({ children, categoryId }) => {
-  useGate(CategoryGate, { categoryId });
+export const CategoryIdGateProvider: FC<CategoryIdGateProviderProps & CommonProps> = ({ children, categoryAbbr }) => {
+  useGate(CategoryGate, { categoryAbbr });
   return <>{children}</>;
 };

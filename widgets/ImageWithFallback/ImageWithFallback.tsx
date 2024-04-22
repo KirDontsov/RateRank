@@ -19,6 +19,8 @@ export const ImageWithFallback = (props: ImageWithFallbackProps) => {
       alt={alt}
       {...rest}
       src={imgSrc}
+      placeholder="blur"
+      blurDataURL={fallbackSrc}
       onLoad={(result) => {
         if (result.currentTarget.width === 0) {
           // Broken image
