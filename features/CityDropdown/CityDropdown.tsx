@@ -22,5 +22,5 @@ export const CityDropdown = () => {
     abbreviation: city?.abbreviation ?? '',
   };
 
-  return <FormDropdown options={options} value={value} setValue={setCity} />;
+  return <FormDropdown options={options} value={value} setValue={setCity} placeholder="Выберите город" />;
 };
