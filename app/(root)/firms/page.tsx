@@ -1,19 +1,26 @@
 'use client';
 import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
-import { Footer, Nav, Pagination, CommonHeader, Section } from '@/widgets';
 import { Curve, FirmsGateProvider, FirmsList } from '@/features';
 import { COMMON_TITLE, FETCH_LIMIT } from '@/shared';
+import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 
-export default function Page() {
+export interface CategoryPageProps {
+  params: { cityId: string; categoryId: string };
+}
+
+export default function Page({ params }: CategoryPageProps) {
   const { firmsCount, setPage, page } = useUnit({
     page: $firmsPage,
     setPage: setFirmsPageEvt,
     firmsCount: $firmsCount,
   });
 
+  const categoryAbbr = params?.categoryId ?? '';
+  const cityAbbr = params?.cityId ?? '';
+
   return (
-    <FirmsGateProvider>
+    <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
       <Curve>
         <Nav />
         <Section>
