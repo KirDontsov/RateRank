@@ -1,12 +1,12 @@
 'use client';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, ErrorTypes, HeroBackground } from '@/shared';
 import { $firm, $images, addReviewEvt } from '@/api';
-import { Footer, Nav, FormInput, FormTextArea, Section } from '@/widgets';
-import { useUnit } from 'effector-react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
 import { Curve, FirmIdGateProvider } from '@/features';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, ErrorTypes, HeroBackground } from '@/shared';
+import { Footer, FormInput, FormTextArea, Nav, Section } from '@/widgets';
+import { useUnit } from 'effector-react';
 import Image from 'next/image';
+import { useCallback, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   AUTHOR_MAX_VALUE,
@@ -17,13 +17,19 @@ import {
 } from './constants';
 import { AddReviewValues } from './interfaces';
 
-export default function Page() {
+type Props = {
+  params: { cityId: string; categoryId: string; firmId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default function Page({ params }: Props) {
   const { firm, images, addReview } = useUnit({
     firm: $firm,
     images: $images,
     addReview: addReviewEvt,
   });
 
+  const firmUrl = params?.firmId ?? '';
   const firmId = firm?.firm_id ?? '';
 
   const form = useForm<AddReviewValues>({
@@ -50,7 +56,7 @@ export default function Page() {
   }, [firmId, addReview, getValues]);
 
   return (
-    <FirmIdGateProvider firmId={firmId}>
+    <FirmIdGateProvider firmUrl={firmUrl}>
       <Curve>
         <Nav />
         <Section pt={0}>
