@@ -1,12 +1,23 @@
 'use client';
-import { CenteredContainer, Footer, HeroSection, Nav, ThemeProvider } from '@/widgets';
 import { AuthPageGateProvider, PageGateProvider } from '@/context';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Curve } from '@/features';
 import { COMMON_TITLE } from '@/shared';
+import { CenteredContainer, Footer, HeroSection, Nav, ThemeProvider } from '@/widgets';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useLayoutEffect } from 'react';
 
 export default function Page() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useLayoutEffect(() => {
+    const url = `${pathname}?${searchParams}`;
+    // @ts-ignore
+    ym(97095336, 'hit', url);
+  }, [pathname, searchParams]);
+
   return (
     <ThemeProvider>
       <AuthPageGateProvider>
