@@ -210,6 +210,7 @@ sample({
 
 // Pagination by city, category, type
 sample({
+  // @ts-ignore
   clock: setFirmsPageEvt,
   source: [$city, $category],
   fn: ([city, category], page) => {
