@@ -155,6 +155,7 @@ export const getSimilarImagesFx = imagesD.createEffect({
 sample({
   clock: SimilarImagesGate.open,
   source: $firms,
+  filter: (firms) => !!firms && !!firms?.length,
   fn: (s) => s?.map((firm) => firm?.url),
   target: getSimilarImagesFx,
 });
