@@ -47,6 +47,18 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   return {
     title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, онлайн бронирование столиков, цены, меню, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии, Онлайн бронирование столиков. Рейтинг ресторанов и кафе города ${cityName}, соседние и похожие рестораны на ${COMMON_DOMAIN}`,
+    alternates: {
+      canonical: `https://топвыбор.рф/${params.cityId}/${category?.data?.category?.abbreviation}/${firmUrl}`,
+    },
+    keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
+    openGraph: {
+      title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, онлайн бронирование столиков, цены, меню, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
+      description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии, Онлайн бронирование столиков. Рейтинг ресторанов и кафе города ${cityName}, соседние и похожие рестораны на ${COMMON_DOMAIN}`,
+      url: `https://топвыбор.рф/${params.cityId}/${category?.data?.category?.abbreviation}/${firmUrl}`,
+      siteName: `${COMMON_DOMAIN}`,
+      locale: 'ru_RU',
+      type: 'website',
+    },
   };
 }
 

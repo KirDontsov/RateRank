@@ -31,6 +31,16 @@ export async function generateMetadata({ params }: CategoryIdProps, parent: Reso
   return {
     title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+    alternates: { canonical: `https://топвыбор.рф/${params.cityId}/${category?.data?.category?.abbreviation}` },
+    keywords: [`${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
+    openGraph: {
+      title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
+      description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+      url: `https://топвыбор.рф/${params.cityId}/${category?.data?.category?.abbreviation}`,
+      siteName: `${COMMON_DOMAIN}`,
+      locale: 'ru_RU',
+      type: 'website',
+    },
   };
 }
 
