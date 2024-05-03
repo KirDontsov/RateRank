@@ -4,9 +4,11 @@ import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
   CitiesGateProvider,
+  CityIdGateProvider,
   Curve,
   FirmsGateProvider,
   FirmsList,
+  FirmsMap,
 } from '@/features';
 import { FETCH_LIMIT } from '@/shared';
 import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
@@ -42,30 +44,45 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
 
   return (
     <CitiesGateProvider>
-      <CategoriesGateProvider>
-        <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
-          <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
-            <Curve>
-              <Nav />
-              <Section>
-                <CommonHeader title="Компании" subTitle="раздел" />
-                {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
+      <CityIdGateProvider cityId={cityAbbr}>
+        <CategoriesGateProvider>
+          <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
+            <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
+              <Curve>
+                <Nav />
+                <Section pt={0}>
+                  <div className="flex w-full">
+                    <div className="flex flex-col w-1/5 gap-2 bg-white dark:bg-gray-900 h-[100vh] overflow-auto pt-[74px] relative">
+                      <CommonHeader title="Компании" subTitle="раздел" />
+                      {firmsCount ? (
+                        <FirmsList />
+                      ) : (
+                        <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
+                      )}
+                      <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-gray-900">
+                        {firmsCount && (
+                          <Pagination
+                            current={Number(searchParams.get('firmsPage')) || page}
+                            onChange={handleChangePage}
+                            total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col w-4/5">
+                      <FirmsMap />
+                    </div>
+                  </div>
 
-                <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
-                  {firmsCount && (
-                    <Pagination
-                      current={Number(searchParams.get('firmsPage')) || page}
-                      onChange={handleChangePage}
-                      total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)}
-                    />
-                  )}
-                  <Footer />
-                </div>
-              </Section>
-            </Curve>
-          </FirmsGateProvider>
-        </CategoryIdGateProvider>
-      </CategoriesGateProvider>
+                  <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
+                    <Footer />
+                  </div>
+                </Section>
+              </Curve>
+            </FirmsGateProvider>
+          </CategoryIdGateProvider>
+        </CategoriesGateProvider>
+      </CityIdGateProvider>
     </CitiesGateProvider>
   );
 };

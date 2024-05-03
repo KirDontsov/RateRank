@@ -29,19 +29,21 @@ export const Nav = () => {
       })}
     >
       <div
-        className={cn('container px-6 py-2 mx-auto', {
+        className={cn('container px-6 py-2 mx-auto pointer-events-none', {
           'flex justify-between items-center': !tablet,
         })}
       >
         <div className="flex items-center justify-between">
-          <Link href="/">{COMMON_TITLE.toLocaleUpperCase()}</Link>
+          <Link className="pointer-events-auto" href="/">
+            {COMMON_TITLE.toLocaleUpperCase()}
+          </Link>
 
           {tablet && (
             <div className="flex lg:hidden">
               <button
                 onClick={handleOpen}
                 type="button"
-                className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+                className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400 pointer-events-auto"
                 aria-label="toggle menu"
               >
                 {open ? (
@@ -74,7 +76,7 @@ export const Nav = () => {
 
         {!tablet && !open && (
           <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-100 translate-x-0 flex items-center">
-            <div className="flex flex-row mx-6 items-center">
+            <div className="flex flex-row mx-6 items-center pointer-events-auto">
               <CityDropdown />
               {/* <Link
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
@@ -103,7 +105,7 @@ export const Nav = () => {
 
         {tablet && open && (
           <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-700">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center pointer-events-auto">
               <CityDropdown />
               {/* <Link
                 className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
