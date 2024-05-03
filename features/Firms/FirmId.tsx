@@ -12,7 +12,7 @@ import {
   $reviewsPage,
   setReviewsPageEvt,
 } from '@/api';
-import { Images, Prices, ReviewsList, SimilarFirms } from '@/features';
+import { FirmMap, Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
 import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, SectionHeader } from '@/widgets';
@@ -77,7 +77,7 @@ export const FirmId = () => {
       <div className="w-full flex flex-col gap-8">
         <header>
           <div className="w-full bg-center bg-cover h-[38rem] relative">
-            {!imagesLoading && !!images?.length && (
+            {!imagesLoading && (
               <ImageWithFallback
                 className="w-full h-[38rem] absolute z-[-1]"
                 src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
@@ -103,7 +103,7 @@ export const FirmId = () => {
           <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
             <div
               className={cn('w-full flex gap-8', {
-                'flex-col flex-col-reverse': tablet,
+                'flex-col': tablet,
               })}
             >
               <Images />
@@ -181,6 +181,8 @@ export const FirmId = () => {
                     <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
                   </div>
                 )}
+
+                {!!firm?.coords && <FirmMap />}
 
                 {(firm?.description || oaiDescription?.oai_description_value) && (
                   <>

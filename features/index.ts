@@ -4,6 +4,7 @@ export * from './Cities';
 export * from './CityDropdown';
 export * from './Curve';
 export * from './Firms';
+export * from './FirmsMap';
 export * from './Images';
 export * from './OaiDescription';
 export * from './Prices';

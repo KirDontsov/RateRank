@@ -13,6 +13,7 @@ export interface City {
   city_id: string;
   name: string;
   abbreviation: string;
+  coords: string;
 }
 
 export interface CitiesQueryResult {
