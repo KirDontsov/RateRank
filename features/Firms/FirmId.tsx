@@ -239,13 +239,13 @@ export const FirmId = () => {
               <ReviewsList />
             </>
           ) : (
-            <>
+            <div className="w-full px-8">
               <SectionHeader
                 title="Нет отзывов"
                 subTitle={`Напишите отзыв первым о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
               />
               <Button onClick={handleAddReview}>Написать отзыв</Button>
-            </>
+            </div>
           )}
         </div>
         <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto">
@@ -256,10 +256,12 @@ export const FirmId = () => {
               total={Math.ceil(((reviewsCount ?? 0) - 1) / FETCH_LIMIT)}
             />
           )}
-          <div className="container mt-8">
+          <div className="container mt-8 px-8">
             <SectionHeader title={`Похожие ${category?.name}:`} />
           </div>
-          <SimilarFirms />
+          <div className="w-full px-8">
+            <SimilarFirms />
+          </div>
           <Footer />
         </div>
       </div>

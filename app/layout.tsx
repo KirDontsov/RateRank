@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: CommonProps) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
