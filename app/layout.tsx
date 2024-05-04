@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://топвыбор.рф' },
   keywords: ['отзывы', ' рестораны', ' салоны красоты', ' автосервисы', ' медицина', ' Москва', ' Санкт-петербург'],
   openGraph: {
-    title: `${COMMON_TITLE}`,
+    title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
     url: 'https://топвыбор.рф',
     siteName: `${COMMON_DOMAIN}`,
