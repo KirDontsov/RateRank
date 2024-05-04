@@ -52,7 +52,7 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
                 <Nav />
                 <Section pt={0}>
                   <div className="flex w-full">
-                    <div className="flex flex-col w-1/5 gap-2 bg-white dark:bg-gray-900 h-[100vh] overflow-auto pt-[74px] relative">
+                    <div className="flex flex-col w-[21%] gap-2 bg-white dark:bg-gray-900 h-[100vh] overflow-auto pt-[74px] relative">
                       <CommonHeader title="Компании" subTitle="раздел" />
                       {firmsCount ? (
                         <FirmsList />
@@ -69,7 +69,7 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
                         )}
                       </div>
                     </div>
-                    <div className="flex flex-col w-4/5">
+                    <div className="flex flex-col w-[79%]">
                       <FirmsMap />
                     </div>
                   </div>
