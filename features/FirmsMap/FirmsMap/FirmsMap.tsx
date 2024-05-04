@@ -43,7 +43,7 @@ export const FirmsMap = () => {
         mapStyle="mapbox://styles/kirdontsov/ck6cbhtnf27vu1inwoo33gdcx"
         // @ts-ignore
         className={styles.mapStyle}
-        style={{ width: '100%', height: '100vh' }}
+        style={{ width: '100%', height: '100svh' }}
         initialViewState={{
           longitude: Number(initialCoords?.[0] ?? 0),
           latitude: Number(initialCoords?.[1] ?? 0),

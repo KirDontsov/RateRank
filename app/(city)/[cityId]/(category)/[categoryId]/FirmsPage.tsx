@@ -51,15 +51,15 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
               <Curve>
                 <Nav />
                 <Section pt={0}>
-                  <div className="flex w-full">
-                    <div className="flex flex-col w-[21%] gap-2 bg-white dark:bg-gray-900 h-[100vh] overflow-auto pt-[74px] relative">
+                  <div className="flex xl:flex-row xl:w-full flex-col-reverse px-4 xl:px-0">
+                    <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 xl:h-[100svh] xl:overflow-auto pt-[74px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
                       <CommonHeader title="Компании" subTitle="раздел" />
                       {firmsCount ? (
                         <FirmsList />
                       ) : (
                         <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
                       )}
-                      <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto sticky bottom-[8px] bg-white dark:bg-gray-900">
+                      <div className="flex flex-col items-center gap-4 py-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-gray-900">
                         {firmsCount && (
                           <Pagination
                             current={Number(searchParams.get('firmsPage')) || page}
@@ -69,7 +69,7 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
                         )}
                       </div>
                     </div>
-                    <div className="flex flex-col w-[79%]">
+                    <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full">
                       <FirmsMap />
                     </div>
                   </div>
