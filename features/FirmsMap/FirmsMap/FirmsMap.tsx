@@ -75,18 +75,17 @@ export const FirmsMap = () => {
             }}
             closeButton={true}
             closeOnClick={true}
-            // offset={-30}
-            className={styles.popupMain}
+            className={`${styles.popupMain} text-gray-900 dark:text-white`}
             anchor="bottom-left"
           >
             <h3 className={styles.popupTitle}>{selectedMarker?.firm?.name}</h3>
-            <div className={styles.popupInfo}>
-              <label className={styles.popupLabel}>Адрес: </label>
+            <div className={`${styles.popupInfo} text-gray-900 dark:text-white dark:bg-gray-800`}>
+              <label className={`${styles.popupLabel} text-blue-400 dark:text-blue-400`}>Адрес: </label>
               <p>{selectedMarker?.firm?.address}</p>
               <br />
               {selectedMarker?.firm?.default_phone && (
                 <>
-                  <label className={styles.popupLabel}>Тел: </label>
+                  <label className={`${styles.popupLabel} text-blue-400 dark:text-blue-400`}>Тел: </label>
                   <p>{selectedMarker?.firm?.default_phone}</p>
                   <br />
                 </>

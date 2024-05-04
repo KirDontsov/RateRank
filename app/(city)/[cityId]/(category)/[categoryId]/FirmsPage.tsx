@@ -59,7 +59,7 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
                       ) : (
                         <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
                       )}
-                      <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-gray-900">
+                      <div className="flex flex-col items-center gap-4 pt-4 w-full mb-auto sticky bottom-[8px] bg-white dark:bg-gray-900">
                         {firmsCount && (
                           <Pagination
                             current={Number(searchParams.get('firmsPage')) || page}
