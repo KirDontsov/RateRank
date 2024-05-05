@@ -53,6 +53,7 @@ persist({
   store: $firms,
   key: 'firms',
 });
+export const $firmsForMap = firmsD.createStore<Firm[]>([]);
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
 
@@ -78,21 +79,42 @@ export const getFirmsFx = firmsD.createEffect({
   },
 });
 
+export const getFirmsForMapFx = firmsD.createEffect({
+  handler: async ({ city_id, category_id }: FirmsParams): Promise<{ firms: FirmsQueryResult }> => {
+    const res = await fetch(`${BACKEND_PORT}/api/firms_by_abbr_for_map?city_id=${city_id}&category_id=${category_id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    });
+    const firms = await res.json();
+
+    return { firms };
+  },
+});
+
 sample({
-  // @ts-ignore
   clock: FirmsGate.open,
-  source: [$city, $category, $firmsPage, $cities, $categories],
-  fn: ([city, category, firmsPage, cities, categories], c) => {
+  source: { city: $city, category: $category, firmsPage: $firmsPage, cities: $cities, categories: $categories },
+  fn: ({ city, category, firmsPage }, c) => {
     return {
       page: firmsPage || 1,
       limit: 10,
-      // @ts-ignore
-      city_id: c?.cityAbbr,
-      // @ts-ignore
-      category_id: c?.categoryAbbr,
+      city_id: c?.cityAbbr || city?.abbreviation || '',
+      category_id: c?.categoryAbbr || category?.abbreviation || '',
     };
   },
   target: getFirmsFx,
+});
+
+sample({
+  clock: FirmsGate.open,
+  source: { city: $city, category: $category, cities: $cities, categories: $categories },
+  fn: ({ city, category }, c) => {
+    return {
+      city_id: c?.cityAbbr || city?.abbreviation || '',
+      category_id: c?.categoryAbbr || category?.abbreviation || '',
+    };
+  },
+  target: getFirmsForMapFx,
 });
 
 sample({
@@ -105,6 +127,12 @@ sample({
   clock: getFirmsFx.doneData,
   fn: (c) => c.firms.data.firms_count || null,
   target: $firmsCount,
+});
+
+sample({
+  clock: getFirmsForMapFx.doneData,
+  fn: (c) => c.firms.data.firms || [],
+  target: $firmsForMap,
 });
 
 // === FIRM ===
