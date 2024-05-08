@@ -30,8 +30,8 @@ class ErrorBoundary extends PureComponent<ErrorBoundaryProps, ErrorBoundaryState
   }
 }
 
-// export default Sentry.withErrorBoundary(ErrorBoundary, {
-//   fallback: <div>{'an error has occurred'}</div>,
-// }) as ComponentType<ErrorBoundaryProps>;
+export default Sentry.withErrorBoundary(ErrorBoundary, {
+  fallback: <div>{'an error has occurred'}</div>,
+}) as ComponentType<ErrorBoundaryProps>;
 
-export default ErrorBoundary;
+// export default ErrorBoundary;
