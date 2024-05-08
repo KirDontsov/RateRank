@@ -49,7 +49,6 @@ export const CityDropdown = () => {
       placeholder="Выберите город"
       options={options}
       value={value}
-      setValue={setValue}
       onSelect={handleSelect}
       open={open}
       toggleOpen={handleOpen}
