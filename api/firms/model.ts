@@ -56,6 +56,7 @@ persist({
 export const $firmsForMap = firmsD.createStore<Firm[]>([]);
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
+export const $firmsError = firmsD.createStore<string | null>(null);
 
 export const setFirmsPageEvt = firmsD.createEvent<number>();
 
@@ -125,6 +126,12 @@ sample({
 
 sample({
   clock: getFirmsFx.doneData,
+  fn: () => null,
+  target: $firmsError,
+});
+
+sample({
+  clock: getFirmsFx.doneData,
   fn: (c) => c.firms.data.firms_count || null,
   target: $firmsCount,
 });
@@ -133,6 +140,12 @@ sample({
   clock: getFirmsForMapFx.doneData,
   fn: (c) => c.firms.data.firms || [],
   target: $firmsForMap,
+});
+
+sample({
+  clock: getFirmsFx.failData,
+  fn: () => 'error getFirmsFx',
+  target: $firmsError,
 });
 
 // === FIRM ===
@@ -146,6 +159,8 @@ persist({
   key: 'firm',
 });
 export const $firmName = firmD.createStore<string | null>(null);
+export const $firmError = firmD.createStore<string | null>(null);
+
 export const setFirmEvt = firmD.createEvent<FirmUrl>();
 export const setFirmLoadingEvt = firmD.createEvent<boolean>();
 
@@ -204,6 +219,19 @@ sample({
   clock: getFirmByUrlFx.doneData,
   fn: () => false,
   target: $firmLoading,
+});
+
+// error
+sample({
+  clock: getFirmByUrlFx.failData,
+  fn: () => 'error getFirmByUrlFx',
+  target: $firmError,
+});
+
+sample({
+  clock: getFirmByUrlFx.doneData,
+  fn: () => null,
+  target: $firmError,
 });
 
 sample({
