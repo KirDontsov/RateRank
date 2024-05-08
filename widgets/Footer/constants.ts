@@ -6,37 +6,37 @@ FOOTER_LINKS.set('Сервис', [
   },
   {
     title: 'Каталог',
-    href: '/catalog',
+    href: '/#',
   },
   {
     title: 'Тарифы',
-    href: '/prices',
+    href: '/#',
   },
   {
     title: 'Помощь',
-    href: '/help',
+    href: '/#',
   },
 ]);
 FOOTER_LINKS.set('Компания', [
   {
     title: 'О Нас',
-    href: '/about',
+    href: '/#',
   },
   {
     title: 'Вакансии',
-    href: '/jobs',
+    href: '/#',
   },
   {
     title: 'Блог',
-    href: '/blog',
+    href: '/#',
   },
   {
     title: 'Новости',
-    href: '/news',
+    href: '/#',
   },
   {
     title: 'Контакты',
-    href: '/contacts',
+    href: '/#',
   },
 ]);
 FOOTER_LINKS.set('Кейсы', [
@@ -54,7 +54,7 @@ FOOTER_LINKS.set('Кейсы', [
   },
   {
     title: 'Аналитика',
-    href: '/analytics',
+    href: '/#',
   },
 ]);
 FOOTER_LINKS.set('Юр. информация', [

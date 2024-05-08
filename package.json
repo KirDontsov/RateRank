@@ -11,6 +11,7 @@
   "dependencies": {
     "@effector/next": "^0.7.0",
     "@effector/redux-devtools-adapter": "^0.2.0",
+    "@sentry/nextjs": "^7.105.0",
     "classnames": "^2.5.1",
     "effector": "^23.1.0",
     "effector-localstorage": "^1.0.0",

@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
+import { $cityError, $firmsCount, $firmsError, $firmsPage, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -13,7 +13,7 @@ import {
 import { FETCH_LIMIT } from '@/shared';
 import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 export interface FirmsPageProps {
@@ -26,11 +26,16 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { firmsCount, setPage, page } = useUnit({
+  const { firmsCount, setPage, page, firmsError } = useUnit({
     page: $firmsPage,
     setPage: setFirmsPageEvt,
     firmsCount: $firmsCount,
+    firmsError: $firmsError,
   });
+
+  if (firmsError) {
+    notFound();
+  }
 
   const handleChangePage = useCallback(
     (e: number) => {

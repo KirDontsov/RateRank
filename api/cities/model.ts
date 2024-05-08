@@ -2,6 +2,7 @@ import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { persist } from 'effector-storage/local';
+import { notFound } from 'next/navigation';
 
 export const DEFAULT_DROPDOWN_VALUE = {
   city_id: 'Выберите город',
@@ -13,7 +14,7 @@ export interface City {
   city_id: string;
   name: string;
   abbreviation: string;
-  coords: string;
+  coords: string | null;
 }
 
 export interface CitiesQueryResult {
@@ -40,6 +41,7 @@ export const $cityAbbreviation = cityD.createStore<string | null>(null);
 
 export const $city = cityD.createStore<City | null>(null);
 persist({ store: $city, key: 'city' });
+export const $cityError = cityD.createStore<string | null>(null);
 export const fetchCitiesEvt = cityD.createEvent<string>();
 export const setCityEvt = cityD.createEvent<string>();
 
@@ -68,8 +70,8 @@ export const getCitiesFx = citiesD.createEffect({
 
 sample({
   clock: CitiesGate.open,
-  // source: $cities,
-  // filter: (c) => !c?.length,
+  source: { cities: $cities },
+  filter: ({ cities }) => !cities?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCitiesFx,
 });
@@ -90,24 +92,47 @@ sample({
 
 sample({
   clock: CityGate.open,
-  // source: $cities,
-  // filter: (s) => !s.length,
+  source: { cities: $cities },
+  filter: ({ cities }) => !cities?.length,
   fn: () => ({ page: 1, limit: 10 }),
   target: getCitiesFx,
 });
 
 sample({
   clock: CityGate.open,
-  fn: (c) => c?.cityId,
+  source: { cities: $cities },
+  filter: ({ cities }, c) => !!cities?.length && !!c?.cityId,
+  fn: ({ cities }, c) => c?.cityId,
   target: $cityAbbreviation,
 });
 
 sample({
-  source: [$cityAbbreviation, $cities],
-  // filter: (s, c) => s !== '',
   // @ts-ignore
-  fn: ([s, c]) => c?.find((city) => city?.abbreviation === s) || DEFAULT_DROPDOWN_VALUE,
+  clock: CityGate.open,
+  source: { cityAbbreviation: $cityAbbreviation, cities: $cities },
+  filter: ({ cityAbbreviation, cities }) => !!cityAbbreviation && !!cities?.length,
+  fn: ({ cityAbbreviation, cities }) =>
+    cities?.find((city) => city?.abbreviation === cityAbbreviation) || DEFAULT_DROPDOWN_VALUE,
   target: $city,
+});
+
+// error
+sample({
+  clock: CityGate.open,
+  source: { cityAbbreviation: $cityAbbreviation, cities: $cities },
+  filter: ({ cityAbbreviation, cities }) =>
+    !!cityAbbreviation && !!cities?.length && !cities?.some((city) => city?.abbreviation === cityAbbreviation),
+  fn: ({}, c) => `Город ${c?.cityId} не найден`,
+  target: $cityError,
+});
+
+sample({
+  clock: CityGate.open,
+  source: { cityAbbreviation: $cityAbbreviation, cities: $cities },
+  filter: ({ cityAbbreviation, cities }) =>
+    !!cityAbbreviation && !!cities?.length && cities?.some((city) => city?.abbreviation === cityAbbreviation),
+  fn: () => null,
+  target: $cityError,
 });
 
 // sample({

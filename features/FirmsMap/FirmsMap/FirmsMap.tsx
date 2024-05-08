@@ -6,23 +6,21 @@ import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { FC, MouseEvent, memo, useMemo, useRef, useState } from 'react';
-import Map, { FullscreenControl, GeolocateControl, Marker, NavigationControl, Popup } from 'react-map-gl';
+import { FC, MouseEvent, memo, useRef, useState } from 'react';
+import Map, {
+  FullscreenControl,
+  GeolocateControl,
+  MapRef,
+  MapboxGeoJSONFeature,
+  Marker,
+  NavigationControl,
+  Popup,
+} from 'react-map-gl';
 import styles from './map.module.scss';
 
-export interface MapItemProperties extends Firm {
-  longitude: string;
-  latitude: string;
-}
-
-export interface MapItem {
-  id: number;
-  properties: MapItemProperties;
-}
-
 export interface MarkersComponentProps {
-  items: MapItem[] | null;
-  zoomToSelectedLoc: (e: MouseEvent<HTMLButtonElement>, item: MapItem) => void;
+  items: MapboxGeoJSONFeature[] | null;
+  zoomToSelectedLoc: (e: MouseEvent<HTMLButtonElement>, item: MapboxGeoJSONFeature) => void;
 }
 
 /** Работаем с гео-json и itemsInViewPort иначе тормозит */
@@ -56,9 +54,9 @@ export const Markers = memo(MarkersComponent);
 export const FirmsMap = () => {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const searchParams = useSearchParams();
-  const [selectedMarker, setSelectedMarker] = useState<MapItem | null>(null);
-  const [itemsInViewPort, setItemsInViewPort] = useState<MapItem[] | null>(null);
-  const mapRef = useRef(null);
+  const [selectedMarker, setSelectedMarker] = useState<MapboxGeoJSONFeature | null>(null);
+  const [itemsInViewPort, setItemsInViewPort] = useState<MapboxGeoJSONFeature[] | null>(null);
+  const mapRef = useRef<MapRef>(null);
 
   const { firms, city, category, page } = useUnit({
     firms: $firmsForMap,
@@ -67,14 +65,10 @@ export const FirmsMap = () => {
     page: $firmsPage,
   });
 
-  console.log('itemsInViewPort', itemsInViewPort);
-
-  const zoomToSelectedLoc = (e: MouseEvent<HTMLButtonElement>, item: MapItem) => {
-    // stop event bubble-up which triggers unnecessary events
+  const zoomToSelectedLoc = (e: MouseEvent<HTMLButtonElement>, item: MapboxGeoJSONFeature) => {
     e.stopPropagation();
 
     setSelectedMarker(item);
-    // @ts-ignore
     mapRef.current?.flyTo({ center: [item?.properties?.longitude ?? 0, item?.properties?.latitude ?? 0], zoom: 17 });
   };
 
@@ -96,16 +90,15 @@ export const FirmsMap = () => {
             zoom: 10,
           }}
           maxZoom={20}
-          minZoom={1}
+          minZoom={3}
           pitch={45}
-          bearing={-17.6}
+          bearing={-18}
           onMove={() => {
-            const featuresInViewport = mapRef?.current
+            const featuresInViewport: MapboxGeoJSONFeature[] | null =
               // @ts-ignore
-              ?.getMap()
-              .queryRenderedFeatures({ layers: ['car-services-msk'] });
-            if (featuresInViewport?.length < 300) {
-              setItemsInViewPort(featuresInViewport);
+              mapRef?.current?.getMap().queryRenderedFeatures({ layers: ['car-services-msk'] }) ?? null;
+            if ((featuresInViewport?.length ?? 0) < 300) {
+              setItemsInViewPort(featuresInViewport || null);
             }
           }}
         >
