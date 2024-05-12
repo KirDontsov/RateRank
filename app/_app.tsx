@@ -1,6 +1,6 @@
+import { ErrorBoundary } from '@/features/ErrorBoundary';
 import { EffectorNext, getClientScope } from '@effector/next';
 import { attachReduxDevTools } from '@effector/redux-devtools-adapter';
-import { ErrorBoundary } from '@sentry/nextjs/types/server';
 import { AnimatePresence } from 'framer-motion';
 import type { AppProps } from 'next/app';
 

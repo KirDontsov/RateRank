@@ -126,12 +126,6 @@ sample({
 
 sample({
   clock: getFirmsFx.doneData,
-  fn: () => null,
-  target: $firmsError,
-});
-
-sample({
-  clock: getFirmsFx.doneData,
   fn: (c) => c.firms.data.firms_count || null,
   target: $firmsCount,
 });
