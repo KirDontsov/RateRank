@@ -9,8 +9,10 @@ import { useSearchParams } from 'next/navigation';
 import { FC, MouseEvent, memo, useRef, useState } from 'react';
 import Map, {
   FullscreenControl,
+  GeoJSONSource,
   GeolocateControl,
   Layer,
+  MapLayerMouseEvent,
   MapRef,
   MapboxGeoJSONFeature,
   Marker,
@@ -59,6 +61,7 @@ export const FirmsMap = () => {
   const searchParams = useSearchParams();
   const [selectedMarker, setSelectedMarker] = useState<MapboxGeoJSONFeature | null>(null);
   const [itemsInViewPort, setItemsInViewPort] = useState<MapboxGeoJSONFeature[] | null>(null);
+  const [currentZoom, setCurrentZoom] = useState<number | null>(null);
   const mapRef = useRef<MapRef>(null);
 
   const { firms, city, category, page } = useUnit({
@@ -100,6 +103,26 @@ export const FirmsMap = () => {
       }),
   };
 
+  const onClick = (event: MapLayerMouseEvent) => {
+    const feature = event?.features?.[0];
+    const clusterId = feature?.properties?.cluster_id;
+
+    const mapboxSource = mapRef.current?.getSource('my-data') as GeoJSONSource;
+
+    mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) {
+        return;
+      }
+
+      mapRef.current?.easeTo({
+        // @ts-ignore
+        center: feature?.geometry?.coordinates,
+        zoom,
+        duration: 500,
+      });
+    });
+  };
+
   const initialCoords = city?.coords?.split(', ');
 
   return (
@@ -121,26 +144,33 @@ export const FirmsMap = () => {
         pitch={45}
         bearing={-18}
         interactiveLayerIds={[clusterLayer?.id ?? '']}
+        onClick={onClick}
         onMove={() => {
-          const featuresInViewport: MapboxGeoJSONFeature[] | null =
-            // @ts-ignore
-            mapRef?.current?.getMap().queryRenderedFeatures({ layers: ['unclustered-point'] }) ?? null;
-
-          console.log('featuresInViewport?.length', featuresInViewport?.length);
-          if ((featuresInViewport?.length ?? 0) < 300) {
-            setItemsInViewPort(featuresInViewport || null);
+          const _currentZoom = mapRef?.current?.getZoom() ?? 0;
+          setCurrentZoom(_currentZoom);
+          if (!!currentZoom && currentZoom >= 13) {
+            const featuresInViewport: MapboxGeoJSONFeature[] | null =
+              // @ts-ignore
+              mapRef?.current?.getMap().queryRenderedFeatures({ layers: ['unclustered-point'] }) ?? null;
+            if ((featuresInViewport?.length ?? 0) < 300) {
+              setItemsInViewPort(featuresInViewport || null);
+            }
           }
         }}
       >
         {!!firms?.length && (
           <>
-            {' '}
-            <Markers items={itemsInViewPort} zoomToSelectedLoc={zoomToSelectedLoc} />
+            {!!currentZoom && currentZoom >= 13 && (
+              <Markers items={itemsInViewPort} zoomToSelectedLoc={zoomToSelectedLoc} />
+            )}
             <Source
               id="my-data"
               type="geojson"
               // @ts-ignore
               data={geojson}
+              cluster={true}
+              clusterMaxZoom={14}
+              clusterRadius={50}
             >
               {/* <Layer {...layerStyle} /> */}
               <Layer {...clusterLayer} />
