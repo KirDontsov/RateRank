@@ -10,12 +10,15 @@ import { FC, MouseEvent, memo, useRef, useState } from 'react';
 import Map, {
   FullscreenControl,
   GeolocateControl,
+  Layer,
   MapRef,
   MapboxGeoJSONFeature,
   Marker,
   NavigationControl,
   Popup,
+  Source,
 } from 'react-map-gl';
+import { clusterCountLayer, clusterLayer, unclusteredPointLayer } from './Layers';
 import styles from './map.module.scss';
 
 export interface MarkersComponentProps {
@@ -69,75 +72,117 @@ export const FirmsMap = () => {
     e.stopPropagation();
 
     setSelectedMarker(item);
-    mapRef.current?.flyTo({ center: [item?.properties?.longitude ?? 0, item?.properties?.latitude ?? 0], zoom: 17 });
+    mapRef.current?.flyTo({
+      center: [item?.properties?.longitude ?? 0, item?.properties?.latitude ?? 0],
+      zoom: 17,
+      duration: 2000,
+    });
+  };
+
+  const geojson = {
+    type: 'FeatureCollection',
+    features: firms
+      ?.filter((x) => !!x?.coords && x?.coords !== `0`)
+      ?.map((firm) => {
+        const coords = firm?.coords?.split(', ');
+        return {
+          id: firm?.firm_id,
+          type: 'Feature',
+          properties: {
+            name: firm?.name,
+            address: firm?.address,
+            url: firm?.url,
+            longitude: Number(coords[0]),
+            latitude: Number(coords[1]),
+          },
+          geometry: { type: 'Point', coordinates: [Number(coords[0]), Number(coords[1])] },
+        };
+      }),
   };
 
   const initialCoords = city?.coords?.split(', ');
 
   return (
     <div className={styles.mainStyle}>
-      {!!firms?.length && (
-        <Map
-          ref={mapRef}
-          mapboxAccessToken={mapboxToken}
-          mapStyle="mapbox://styles/kirdontsov/ck6cbhtnf27vu1inwoo33gdcx"
-          // @ts-ignore
-          className={styles.mapStyle}
-          style={{ width: '100%', height: '100svh' }}
-          initialViewState={{
-            longitude: Number(initialCoords?.[0] ?? 0),
-            latitude: Number(initialCoords?.[1] ?? 0),
-            zoom: 10,
-          }}
-          maxZoom={20}
-          minZoom={3}
-          pitch={45}
-          bearing={-18}
-          onMove={() => {
-            const featuresInViewport: MapboxGeoJSONFeature[] | null =
+      <Map
+        ref={mapRef}
+        mapboxAccessToken={mapboxToken}
+        mapStyle="mapbox://styles/kirdontsov/ck6cbhtnf27vu1inwoo33gdcx"
+        // @ts-ignore
+        className={styles.mapStyle}
+        style={{ width: '100%', height: '100svh' }}
+        initialViewState={{
+          longitude: Number(initialCoords?.[0] ?? 0),
+          latitude: Number(initialCoords?.[1] ?? 0),
+          zoom: 10,
+        }}
+        maxZoom={20}
+        minZoom={3}
+        pitch={45}
+        bearing={-18}
+        interactiveLayerIds={[clusterLayer?.id ?? '']}
+        onMove={() => {
+          const featuresInViewport: MapboxGeoJSONFeature[] | null =
+            // @ts-ignore
+            mapRef?.current?.getMap().queryRenderedFeatures({ layers: ['unclustered-point'] }) ?? null;
+
+          console.log('featuresInViewport?.length', featuresInViewport?.length);
+          if ((featuresInViewport?.length ?? 0) < 300) {
+            setItemsInViewPort(featuresInViewport || null);
+          }
+        }}
+      >
+        {!!firms?.length && (
+          <>
+            {' '}
+            <Markers items={itemsInViewPort} zoomToSelectedLoc={zoomToSelectedLoc} />
+            <Source
+              id="my-data"
+              type="geojson"
               // @ts-ignore
-              mapRef?.current?.getMap().queryRenderedFeatures({ layers: ['car-services-msk'] }) ?? null;
-            if ((featuresInViewport?.length ?? 0) < 300) {
-              setItemsInViewPort(featuresInViewport || null);
-            }
-          }}
-        >
-          <Markers items={itemsInViewPort} zoomToSelectedLoc={zoomToSelectedLoc} />
-
-          {selectedMarker ? (
-            <Popup
-              latitude={Number(selectedMarker?.properties?.latitude ?? 0)}
-              longitude={Number(selectedMarker?.properties?.longitude ?? 0)}
-              onClose={() => {
-                setSelectedMarker(null);
-              }}
-              closeButton={true}
-              closeOnClick={true}
-              className={`${styles.popupMain} text-gray-900 dark:text-white`}
-              anchor="bottom-left"
+              data={geojson}
             >
-              <h3 className={styles.popupTitle}>{selectedMarker?.properties?.name}</h3>
-              <div className={`${styles.popupInfo} text-gray-900 dark:text-white dark:bg-gray-800`}>
-                <label className={`${styles.popupLabel} text-blue-400 dark:text-blue-400`}>Адрес: </label>
-                <p>{selectedMarker?.properties?.address}</p>
-                <br />
+              {/* <Layer {...layerStyle} /> */}
+              <Layer {...clusterLayer} />
+              <Layer {...clusterCountLayer} />
+              <Layer {...unclusteredPointLayer} />
+            </Source>
+          </>
+        )}
 
-                <Link
-                  href={`/${city?.abbreviation}/${category?.abbreviation}/${selectedMarker?.properties?.url || transliterate(selectedMarker?.properties?.name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
-                  // target={selectedMarker?.firm?.url === '' ? null : '_blank'}
-                  className={styles.popupWebUrl}
-                >
-                  Подробнее
-                </Link>
-              </div>
-            </Popup>
-          ) : null}
+        {selectedMarker ? (
+          <Popup
+            latitude={Number(selectedMarker?.properties?.latitude ?? 0)}
+            longitude={Number(selectedMarker?.properties?.longitude ?? 0)}
+            onClose={() => {
+              setSelectedMarker(null);
+            }}
+            closeButton={true}
+            closeOnClick={true}
+            className={`${styles.popupMain} text-gray-900 dark:text-white`}
+            anchor="bottom-left"
+          >
+            <h3 className={styles.popupTitle}>{selectedMarker?.properties?.name}</h3>
+            <div className={`${styles.popupInfo} text-gray-900 dark:text-white dark:bg-gray-800`}>
+              <label className={`${styles.popupLabel} text-blue-400 dark:text-blue-400`}>Адрес: </label>
+              <p>{selectedMarker?.properties?.address}</p>
+              <br />
 
-          <GeolocateControl position="top-left" style={{ marginTop: '154%' }} />
-          <NavigationControl position="top-left" />
-          <FullscreenControl position="bottom-right" />
-        </Map>
-      )}
+              <Link
+                href={`/${city?.abbreviation}/${category?.abbreviation}/${selectedMarker?.properties?.url || transliterate(selectedMarker?.properties?.name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
+                // target={selectedMarker?.firm?.url === '' ? null : '_blank'}
+                className={styles.popupWebUrl}
+              >
+                Подробнее
+              </Link>
+            </div>
+          </Popup>
+        ) : null}
+
+        <GeolocateControl position="top-left" style={{ marginTop: '154%' }} />
+        <NavigationControl position="top-left" />
+        <FullscreenControl position="bottom-right" />
+      </Map>
     </div>
   );
 };

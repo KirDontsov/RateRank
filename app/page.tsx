@@ -11,12 +11,15 @@ import { useLayoutEffect } from 'react';
 export default function Page() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const prod = process.env.PRODUCTION;
 
   useLayoutEffect(() => {
-    const url = `${pathname}?${searchParams}`;
-    // @ts-ignore
-    ym(97095336, 'hit', url);
-  }, [pathname, searchParams]);
+    if (prod) {
+      const url = `${pathname}?${searchParams}`;
+      // @ts-ignore
+      ym(97095336, 'hit', url);
+    }
+  }, [pathname, searchParams, prod]);
 
   return (
     <ThemeProvider>
