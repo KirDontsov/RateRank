@@ -49,7 +49,7 @@ export const SearchVariants = () => {
 
   return (
     <>
-      {searchVariants?.length && searchVariantsExpanded && (
+      {!!searchVariants?.length && searchVariantsExpanded && (
         <div
           ref={dropdownRef}
           className="flex flex-col bg-white dark:bg-gray-900 relative w-full h-fit top-[54px] px-8  items-center justify-center overflow-hidden bg-opacity-5"
