@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
   const categoryName = category?.data?.category?.name ?? '';
 
-  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm_url/${firmUrl}`, {
+  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm_by_url/${firmUrl}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   })

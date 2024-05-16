@@ -45,7 +45,7 @@ export default function RootLayout({ children }: CommonProps) {
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
-        {process.env.PRODUCTION && (
+        {/* {process.env.PRODUCTION && (
           <Script id="metrika-counter" strategy="afterInteractive">
             {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 		        m[i].l=1*new Date();
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: CommonProps) {
 		             webvisor:true
 		        });`}
           </Script>
-        )}
+        )} */}
       </body>
     </html>
   );

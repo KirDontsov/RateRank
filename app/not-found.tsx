@@ -1,6 +1,8 @@
 'use client';
 import { Button, CenteredContainer, HeroSection } from '@/widgets';
 
+export const dynamic = 'error';
+
 export default function NotFound() {
   const handleClick = () => {
     window.location.assign('/');

@@ -110,7 +110,7 @@ export const FirmsMap = () => {
     const mapboxSource = mapRef.current?.getSource('my-data') as GeoJSONSource;
 
     mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
-      if (err) {
+      if (err || !feature) {
         return;
       }
 

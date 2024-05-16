@@ -1,8 +1,8 @@
 'use client';
-import { $firm, $images, addReviewEvt } from '@/api';
+import { $category, $city, $firm, $images, addReviewEvt } from '@/api';
 import { Curve, FirmIdGateProvider } from '@/features';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, ErrorTypes, HeroBackground } from '@/shared';
-import { Footer, FormInput, FormTextArea, Nav, Section } from '@/widgets';
+import { Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import Image from 'next/image';
 import { useCallback, useEffect } from 'react';
@@ -23,7 +23,9 @@ type Props = {
 };
 
 export default function Page({ params }: Props) {
-  const { firm, images, addReview } = useUnit({
+  const { city, category, firm, images, addReview } = useUnit({
+    city: $city,
+    category: $category,
     firm: $firm,
     images: $images,
     addReview: addReviewEvt,
@@ -64,15 +66,12 @@ export default function Page({ params }: Props) {
             <div className="w-full flex flex-col gap-8">
               <header>
                 <div className="w-full bg-center bg-cover h-[38rem] relative">
-                  <Image
+                  <ImageWithFallback
                     className="w-full h-[38rem] absolute z-[-1]"
-                    src={
-                      images?.length
-                        ? `${DEFAULT_PHOTOS_ENDPOINT}/${firm?.firm_id}/${images[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
-                        : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
-                    }
+                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                    fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                     fill
-                    alt={images[0]?.img_alt}
+                    alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
                     style={{ objectFit: 'cover' }}
                     placeholder="blur"
                     blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}

@@ -13,13 +13,13 @@ export default function Page() {
   const searchParams = useSearchParams();
   const prod = process.env.PRODUCTION;
 
-  useLayoutEffect(() => {
-    if (prod) {
-      const url = `${pathname}?${searchParams}`;
-      // @ts-ignore
-      ym(97095336, 'hit', url);
-    }
-  }, [pathname, searchParams, prod]);
+  // useLayoutEffect(() => {
+  //   if (prod) {
+  //     const url = `${pathname}?${searchParams}`;
+  //     // @ts-ignore
+  //     ym(97095336, 'hit', url);
+  //   }
+  // }, [pathname, searchParams, prod]);
 
   return (
     <ThemeProvider>
