@@ -7,4 +7,5 @@ export * from './oai_descriptions';
 export * from './oai_reviews';
 export * from './prices';
 export * from './reviews';
+export * from './search';
 export * from './types';

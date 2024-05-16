@@ -21,6 +21,7 @@ export interface Firm {
   default_phone: string;
   description: string;
   category_id: string;
+  city_id: string;
   coords: string;
 }
 
