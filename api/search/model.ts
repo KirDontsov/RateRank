@@ -7,7 +7,7 @@ export interface SearchValue {
   input: string | null;
 }
 
-export interface FirmsQueryResult {
+export interface SearchQueryResult {
   status: string;
   data: {
     firms: Firm[];
@@ -28,7 +28,7 @@ export const getSearchVariantsEvt = searchD.createEvent<SearchValue>();
 export const toggleSearchVariantsEvt = searchD.createEvent<boolean>();
 
 export const getSearchVariantsFx = searchD.createEffect({
-  handler: async ({ input }: SearchValue): Promise<{ firms: FirmsQueryResult }> => {
+  handler: async ({ input }: SearchValue): Promise<{ firms: SearchQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/firms_search?input=${input}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',

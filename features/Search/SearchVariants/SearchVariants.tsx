@@ -25,15 +25,10 @@ export const SearchVariants = () => {
     toggleSearchVariants: toggleSearchVariantsEvt,
   });
 
-  console.log('cities', cities);
-  console.log('categories', categories);
-
   const handleClick = useCallback(
     ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
       console.log('currentTarget?.id', currentTarget?.id);
       const variantFirm = searchVariants?.find((item) => item?.url === currentTarget?.id);
-
-      console.log('variantFirm', variantFirm);
 
       const city = cities?.find((item) => item?.city_id === variantFirm?.city_id);
       const category = categories?.find((item) => item?.category_id === variantFirm?.category_id);
