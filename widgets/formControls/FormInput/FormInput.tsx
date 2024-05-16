@@ -1,6 +1,7 @@
 'use client';
+import cn from 'classnames';
 import { ChangeEvent, FC, useCallback, useState } from 'react';
-import { useController, UseControllerProps } from 'react-hook-form';
+import { UseControllerProps, useController } from 'react-hook-form';
 
 export type ValidationRules = UseControllerProps['rules'];
 
@@ -16,6 +17,8 @@ export interface FormControlProps {
   dataTestId?: string;
   /** placeholder */
   placeholder?: string;
+  /** placeholder */
+  className?: string;
 }
 
 export interface FormInputProps extends FormControlProps {
@@ -25,7 +28,7 @@ export interface FormInputProps extends FormControlProps {
   maxLength?: number;
 }
 
-export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, maxLength, label }) => {
+export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, maxLength, label, className = '' }) => {
   const [showError, setShowError] = useState(true);
 
   const {
@@ -54,12 +57,19 @@ export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, 
   }, [internalOnBlur]);
 
   return (
-    <div>
-      <label htmlFor={name} className="text-sm text-gray-700 dark:text-gray-200">
-        {label}
-      </label>
+    <div className={className}>
+      {label && (
+        <label htmlFor={name} className="text-sm text-gray-700 dark:text-gray-200">
+          {label}
+        </label>
+      )}
 
-      <label className="block mt-3" htmlFor={name}>
+      <label
+        className={cn('block', {
+          'mt-3': label,
+        })}
+        htmlFor={name}
+      >
         <input
           ref={ref}
           id={name}
@@ -69,7 +79,7 @@ export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, 
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}
-          className="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
         />
       </label>
       {error && showError && <span className="text-red-500 text-xs pt-1 block">{error?.message}</span>}

@@ -1,6 +1,6 @@
 'use client';
 import { $loading, useUserAuth } from '@/context';
-import { CityDropdown } from '@/features';
+import { CityDropdown, SearchInput, SearchVariants } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
@@ -22,116 +22,125 @@ export const Nav = () => {
   const handleOpen = useCallback(() => setOpen((prevState) => !prevState), []);
 
   return (
-    <nav
-      className={cn('w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%]', {
-        'dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)]': !open,
-        'dark:bg-gray-700 bg-white': open,
-      })}
-    >
-      <div
-        className={cn('container px-6 py-2 mx-auto pointer-events-none', {
-          'flex justify-between items-center': !tablet,
+    <>
+      <nav
+        className={cn('w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%]', {
+          'dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)]': !open,
+          'dark:bg-gray-700 bg-white': open,
         })}
       >
-        <div className="flex items-center justify-between">
-          <Link className="pointer-events-auto" href="/">
-            {COMMON_TITLE.toLocaleUpperCase()}
-          </Link>
+        <div
+          className={cn('px-6 py-2 mx-auto pointer-events-none', {
+            'flex justify-between items-center': !tablet,
+          })}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex gap-8 items-center justify-center">
+              <Link className="pointer-events-auto" href="/">
+                {COMMON_TITLE.toLocaleUpperCase()}
+              </Link>
+              <div className="pointer-events-auto">
+                <SearchInput />
+              </div>
+            </div>
 
-          {tablet && (
-            <div className="flex lg:hidden">
-              <button
-                onClick={handleOpen}
-                type="button"
-                className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400 pointer-events-auto"
-                aria-label="toggle menu"
-              >
-                {open ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
+            {tablet && (
+              <div className="flex lg:hidden">
+                <button
+                  onClick={handleOpen}
+                  type="button"
+                  className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400 pointer-events-auto"
+                  aria-label="toggle menu"
+                >
+                  {open ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {!tablet && !open && (
+            <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-100 translate-x-0 flex items-center">
+              <div className="flex flex-row mx-6 items-center pointer-events-auto">
+                <CityDropdown />
+
+                {/* <Link
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               href="#"
+             >
+               Добавить организацию
+             </Link> */}
+                {!value && !loading && (
+                  <Link
+                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                    href="/login"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
-                  </svg>
+                    Вход
+                  </Link>
                 )}
-              </button>
+
+                {/* <Link
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               href="/dashboard"
+             >
+               Dashboard
+             </Link> */}
+              </div>
+            </div>
+          )}
+
+          {tablet && open && (
+            <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-700">
+              <div className="flex flex-col items-center pointer-events-auto">
+                <CityDropdown />
+                {/* <Link
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               href="#"
+             >
+               Добавить организацию
+             </Link> */}
+                {!value && !loading && (
+                  <Link
+                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                    href="/login"
+                  >
+                    Вход
+                  </Link>
+                )}
+
+                {/* <Link
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               href="/dashboard"
+             >
+               Dashboard
+             </Link> */}
+              </div>
             </div>
           )}
         </div>
-
-        {!tablet && !open && (
-          <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-100 translate-x-0 flex items-center">
-            <div className="flex flex-row mx-6 items-center pointer-events-auto">
-              <CityDropdown />
-              {/* <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="#"
-              >
-                Добавить организацию
-              </Link> */}
-              {!value && !loading && (
-                <Link
-                  className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                  href="/login"
-                >
-                  Вход
-                </Link>
-              )}
-
-              {/* <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="/dashboard"
-              >
-                Dashboard
-              </Link> */}
-            </div>
-          </div>
-        )}
-
-        {tablet && open && (
-          <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-700">
-            <div className="flex flex-col items-center pointer-events-auto">
-              <CityDropdown />
-              {/* <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="#"
-              >
-                Добавить организацию
-              </Link> */}
-              {!value && !loading && (
-                <Link
-                  className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                  href="/login"
-                >
-                  Вход
-                </Link>
-              )}
-
-              {/* <Link
-                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
-                href="/dashboard"
-              >
-                Dashboard
-              </Link> */}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
+      </nav>
+      <SearchVariants />
+    </>
   );
 };
