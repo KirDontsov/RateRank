@@ -136,9 +136,44 @@ sample({
   target: $firmsForMap,
 });
 
+/** error handling */
+sample({
+  clock: getFirmsFx.doneData,
+  filter: (c) => c.firms?.status === 'error',
+  fn: () => 'error getFirmsFx',
+  target: $firmsError,
+});
+
 sample({
   clock: getFirmsFx.failData,
   fn: () => 'error getFirmsFx',
+  target: $firmsError,
+});
+
+sample({
+  clock: getFirmsFx.doneData,
+  filter: (c) => c.firms?.status === 'success',
+  fn: () => null,
+  target: $firmsError,
+});
+
+sample({
+  clock: getFirmsForMapFx.doneData,
+  filter: (c) => c.firms?.status === 'error',
+  fn: () => 'error getFirmsFx',
+  target: $firmsError,
+});
+
+sample({
+  clock: getFirmsForMapFx.failData,
+  fn: (c) => 'error getFirmsFx',
+  target: $firmsError,
+});
+
+sample({
+  clock: getFirmsForMapFx.doneData,
+  filter: (c) => c.firms?.status === 'success',
+  fn: () => null,
   target: $firmsError,
 });
 
@@ -171,7 +206,7 @@ export const getFirmFx = firmD.createEffect({
 
 export const getFirmByUrlFx = firmD.createEffect({
   handler: async ({ firmUrl }: FirmUrl): Promise<{ firm: FirmQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/firm_url/${firmUrl}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/firm_by_url/${firmUrl}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
@@ -215,7 +250,14 @@ sample({
   target: $firmLoading,
 });
 
-// error
+/** error handling */
+sample({
+  clock: getFirmByUrlFx.doneData,
+  filter: (c) => c.firm?.status === 'error',
+  fn: () => 'error getFirmsFx',
+  target: $firmError,
+});
+
 sample({
   clock: getFirmByUrlFx.failData,
   fn: () => 'error getFirmByUrlFx',
@@ -224,6 +266,7 @@ sample({
 
 sample({
   clock: getFirmByUrlFx.doneData,
+  filter: (c) => c.firm?.status === 'success',
   fn: () => null,
   target: $firmError,
 });
