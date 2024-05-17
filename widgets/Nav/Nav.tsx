@@ -22,7 +22,7 @@ export const Nav = () => {
   const handleOpen = useCallback(() => setOpen((prevState) => !prevState), []);
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-hidden">
       <nav
         className={cn('w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%]', {
           'dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)]': !open,
