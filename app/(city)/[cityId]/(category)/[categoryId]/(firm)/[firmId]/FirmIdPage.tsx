@@ -31,8 +31,8 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId, categoryAbbr, firmUrl 
 
   return (
     <CitiesGateProvider>
-      <CategoriesGateProvider>
-        <CityIdGateProvider cityId={cityId}>
+      <CityIdGateProvider cityId={cityId}>
+        <CategoriesGateProvider>
           <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
             <FirmsGateProvider cityAbbr={cityId} categoryAbbr={categoryAbbr ?? ''}>
               <FirmIdGateProvider firmUrl={firmUrl}>
@@ -55,8 +55,8 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({ cityId, categoryAbbr, firmUrl 
               </FirmIdGateProvider>
             </FirmsGateProvider>
           </CategoryIdGateProvider>
-        </CityIdGateProvider>
-      </CategoriesGateProvider>
+        </CategoriesGateProvider>
+      </CityIdGateProvider>
     </CitiesGateProvider>
   );
 };

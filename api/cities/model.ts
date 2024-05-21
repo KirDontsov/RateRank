@@ -8,6 +8,7 @@ export const DEFAULT_DROPDOWN_VALUE = {
   city_id: 'Выберите город',
   name: 'Выберите город',
   abbreviation: 'Выберите город',
+  coords: null,
 };
 
 export interface City {
@@ -100,15 +101,12 @@ sample({
 
 sample({
   clock: CityGate.open,
-  source: { cities: $cities },
-  filter: ({ cities }, c) => !!cities?.length && !!c?.cityId,
-  fn: ({ cities }, c) => c?.cityId,
+  filter: (c) => !!c?.cityId,
+  fn: (c) => c?.cityId,
   target: $cityAbbreviation,
 });
 
 sample({
-  // @ts-ignore
-  clock: CityGate.open,
   source: { cityAbbreviation: $cityAbbreviation, cities: $cities },
   filter: ({ cityAbbreviation, cities }) => !!cityAbbreviation && !!cities?.length,
   fn: ({ cityAbbreviation, cities }) =>
