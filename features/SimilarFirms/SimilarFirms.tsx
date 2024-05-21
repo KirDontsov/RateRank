@@ -36,9 +36,9 @@ export const SimilarFirms = () => {
                     : ''
                 }
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
-                alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
-                title={firm?.name}
-                url={firm?.url}
+                alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+                title={firm?.name ?? ''}
+                url={firm?.url ?? ''}
                 subTitle={category?.name.slice(0, -1) || ''}
                 address={firm?.address}
               />

@@ -92,7 +92,7 @@ export const FirmId = () => {
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
-                  alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
+                  alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -101,7 +101,7 @@ export const FirmId = () => {
               )}
               <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                 <div className="text-center">
-                  <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${category?.name?.slice(0, -1)} ${firm?.name}`}</h1>
+                  <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`}</h1>
                   <Button onClick={() => {}}>Позвонить</Button>
                 </div>
               </div>
@@ -124,7 +124,7 @@ export const FirmId = () => {
                   <Anchors />
                   <SectionHeader
                     id="contacts"
-                    title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
+                    title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
                   />
                   <div className="flex flex-col gap-4">
                     <div className="flex gap-2 text-gray-500">
@@ -197,7 +197,7 @@ export const FirmId = () => {
                     <>
                       <SectionHeader
                         id="description"
-                        title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`}
+                        title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
                       />
                       <div className={`${styles.myCustomStyle} list-disc`}>
                         {!oaiDescription?.oai_description_value || oaiDescription?.oai_description_value === ''
@@ -213,7 +213,7 @@ export const FirmId = () => {
                   <div className="flex flex-col gap-4 my-4">
                     <SectionHeader
                       id="faq"
-                      title={`Часто задаваемые вопросы о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
+                      title={`Часто задаваемые вопросы о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                     />
                     <Accordion firm={firm} category={category} />
                   </div>
@@ -225,8 +225,8 @@ export const FirmId = () => {
                 <div className="container my-4 px-8 xl:px-0">
                   <SectionHeader
                     {...(oaiReviews.length ? { id: 'reviews' } : {})}
-                    title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
-                    subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
+                    title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                    subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                 </div>
                 <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -241,7 +241,7 @@ export const FirmId = () => {
                 <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
                   <SectionHeader
                     {...(reviewsCount && !oaiReviews.length ? { id: 'reviews' } : {})}
-                    title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
+                    title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                   <Button onClick={handleAddReview}>Написать отзыв</Button>
                 </div>
@@ -251,7 +251,7 @@ export const FirmId = () => {
               <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
                 <SectionHeader
                   title="Нет отзывов"
-                  subTitle={`Напишите отзыв первым о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name}`}
+                  subTitle={`Напишите отзыв первым о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                 />
                 <Button onClick={handleAddReview}>Написать отзыв</Button>
               </div>
@@ -266,7 +266,7 @@ export const FirmId = () => {
               />
             )}
             <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
-              <SectionHeader title={`Похожие ${category?.name}:`} />
+              <SectionHeader title={`Похожие ${category?.name ?? ''}:`} />
             </div>
             <div className="w-full px-8">
               <SimilarFirms />
