@@ -124,7 +124,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   'flex-col': tablet,
                 })}
               >
-                <Images firm={firm} images={images} />
+                <Images firm={firm} category={category} images={images} />
                 <div
                   className={cn('w-1/2 flex flex-col gap-4', {
                     'w-full': tablet,
