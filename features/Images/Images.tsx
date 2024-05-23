@@ -1,15 +1,19 @@
-import { $category, $firm, $images } from '@/api';
-import { useUnit } from 'effector-react';
-import { ImagesList } from './ImagesList';
-import { SectionHeader } from '@/widgets';
+import { $category, $firm, ImageType } from '@/api';
 import { useMediaQuery } from '@/hooks';
+import { SectionHeader } from '@/widgets';
 import cn from 'classnames';
+import { useUnit } from 'effector-react';
+import { FC } from 'react';
+import { ImagesList } from './ImagesList';
 
-export const Images = () => {
-  const { firm, category, images } = useUnit({
+export interface ImagesProps {
+  images: ImageType[] | null;
+}
+
+export const Images: FC<ImagesProps> = ({ images }) => {
+  const { firm, category } = useUnit({
     firm: $firm,
     category: $category,
-    images: $images,
   });
 
   const tablet = useMediaQuery('(max-width: 768px)');
@@ -26,7 +30,7 @@ export const Images = () => {
             <SectionHeader title={`Фотографии ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
 
             <div className="w-full flex flex-col gap-4">
-              <ImagesList />
+              <ImagesList images={images} />
             </div>
           </>
         ) : (

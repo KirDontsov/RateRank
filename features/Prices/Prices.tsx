@@ -1,18 +1,22 @@
-import { $category, $firm, $pricesCategories, $pricesItems } from '@/api';
+import { $category, $firm, PriceCategory, PriceItem } from '@/api';
 import { SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import groupBy from 'lodash/groupBy';
+import { FC } from 'react';
 import styles from './prices.module.scss';
 
-export const Prices = () => {
-  const { firm, category, pricesItems, pricesCategories } = useUnit({
+export interface PricesProps {
+  prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
+}
+
+export const Prices: FC<PricesProps> = ({ prices }) => {
+  const { prices_items, prices_categories } = prices;
+  const { firm, category } = useUnit({
     firm: $firm,
     category: $category,
-    pricesItems: $pricesItems,
-    pricesCategories: $pricesCategories,
   });
 
-  const itemsByCategories = groupBy(pricesItems, 'price_category_id');
+  const itemsByCategories = groupBy(prices_items, 'price_category_id');
   if (!Object.entries(itemsByCategories)?.length) {
     return <></>;
   }
@@ -22,8 +26,8 @@ export const Prices = () => {
       <div className={`${styles.myCustomStyle} list-disc`}>
         {Object.entries(itemsByCategories)?.map(([category, items]) => (
           <div key={category}>
-            {pricesCategories?.find((cat) => cat?.price_category_id === category)?.name} -{' '}
-            {pricesCategories?.find((cat) => cat?.price_category_id === category)?.value}
+            {prices_categories?.find((cat) => cat?.price_category_id === category)?.name} -{' '}
+            {prices_categories?.find((cat) => cat?.price_category_id === category)?.value}
             <ul>
               {items?.map((x) => (
                 <li key={x?.price_item_id}>

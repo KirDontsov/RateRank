@@ -1,9 +1,18 @@
-import { $firms } from '@/api';
-import { useList } from 'effector-react';
+import { Firm } from '@/api';
+import { FC } from 'react';
 import { FirmCard } from '../FirmCard';
 
-export const FirmsList = () => {
-  return useList($firms, ({ firm_id, name, address, url }) => (
-    <FirmCard firm_id={firm_id} url={url} name={name} address={address} />
-  ));
+export interface FirmsListProps {
+  firms: Firm[] | null;
+}
+
+export const FirmsList: FC<FirmsListProps> = ({ firms }) => {
+  return (
+    <>
+      {!!firms?.length &&
+        firms?.map(({ firm_id, name, address, url }) => {
+          return <FirmCard key={firm_id} firm_id={firm_id} url={url} name={name} address={address} />;
+        })}
+    </>
+  );
 };
