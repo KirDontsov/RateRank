@@ -27,7 +27,6 @@ export const SearchVariants = () => {
 
   const handleClick = useCallback(
     ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
-      console.log('currentTarget?.id', currentTarget?.id);
       const variantFirm = searchVariants?.find((item) => item?.url === currentTarget?.id);
 
       const city = cities?.find((item) => item?.city_id === variantFirm?.city_id);

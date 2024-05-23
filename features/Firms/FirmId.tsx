@@ -1,16 +1,19 @@
 'use client';
 import {
-  $category,
-  $city,
-  $firm,
   $firmError,
   $firmLoading,
-  $images,
   $imagesLoading,
-  $oaiDescription,
-  $oaiReviews,
   $reviewsCount,
   $reviewsPage,
+  Category,
+  City,
+  Firm,
+  ImageType,
+  OaiDescription,
+  OaiReview,
+  PriceCategory,
+  PriceItem,
+  Review,
   setReviewsPageEvt,
 } from '@/api';
 import { FirmMap, Images, Prices, ReviewsList, SimilarFirms } from '@/features';
@@ -20,40 +23,41 @@ import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, Sect
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 
 import { FirmLoading } from './FirmLoading';
 import styles from './oaiReviewStyles.module.scss';
 
-export const FirmId = () => {
+export interface FirmIdProps {
+  city: City | null;
+  category: Category | null;
+  firm: Firm | null;
+  images: ImageType[] | null;
+  reviews: Review[] | null;
+  oai_description: OaiDescription | null;
+  oai_reviews: OaiReview[] | null;
+  prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
+}
+
+export const FirmId: FC<FirmIdProps> = ({
+  city,
+  category,
+  firm,
+  images,
+  reviews,
+  oai_description,
+  oai_reviews,
+  prices,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const {
-    firm,
-    reviewsCount,
-    setPage,
-    page,
-    oaiReviews,
-    oaiDescription,
-    images,
-    imagesLoading,
-    city,
-    category,
-    firmLoading,
-    firmError,
-  } = useUnit({
-    firm: $firm,
+  const { reviewsCount, setPage, page, imagesLoading, firmLoading, firmError } = useUnit({
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
-    oaiReviews: $oaiReviews,
-    oaiDescription: $oaiDescription,
-    images: $images,
     imagesLoading: $imagesLoading,
-    city: $city,
-    category: $category,
     firmLoading: $firmLoading,
     firmError: $firmError,
   });
@@ -115,7 +119,7 @@ export const FirmId = () => {
                   'flex-col': tablet,
                 })}
               >
-                <Images />
+                <Images images={images} />
                 <div
                   className={cn('w-1/2 flex flex-col gap-4', {
                     'w-full': tablet,
@@ -193,23 +197,23 @@ export const FirmId = () => {
 
                   {!!firm?.coords && <FirmMap />}
 
-                  {(firm?.description || oaiDescription?.oai_description_value) && (
+                  {(firm?.description || oai_description?.oai_description_value) && (
                     <>
                       <SectionHeader
                         id="description"
                         title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
                       />
                       <div className={`${styles.myCustomStyle} list-disc`}>
-                        {!oaiDescription?.oai_description_value || oaiDescription?.oai_description_value === ''
+                        {!oai_description?.oai_description_value || oai_description?.oai_description_value === ''
                           ? firm?.description
-                          : oaiDescription?.oai_description_value
+                          : oai_description?.oai_description_value
                               ?.replaceAll('*', '')
                               ?.replaceAll('#', '')
                               ?.replaceAll(',,,', ', доб. ')}
                       </div>
                     </>
                   )}
-                  <Prices />
+                  <Prices prices={prices} />
                   <div className="flex flex-col gap-4 my-4">
                     <SectionHeader
                       id="faq"
@@ -220,17 +224,17 @@ export const FirmId = () => {
                 </div>
               </div>
             </div>
-            {oaiReviews.length ? (
+            {oai_reviews?.length ? (
               <>
                 <div className="container my-4 px-8 xl:px-0">
                   <SectionHeader
-                    {...(oaiReviews.length ? { id: 'reviews' } : {})}
+                    {...(oai_reviews.length ? { id: 'reviews' } : {})}
                     title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                     subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                 </div>
                 <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                  <div className={`${styles.myCustomStyle} list-disc`}>{oaiReviews?.[0]?.text ?? ''}</div>
+                  <div className={`${styles.myCustomStyle} list-disc`}>{oai_reviews?.[0]?.text ?? ''}</div>
                 </div>
               </>
             ) : (
@@ -240,12 +244,12 @@ export const FirmId = () => {
               <>
                 <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
                   <SectionHeader
-                    {...(reviewsCount && !oaiReviews.length ? { id: 'reviews' } : {})}
+                    {...(reviewsCount && !oai_reviews?.length ? { id: 'reviews' } : {})}
                     title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                   <Button onClick={handleAddReview}>Написать отзыв</Button>
                 </div>
-                <ReviewsList />
+                <ReviewsList reviews={reviews} />
               </>
             ) : (
               <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">

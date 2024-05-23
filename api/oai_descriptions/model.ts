@@ -11,7 +11,7 @@ export interface OaiDescription {
   firm_id: string;
   oai_description_value?: string;
 }
-export interface OaiDescriptionsQueryResult {
+export interface OaiDescriptionQueryResult {
   status: string;
   data: {
     oai_description: OaiDescription;
@@ -22,7 +22,7 @@ export const $oaiDescription = oaiDescriptionD.createStore<OaiDescription | null
 export const fetchOaiDescriptionEvt = oaiDescriptionD.createEvent<FirmId>();
 
 export const getOaiDescriptionByUrlFx = oaiDescriptionD.createEffect({
-  handler: async ({ firmUrl }: FirmUrl): Promise<{ oai_description: OaiDescriptionsQueryResult }> => {
+  handler: async ({ firmUrl }: FirmUrl): Promise<{ oai_description: OaiDescriptionQueryResult }> => {
     const res = await fetch(`${BACKEND_PORT}/api/oai_description_by_url/${firmUrl}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',

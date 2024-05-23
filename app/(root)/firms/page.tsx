@@ -1,40 +1,50 @@
-'use client';
-import { $firmsCount, $firmsPage, setFirmsPageEvt } from '@/api';
-import { Curve, FirmsGateProvider, FirmsList } from '@/features';
-import { COMMON_TITLE, FETCH_LIMIT } from '@/shared';
-import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
-import { useUnit } from 'effector-react';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { Metadata, ResolvingMetadata } from 'next/types';
+import { FirmsPage } from './FirmsPage';
+import { getCategory, getFirms } from './api';
 
 export interface CategoryPageProps {
   params: { cityId: string; categoryId: string };
+  searchParams: { [key: string]: string | undefined };
 }
 
-export default function Page({ params }: CategoryPageProps) {
-  const { firmsCount, setPage, page } = useUnit({
-    page: $firmsPage,
-    setPage: setFirmsPageEvt,
-    firmsCount: $firmsCount,
-  });
+export type CategoryMetaProps = {
+  params: { cityId: string; categoryId: string };
+};
 
+export async function generateMetadata({ params }: CategoryMetaProps, parent: ResolvingMetadata): Promise<Metadata> {
+  const prevPage = await parent;
+  const cityName = prevPage?.other?.city;
+  const categoryId = params.categoryId ?? '';
+
+  const category = await getCategory(categoryId);
+
+  const categoryName = category?.name;
+
+  return {
+    title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
+    description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+    alternates: { canonical: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}` },
+    keywords: [`${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
+    openGraph: {
+      title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
+      description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+      url: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}`,
+      siteName: `${COMMON_DOMAIN}`,
+      locale: 'ru_RU',
+      type: 'website',
+    },
+  };
+}
+
+/** Список фирм внутри категории */
+export default async function Page({ params, searchParams }: CategoryPageProps) {
   const categoryAbbr = params?.categoryId ?? '';
   const cityAbbr = params?.cityId ?? '';
+  const firmsPage = searchParams?.firmsPage ?? '1';
 
-  return (
-    <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
-      <Curve>
-        <Nav />
-        <Section>
-          <CommonHeader title={COMMON_TITLE} subTitle="Фирмы" />
-          {firmsCount ? <FirmsList /> : <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />}
+  const category = await getCategory(cityAbbr);
+  const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
 
-          <div className="flex flex-col items-center gap-4 pt-4 w-full">
-            {firmsCount && (
-              <Pagination current={page} onChange={setPage} total={Math.ceil((firmsCount ?? 0) / FETCH_LIMIT)} />
-            )}
-            <Footer />
-          </div>
-        </Section>
-      </Curve>
-    </FirmsGateProvider>
-  );
+  return <FirmsPage cityAbbr={cityAbbr} categoryAbbr={categoryAbbr} category={category} firms={firms} />;
 }
