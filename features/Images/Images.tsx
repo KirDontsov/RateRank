@@ -1,21 +1,17 @@
-import { $category, Firm, ImageType } from '@/api';
+import { Category, Firm, ImageType } from '@/api';
 import { useMediaQuery } from '@/hooks';
 import { SectionHeader } from '@/widgets';
 import cn from 'classnames';
-import { useUnit } from 'effector-react';
 import { FC } from 'react';
 import { ImagesList } from './ImagesList';
 
 export interface ImagesProps {
   images: ImageType[] | null;
   firm: Firm | null;
+  category: Category | null;
 }
 
-export const Images: FC<ImagesProps> = ({ images, firm }) => {
-  const { category } = useUnit({
-    category: $category,
-  });
-
+export const Images: FC<ImagesProps> = ({ images, firm, category }) => {
   const tablet = useMediaQuery('(max-width: 768px)');
 
   return (
