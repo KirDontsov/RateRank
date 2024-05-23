@@ -1,5 +1,16 @@
 'use client';
-import { Category, City, Firm, ImageType, OaiDescription, OaiReview, PriceCategory, PriceItem, Review } from '@/api';
+import {
+  Category,
+  City,
+  Firm,
+  ImageType,
+  ImagesQueryResult,
+  OaiDescription,
+  OaiReview,
+  PriceCategory,
+  PriceItem,
+  Review,
+} from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -28,11 +39,13 @@ export interface FirmIdPageProps {
   city: City | null;
   category: Category | null;
   firm: Firm | null;
+  firms: Firm[] | null;
   images: ImageType[] | null;
   reviews: Review[] | null;
   oai_description: OaiDescription | null;
   oai_reviews: OaiReview[] | null;
   prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
+  similarFirmsImages: ImagesQueryResult[] | null;
 }
 
 export const FirmIdPage: FC<FirmIdPageProps> = ({
@@ -42,11 +55,13 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({
   city,
   category,
   firm,
+  firms,
   images,
   reviews,
   oai_description,
   oai_reviews,
   prices,
+  similarFirmsImages,
 }) => {
   const searchParams = useSearchParams();
 
@@ -69,11 +84,13 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({
                                 city={city}
                                 category={category}
                                 firm={firm}
+                                firms={firms}
                                 images={images}
                                 reviews={reviews}
                                 oai_reviews={oai_reviews}
                                 oai_description={oai_description}
                                 prices={prices}
+                                similarFirmsImages={similarFirmsImages}
                               />
                             </Section>
                           </Curve>

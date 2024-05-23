@@ -1,19 +1,21 @@
 'use client';
-import { $city, $category, $firm } from '@/api';
+import { Category, City, Firm, ImagesQueryResult } from '@/api';
 import { SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { HeroBackground } from '@/shared';
 import { Anchors, Button, Footer, ImageWithFallback, SectionHeader } from '@/widgets';
 import cn from 'classnames';
-import { useUnit } from 'effector-react';
+import { FC } from 'react';
 
-export const FirmLoading = () => {
-  const { firm, city, category } = useUnit({
-    firm: $firm,
-    city: $city,
-    category: $category,
-  });
+export interface FirmLoadingProps {
+  city: City | null;
+  category: Category | null;
+  firm: Firm | null;
+  firms: Firm[] | null;
+  similarFirmsImages: ImagesQueryResult[] | null;
+}
 
+export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms, similarFirmsImages }) => {
   const tablet = useMediaQuery('(max-width: 768px)');
 
   return (
@@ -93,7 +95,13 @@ export const FirmLoading = () => {
           <SectionHeader title={`Похожие ${category?.name}:`} />
         </div>
         <div className="w-full px-8">
-          <SimilarFirms />
+          <SimilarFirms
+            city={city}
+            category={category}
+            firm={firm}
+            firms={firms}
+            similarFirmsImages={similarFirmsImages}
+          />
         </div>
         <Footer />
       </div>

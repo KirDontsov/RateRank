@@ -5,11 +5,13 @@ import {
   getCategory,
   getCity,
   getFirm,
+  getFirms,
   getImages,
   getOaiDescription,
   getOaiReviews,
   getPrices,
   getReviews,
+  getSimilarFirmsImages,
 } from './api';
 
 type Props = {
@@ -74,6 +76,8 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const oai_description = await getOaiDescription(firmUrl);
   const oai_reviews = await getOaiReviews(firmUrl, reviewsPage, 10);
   const prices = await getPrices(firmUrl);
+  const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
+  const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
   return (
     <FirmIdPage
@@ -83,11 +87,13 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
       city={city}
       category={category}
       firm={firm}
+      firms={firms}
       images={images}
       reviews={reviews}
       oai_description={oai_description}
       oai_reviews={oai_reviews}
       prices={prices}
+      similarFirmsImages={similarFirmsImages}
     />
   );
 }

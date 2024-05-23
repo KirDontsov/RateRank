@@ -1,23 +1,18 @@
-import { $category, $city, $firm, $firms, $similarFirmsImages, $similarFirmsImagesLoading } from '@/api';
+import { Category, City, Firm, ImagesQueryResult } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 
-import { useUnit } from 'effector-react';
+import { FC } from 'react';
 import { SimilarCard } from './SimilarCard';
 
-export const SimilarFirms = () => {
-  const { city, category, firm, firms, similarFirmsImages, similarFirmsImagesLoading } = useUnit({
-    firms: $firms,
-    firm: $firm,
-    city: $city,
-    category: $category,
-    similarFirmsImages: $similarFirmsImages,
-    similarFirmsImagesLoading: $similarFirmsImagesLoading,
-  });
+export interface SimilarFirmsProps {
+  city: City | null;
+  category: Category | null;
+  firm: Firm | null;
+  firms: Firm[] | null;
+  similarFirmsImages: ImagesQueryResult[] | null;
+}
 
-  if (!firms?.length && similarFirmsImagesLoading) {
-    return <>Loading...</>;
-  }
-
+export const SimilarFirms: FC<SimilarFirmsProps> = ({ firm, firms, city, category, similarFirmsImages }) => {
   return (
     <div className="flex gap-4 overflow-x-auto w-full py-8">
       {!!firms?.length &&
