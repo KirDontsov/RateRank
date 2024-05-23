@@ -69,6 +69,27 @@ export async function getImages(firmUrl: string) {
   return images?.data?.images || null;
 }
 
+export async function getFirms(
+  cityId: string,
+  categoryId: string,
+  page: string,
+  limit: number,
+): Promise<Firm[] | null> {
+  const firms = await fetch(
+    `${BACKEND_PORT}/api/firms_by_abbr?city_id=${cityId}&category_id=${categoryId}&page=${page}&limit=${limit}`,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    },
+  )
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
+
+  return firms?.data?.firms || null;
+}
+
 export async function getReviews(firmUrl: string, page: string, limit: number) {
   const reviews: ReviewsQueryResult = await fetch(
     `${BACKEND_PORT}/api/reviews_by_url/${firmUrl}?page=${page}&limit=${limit}`,
@@ -133,4 +154,21 @@ export async function getPrices(firmUrl: string) {
       prices_categories: oai_reviews?.data?.prices_categories || null,
     } || null
   );
+}
+
+export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQueryResult[]> {
+  const requests: Promise<ImagesQueryResult>[] = [];
+
+  firmUrls.forEach((url: string) => {
+    requests.push(
+      fetch(`${BACKEND_PORT}/api/images_by_url/${url}`, {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'GET',
+      }).then((res) => res.json()),
+    );
+  });
+
+  const similarImages = await Promise.all(requests);
+
+  return similarImages || null;
 }

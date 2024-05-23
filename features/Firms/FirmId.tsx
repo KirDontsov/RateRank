@@ -9,6 +9,7 @@ import {
   City,
   Firm,
   ImageType,
+  ImagesQueryResult,
   OaiDescription,
   OaiReview,
   PriceCategory,
@@ -32,22 +33,26 @@ export interface FirmIdProps {
   city: City | null;
   category: Category | null;
   firm: Firm | null;
+  firms: Firm[] | null;
   images: ImageType[] | null;
   reviews: Review[] | null;
   oai_description: OaiDescription | null;
   oai_reviews: OaiReview[] | null;
   prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
+  similarFirmsImages: ImagesQueryResult[] | null;
 }
 
 export const FirmId: FC<FirmIdProps> = ({
   city,
   category,
   firm,
+  firms,
   images,
   reviews,
   oai_description,
   oai_reviews,
   prices,
+  similarFirmsImages,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -119,7 +124,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   'flex-col': tablet,
                 })}
               >
-                <Images images={images} />
+                <Images firm={firm} images={images} />
                 <div
                   className={cn('w-1/2 flex flex-col gap-4', {
                     'w-full': tablet,
@@ -273,13 +278,25 @@ export const FirmId: FC<FirmIdProps> = ({
               <SectionHeader title={`Похожие ${category?.name ?? ''}:`} />
             </div>
             <div className="w-full px-8">
-              <SimilarFirms />
+              <SimilarFirms
+                city={city}
+                category={category}
+                firm={firm}
+                firms={firms}
+                similarFirmsImages={similarFirmsImages}
+              />
             </div>
             <Footer />
           </div>
         </div>
       ) : (
-        <FirmLoading />
+        <FirmLoading
+          city={city}
+          category={category}
+          firm={firm}
+          firms={firms}
+          similarFirmsImages={similarFirmsImages}
+        />
       )}
     </div>
   );

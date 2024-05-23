@@ -1,4 +1,4 @@
-import { $category, $firm, ImageType } from '@/api';
+import { $category, Firm, ImageType } from '@/api';
 import { useMediaQuery } from '@/hooks';
 import { SectionHeader } from '@/widgets';
 import cn from 'classnames';
@@ -8,11 +8,11 @@ import { ImagesList } from './ImagesList';
 
 export interface ImagesProps {
   images: ImageType[] | null;
+  firm: Firm | null;
 }
 
-export const Images: FC<ImagesProps> = ({ images }) => {
-  const { firm, category } = useUnit({
-    firm: $firm,
+export const Images: FC<ImagesProps> = ({ images, firm }) => {
+  const { category } = useUnit({
     category: $category,
   });
 
