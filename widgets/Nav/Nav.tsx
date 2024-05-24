@@ -7,6 +7,7 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
+import styles from './nav.module.scss';
 
 export const Nav = () => {
   const value = useUserAuth();
@@ -24,7 +25,7 @@ export const Nav = () => {
   return (
     <div className="w-full overflow-hidden">
       <nav
-        className={cn('w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%]', {
+        className={cn(`w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%] ${styles.nav}`, {
           'dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)]': !open,
           'dark:bg-gray-700 bg-white': open,
         })}

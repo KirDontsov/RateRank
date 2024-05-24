@@ -41,7 +41,7 @@ export const FirmMap = () => {
           initialViewState={{
             longitude: Number(coords?.[0] ?? 0),
             latitude: Number(coords?.[1] ?? 0),
-            zoom: 15,
+            zoom: 16,
           }}
           maxZoom={20}
           minZoom={1}
