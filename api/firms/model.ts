@@ -20,6 +20,7 @@ export interface Firm {
   site: string;
   default_phone: string;
   description: string;
+  rating: string;
   category_id: string;
   city_id: string;
   coords: string;

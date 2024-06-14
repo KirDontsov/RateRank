@@ -20,7 +20,7 @@ import {
 import { FirmMap, Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
-import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, SectionHeader } from '@/widgets';
+import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, Rating, SectionHeader } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -135,6 +135,17 @@ export const FirmId: FC<FirmIdProps> = ({
                   })}
                 >
                   <Anchors />
+                  <SectionHeader
+                    id="contacts"
+                    title={`Рейтинг ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
+                  />
+                  <div className="flex items-center">
+                    <Rating rating={firm?.rating} />
+                    <div className="flex items-center ml-2">
+                      {firm?.rating} /
+                      {`${reviewsCount} ${reviewsCount === 1 ? 'отзыв' : (reviewsCount ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}
+                    </div>
+                  </div>
                   <SectionHeader
                     id="contacts"
                     title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}

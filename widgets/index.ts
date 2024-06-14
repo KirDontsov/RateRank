@@ -10,6 +10,7 @@ export * from './ImageWithFallback';
 export * from './LoadingScreen';
 export * from './Nav';
 export * from './Pagination';
+export * from './Rating';
 export * from './Section';
 export * from './SectionHeader';
 export * from './ThemeProvider';
