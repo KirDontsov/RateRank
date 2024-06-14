@@ -61,14 +61,14 @@ export default function RootLayout({ children }: CommonProps) {
 		             webvisor:true
 		        });`}
             </Script>
-            <Script id="webmaster-waiter" strategy="afterInteractive">
+            <Script id="webmaster-waiter" strategy="beforeInteractive">
               {`window.YandexRotorSettings = {
-                  WaiterEnabled: true;
-                  FailOnTimeout: false;
-                  NoJsRedirectsToMain: true
+                  WaiterEnabled: true,
+                  FailOnTimeout: false,
+                  NoJsRedirectsToMain: true,
                   IsLoaded: function() {
                       return document.body.querySelectorAll('div').length > 10;
-                  }
+                  },
               }`}
             </Script>
           </>

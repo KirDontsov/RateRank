@@ -1,5 +1,6 @@
 import { $category, $city, $firmsPage, setFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
+import { Rating } from '@/widgets';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -12,9 +13,10 @@ export interface FirmsCardProps {
   name?: string;
   address?: string;
   descriptioin?: string;
+  rating?: string;
 }
 
-export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address }) => {
+export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rating }) => {
   const searchParams = useSearchParams();
   const { city, category, page, setFirm } = useUnit({
     city: $city,
@@ -35,9 +37,11 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address }) =>
       className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
     >
       <div className="mt-2">
-        <div className="text-xl font-bold text-gray-700 dark:text-white" tabIndex={0}>
+        <div className="text-xl flex justify-between items-center font-bold text-gray-700 dark:text-white" tabIndex={0}>
           {name}
+          <Rating rating={rating} />
         </div>
+
         <p className="mt-2 text-gray-600 dark:text-gray-300">{address}</p>
       </div>
 
