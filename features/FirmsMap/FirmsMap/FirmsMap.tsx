@@ -89,7 +89,7 @@ export const FirmsMap = () => {
       ?.map((firm) => {
         const coords = firm?.coords?.split(', ');
         return {
-          id: firm?.firm_id,
+          id: firm?.url,
           type: 'Feature',
           properties: {
             name: firm?.name,
