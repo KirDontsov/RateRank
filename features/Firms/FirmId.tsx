@@ -141,9 +141,9 @@ export const FirmId: FC<FirmIdProps> = ({
                   />
                   <div className="flex items-center">
                     <Rating rating={firm?.rating} />
-                    <div className="flex items-center ml-2">
-                      {firm?.rating} /
-                      {`${reviewsCount} ${reviewsCount === 1 ? 'отзыв' : (reviewsCount ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}
+                    <div className="flex items-center gap-2 ml-4">
+                      <span>{firm?.rating}</span> /
+                      <span>{`${reviewsCount} ${reviewsCount === 1 ? 'отзыв' : (reviewsCount ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
                     </div>
                   </div>
                   <SectionHeader
