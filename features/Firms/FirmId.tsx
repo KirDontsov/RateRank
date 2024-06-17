@@ -135,17 +135,21 @@ export const FirmId: FC<FirmIdProps> = ({
                   })}
                 >
                   <Anchors />
-                  <SectionHeader
-                    id="contacts"
-                    title={`Рейтинг ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
-                  />
-                  <div className="flex items-center">
-                    <Rating rating={firm?.rating} />
-                    <div className="flex items-center ml-2">
-                      {firm?.rating} /
-                      {`${reviewsCount} ${reviewsCount === 1 ? 'отзыв' : (reviewsCount ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}
-                    </div>
-                  </div>
+                  {Number(firm?.reviews_count) > 0 && (
+                    <>
+                      <SectionHeader
+                        id="contacts"
+                        title={`Рейтинг ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
+                      />
+                      <div className="flex items-center">
+                        <Rating rating={firm?.rating} />
+                        <div className="flex items-center gap-2 ml-4">
+                          <span>{firm?.rating}</span> /
+                          <span>{`${firm?.reviews_count} ${Number(firm?.reviews_count) === 1 ? 'отзыв' : (Number(firm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <SectionHeader
                     id="contacts"
                     title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}

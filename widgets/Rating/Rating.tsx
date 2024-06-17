@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { sequenceGenerator } from '@/shared';
+import { FC } from 'react';
 
 export interface RatingProps {
   rating?: string;
@@ -16,7 +16,7 @@ export const Rating: FC<RatingProps> = ({ rating }) => {
 
   return (
     <span
-      className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-100 dark:bg-gray-600 rounded hover:bg-gray-500 flex"
+      className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-100 dark:bg-gray-600 rounded hover:bg-gray-200 dark:hover:bg-gray-500 flex"
       tabIndex={0}
     >
       {positiveArray.map((x) => (

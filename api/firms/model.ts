@@ -1,4 +1,5 @@
 import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
+import { log } from 'console';
 import { createDomain, sample } from 'effector';
 import persist from 'effector-localstorage';
 import { createGate } from 'effector-react';
@@ -21,9 +22,17 @@ export interface Firm {
   default_phone: string;
   description: string;
   rating: string;
+  reviews_count: string;
   category_id: string;
   city_id: string;
   coords: string;
+}
+
+export interface FirmForMap {
+  name: string;
+  address: string;
+  coords: string;
+  url: string;
 }
 
 export interface FirmsQueryResult {
@@ -55,7 +64,7 @@ persist({
   store: $firms,
   key: 'firms',
 });
-export const $firmsForMap = firmsD.createStore<Firm[]>([]);
+export const $firmsForMap = firmsD.createStore<FirmForMap[]>([]);
 export const $firmsPage = firmsD.createStore<number>(1);
 export const $firmsCount = firmsD.createStore<number | null>(null);
 export const $firmsError = firmsD.createStore<string | null>(null);
@@ -306,12 +315,16 @@ sample({
 
 // Pagination by city, category, type
 sample({
-  // @ts-ignore
   clock: setFirmsPageEvt,
-  source: [$city, $category],
-  fn: ([city, category], page) => {
-    // @ts-ignore
-    return { page, limit: 10, city_id: city?.abbreviation, category_id: category?.abbreviation };
+  source: { city: $city, category: $category },
+  fn: ({ city, category }, page) => {
+    console.log('page', page);
+    return {
+      page,
+      limit: 10,
+      city_id: city?.abbreviation ?? '',
+      category_id: category?.abbreviation ?? '',
+    };
   },
   target: getFirmsFx,
 });
