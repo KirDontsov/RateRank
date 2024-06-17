@@ -14,9 +14,10 @@ export interface FirmsCardProps {
   address?: string;
   descriptioin?: string;
   rating?: string;
+  reviews_count?: string;
 }
 
-export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rating }) => {
+export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rating, reviews_count }) => {
   const searchParams = useSearchParams();
   const { city, category, page, setFirm } = useUnit({
     city: $city,
@@ -41,6 +42,12 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rati
           {name}
           <Rating rating={rating} />
         </div>
+        {Number(reviews_count) > 0 && !!rating && (
+          <p className="mt-2 text-gray-600 dark:text-gray-300">
+            <span>Рейтинг: {rating}</span> /{' '}
+            <span>{`${reviews_count} ${Number(reviews_count) === 1 ? 'отзыв' : (Number(reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+          </p>
+        )}
 
         <p className="mt-2 text-gray-600 dark:text-gray-300">{address}</p>
       </div>
