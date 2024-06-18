@@ -1,4 +1,4 @@
-import { $category, $city, $firm, $imagesLoading, ImageType } from '@/api';
+import { $category, $city, $firm, $imagesLoading, Category, City, Firm, ImageType } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
 import { useUnit } from 'effector-react';
@@ -6,16 +6,12 @@ import { FC } from 'react';
 
 export interface ImagesListProps {
   images: ImageType[] | null;
+  firm: Firm | null;
+  city: City | null;
+  category: Category | null;
 }
 
-export const ImagesList: FC<ImagesListProps> = ({ images }) => {
-  const { firm, city, category, imagesLoading } = useUnit({
-    firm: $firm,
-    city: $city,
-    category: $category,
-    imagesLoading: $imagesLoading,
-  });
-
+export const ImagesList: FC<ImagesListProps> = ({ firm, city, category, images }) => {
   const list = images?.map((img) => {
     return (
       <div key={img?.img_id} className="aspect-video relative">
@@ -31,7 +27,7 @@ export const ImagesList: FC<ImagesListProps> = ({ images }) => {
     );
   });
 
-  if (imagesLoading) {
+  if (!images?.length) {
     return (
       <div
         role="status"

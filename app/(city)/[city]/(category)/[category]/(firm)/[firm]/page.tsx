@@ -15,15 +15,15 @@ import {
 } from './api';
 
 type Props = {
-  params: { cityId: string; categoryId: string; firmId: string };
+  params: { city: string; category: string; firm: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export interface FirmPageProps {
   params: {
-    cityId: string;
-    categoryId: string;
-    firmId: string;
+    city: string;
+    category: string;
+    firm: string;
   };
   searchParams: { [key: string]: string | undefined };
 }
@@ -31,8 +31,8 @@ export interface FirmPageProps {
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
   const cityName = `${prevPage?.other?.city || ''}`;
-  const firmUrl = params?.firmId ?? '';
-  const categoryId = params?.categoryId ?? '';
+  const firmUrl = params?.firm ?? '';
+  const categoryId = params?.category ?? '';
 
   const category = await getCategory(categoryId);
 
@@ -48,13 +48,13 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
     alternates: {
-      canonical: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}/${firmUrl}`,
+      canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
       description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
-      url: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}/${firmUrl}`,
+      url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -64,9 +64,9 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 /** Страница фирмы с отзывами */
 export default async function Page({ params, searchParams }: FirmPageProps) {
-  const cityAbbr = params.cityId ?? '';
-  const categoryAbbr = params.categoryId ?? '';
-  const firmUrl = params.firmId ?? '';
+  const cityAbbr = params.city ?? '';
+  const categoryAbbr = params.category ?? '';
+  const firmUrl = params.firm ?? '';
   const firmsPage = searchParams?.firmsPage ?? '1';
   const reviewsPage = searchParams?.reviewsPage ?? '1';
 

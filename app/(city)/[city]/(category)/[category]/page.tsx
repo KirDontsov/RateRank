@@ -4,18 +4,18 @@ import { FirmsPage } from './FirmsPage';
 import { getCategory, getFirms } from './api';
 
 export interface CategoryPageProps {
-  params: { cityId: string; categoryId: string };
+  params: { city: string; category: string };
   searchParams: { [key: string]: string | undefined };
 }
 
 export type CategoryMetaProps = {
-  params: { cityId: string; categoryId: string };
+  params: { city: string; category: string };
 };
 
 export async function generateMetadata({ params }: CategoryMetaProps, parent: ResolvingMetadata): Promise<Metadata> {
   const prevPage = await parent;
   const cityName = prevPage?.other?.city;
-  const categoryId = params.categoryId ?? '';
+  const categoryId = params.category ?? '';
 
   const category = await getCategory(categoryId);
 
@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: CategoryMetaProps, parent: Re
   return {
     title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-    alternates: { canonical: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}` },
+    alternates: { canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}` },
     keywords: [`${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
       description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-      url: `https://топвыбор.рф/${params.cityId}/${category?.abbreviation}`,
+      url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -39,8 +39,8 @@ export async function generateMetadata({ params }: CategoryMetaProps, parent: Re
 
 /** Список фирм внутри категории */
 export default async function Page({ params, searchParams }: CategoryPageProps) {
-  const categoryAbbr = params?.categoryId ?? '';
-  const cityAbbr = params?.cityId ?? '';
+  const categoryAbbr = params?.category ?? '';
+  const cityAbbr = params?.city ?? '';
   const firmsPage = searchParams?.firmsPage ?? '1';
 
   const category = await getCategory(cityAbbr);
