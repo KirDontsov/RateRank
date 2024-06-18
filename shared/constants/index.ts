@@ -17,3 +17,4 @@ export const HeroBackground = {
 
 export const COMMON_TITLE = 'Топ выбор';
 export const COMMON_DOMAIN = 'Топвыбор.рф';
+export const COMMON_HOST = 'https://топвыбор.рф';

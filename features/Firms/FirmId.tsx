@@ -97,7 +97,7 @@ export const FirmId: FC<FirmIdProps> = ({
             <div className="w-full bg-center bg-cover h-[38rem] relative">
               {!imagesLoading && (
                 <ImageWithFallback
-                  className="w-full h-[38rem] absolute z-[-1]"
+                  className="w-full h-[38rem] absolute z-[-1] blur-sm"
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
@@ -123,57 +123,63 @@ export const FirmId: FC<FirmIdProps> = ({
 
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
             <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
-              <div
-                className={cn('w-full flex gap-8', {
-                  'flex-col': tablet,
-                })}
-              >
-                <Images firm={firm} category={category} images={images} />
-                <div
-                  className={cn('w-1/2 flex flex-col gap-4', {
-                    'w-full': tablet,
-                  })}
-                >
+              <div className="w-full flex gap-8">
+                <div className={cn('w-full flex flex-col gap-4')}>
                   <Anchors />
-                  {Number(firm?.reviews_count) > 0 && (
-                    <>
+                  <div
+                    className={cn('w-full flex', {
+                      'gap-8 flex-col-reverse': tablet,
+                    })}
+                  >
+                    <div
+                      className={cn('flex flex-col gap-4', {
+                        'w-full': tablet,
+                        'w-2/3': !tablet,
+                      })}
+                    >
                       <SectionHeader
                         id="contacts"
-                        title={`Рейтинг ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
+                        title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
                       />
-                      <div className="flex items-center">
-                        <Rating rating={firm?.rating} />
-                        <div className="flex items-center gap-2 ml-4">
-                          <span>{firm?.rating}</span> /
-                          <span>{`${firm?.reviews_count} ${Number(firm?.reviews_count) === 1 ? 'отзыв' : (Number(firm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex gap-2 text-gray-500">
+                          <svg
+                            className="w-6 h-6 text-gray-800 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          Адрес:
                         </div>
+                        <p>{firm?.address}</p>
                       </div>
-                    </>
-                  )}
-                  <SectionHeader
-                    id="contacts"
-                    title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
-                  />
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-2 text-gray-500">
-                      <svg
-                        className="w-6 h-6 text-gray-800 dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Адрес:
                     </div>
-                    <p>{firm?.address}</p>
+
+                    <div
+                      className={cn('flex h-fit', {
+                        'w-full': tablet,
+                        'w-1/3 justify-end': !tablet,
+                      })}
+                    >
+                      {Number(firm?.reviews_count) > 0 && (
+                        <div className="flex h-fit">
+                          <Rating rating={firm?.rating} />
+                          <div className="flex items-center gap-2 ml-4">
+                            <span>{firm?.rating}</span> /
+                            <span>{`${firm?.reviews_count} ${Number(firm?.reviews_count) === 1 ? 'отзыв' : (Number(firm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {firm?.default_phone && (
@@ -249,6 +255,7 @@ export const FirmId: FC<FirmIdProps> = ({
                     />
                     <Accordion firm={firm} category={category} />
                   </div>
+                  <Images firm={firm} city={city} category={category} images={images} />
                 </div>
               </div>
             </div>
@@ -257,7 +264,7 @@ export const FirmId: FC<FirmIdProps> = ({
                 <div className="container my-4 px-8 xl:px-0">
                   <SectionHeader
                     {...(oai_reviews.length ? { id: 'reviews' } : {})}
-                    title={`Краткое содержание отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                    title={`Краткое содержание и анализ отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                     subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                 </div>

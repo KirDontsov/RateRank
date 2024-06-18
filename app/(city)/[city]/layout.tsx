@@ -6,11 +6,11 @@ import { Metadata } from 'next/types';
 import { getCity } from './api';
 
 type CityIdProps = {
-  params: { cityId: string };
+  params: { city: string };
 };
 
 export async function generateMetadata({ params }: CityIdProps): Promise<Metadata> {
-  const cityId = params.cityId;
+  const cityId = params.city;
 
   const city = await getCity(cityId);
   const cityName = city?.name;

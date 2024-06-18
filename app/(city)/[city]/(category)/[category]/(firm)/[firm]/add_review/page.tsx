@@ -18,7 +18,7 @@ import {
 import { AddReviewValues } from './interfaces';
 
 type Props = {
-  params: { cityId: string; categoryId: string; firmId: string };
+  params: { city: string; category: string; firm: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -31,7 +31,7 @@ export default function Page({ params }: Props) {
     addReview: addReviewEvt,
   });
 
-  const firmUrl = params?.firmId ?? '';
+  const firmUrl = params?.firm ?? '';
   const firmId = firm?.firm_id ?? '';
 
   const form = useForm<AddReviewValues>({

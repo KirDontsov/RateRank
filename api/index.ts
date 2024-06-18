@@ -5,6 +5,7 @@ export * from './firms';
 export * from './images';
 export * from './oai_descriptions';
 export * from './oai_reviews';
+export * from './pages';
 export * from './prices';
 export * from './reviews';
 export * from './search';
