@@ -31,7 +31,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
   return (
     <div>
       <Curve>
-        <Nav />
+        <Nav cities={cities} categories={categories} />
         <Section pt={0}>
           <div className="w-full flex flex-col gap-8">
             <header>
@@ -49,7 +49,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                 />
                 <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                   <div className="text-center">
-                    <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${sections?.[0]?.title ?? ''}`}</h1>
+                    <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`${sections?.[0]?.title ?? ''}`}</h1>
                   </div>
                 </div>
               </div>

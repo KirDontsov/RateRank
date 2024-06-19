@@ -26,6 +26,7 @@ import {
   ReviewsGateProvider,
   SimilarImagesGateProvider,
 } from '@/features';
+import { CommonNavProps } from '@/shared';
 import { Nav, Section } from '@/widgets';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
@@ -48,11 +49,13 @@ export interface FirmIdPageProps {
   similarFirmsImages: ImagesQueryResult[] | null;
 }
 
-export const FirmIdPage: FC<FirmIdPageProps> = ({
+export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
   cityId,
   categoryAbbr,
   firmUrl,
+  cities,
   city,
+  categories,
   category,
   firm,
   firms,
@@ -78,7 +81,7 @@ export const FirmIdPage: FC<FirmIdPageProps> = ({
                       <OaiDescriptionGateProvider firmUrl={firmUrl}>
                         <SimilarImagesGateProvider key={firmUrl}>
                           <Curve>
-                            <Nav />
+                            <Nav cities={cities} categories={categories} />
                             <Section pt={0}>
                               <FirmId
                                 city={city}

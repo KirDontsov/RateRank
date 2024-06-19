@@ -11,8 +11,8 @@ export interface CityPageProps {
 export default async function Page({ params }: CityPageProps) {
   const cityId = params.cityId ?? '';
 
-  const city = await getCity(cityId);
+  const cities = await getCities();
   const categories = await getCategories(1, 10);
 
-  return <CategoriesPage cityId={cityId} categories={categories} />;
+  return <CategoriesPage cityId={cityId} cities={cities} categories={categories} />;
 }

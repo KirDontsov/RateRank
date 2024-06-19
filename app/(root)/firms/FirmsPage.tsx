@@ -1,5 +1,5 @@
 'use client';
-import { $cityError, $firmsCount, $firmsError, $firmsPage, Category, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsError, $firmsPage, Category, Firm, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -10,7 +10,7 @@ import {
   FirmsList,
   FirmsMap,
 } from '@/features';
-import { FETCH_LIMIT } from '@/shared';
+import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -19,11 +19,16 @@ import { FC, useCallback } from 'react';
 export interface FirmsPageProps {
   categoryAbbr: string;
   cityAbbr: string;
-  category: Category | null;
   firms: Firm[] | null;
 }
 
-export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr, category, firms }) => {
+export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
+  cityAbbr,
+  categoryAbbr,
+  firms,
+  cities,
+  categories,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -56,7 +61,7 @@ export const FirmsPage: FC<FirmsPageProps> = ({ cityAbbr, categoryAbbr, category
           <CategoryIdGateProvider categoryAbbr={categoryAbbr ?? ''}>
             <FirmsGateProvider cityAbbr={cityAbbr} categoryAbbr={categoryAbbr}>
               <Curve>
-                <Nav />
+                <Nav cities={cities} categories={categories} />
                 <Section pt={0}>
                   <div className="flex xl:flex-row xl:w-full flex-col-reverse px-4 xl:px-0">
                     <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 xl:h-[100svh] xl:overflow-auto pt-[74px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">

@@ -1,4 +1,5 @@
 'use client';
+import { Category, City } from '@/api';
 import { $loading, useUserAuth } from '@/context';
 import { CityDropdown, SearchInput, SearchVariants } from '@/features';
 import { useMediaQuery } from '@/hooks';
@@ -6,10 +7,15 @@ import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import styles from './nav.module.scss';
 
-export const Nav = () => {
+export interface NavProps {
+  cities?: City[] | null;
+  categories?: Category[] | null;
+}
+
+export const Nav: FC<NavProps> = ({ cities, categories }) => {
   const value = useUserAuth();
 
   const { loading } = useUnit({
@@ -141,7 +147,7 @@ export const Nav = () => {
           )}
         </div>
       </nav>
-      <SearchVariants />
+      <SearchVariants cities={cities} categories={categories} />
     </div>
   );
 };

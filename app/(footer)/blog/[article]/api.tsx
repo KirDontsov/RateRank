@@ -27,7 +27,6 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
 }
 
 export async function getFirm(firmId: string): Promise<Firm | null> {
-  console.log('firmId', firmId);
   const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm_by_url/${firmId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',

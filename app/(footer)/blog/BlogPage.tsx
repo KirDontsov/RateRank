@@ -1,20 +1,24 @@
 /** eslint-disable react/jsx-key */
 'use client';
+import { Category, City, PageItem } from '@/api';
 import { Curve } from '@/features';
-import { COMMON_DOMAIN, COMMON_TITLE, DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
-import { CommonHeader, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import { COMMON_TITLE, HeroBackground } from '@/shared';
+import { Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FC } from 'react';
 
 export interface BlogPageProps {
-  pages: any[] | null;
+  pages: PageItem[] | null;
+  cities: City[] | null;
+  categories: Category[] | null;
 }
 
-export const BlogPage: FC<BlogPageProps> = ({ pages }) => {
+export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
   return (
     <div>
       <Curve>
-        <Nav />
+        <Nav cities={cities} categories={categories} />
         <Section pt={0}>
           <div className="w-full flex flex-col gap-8">
             <header>
@@ -32,7 +36,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages }) => {
                 />
                 <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                   <div className="text-center">
-                    <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`Блог - Подборки - ${COMMON_TITLE}`}</h1>
+                    <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`Блог - Подборки - ${COMMON_TITLE}`}</h1>
                   </div>
                 </div>
               </div>
@@ -40,12 +44,16 @@ export const BlogPage: FC<BlogPageProps> = ({ pages }) => {
           </div>
 
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
-            <div className="container min-h-[500px] w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container min-h-[500px] w-full flex flex-col gap-8 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
               {pages?.map((page) => (
-                <div key={page.page_id}>
-                  <Link href={`blog/${page.url}`} className="text-3xl font-semibold text-white lg:text-4xl">
+                <div
+                  key={page.page_id}
+                  className="flex flex-col gap-4 divide-y divide-gray-100 shadow dark:divide-gray-600"
+                >
+                  <Link href={`blog/${page.url}`} className="text-3xl font-semibold text-white lg:text-6xl">
                     {page.oai_value}
                   </Link>
+                  <p className="py-2">Статья написана: {dayjs(page?.createdTs ?? new Date()).format('DD.MM.YY')}</p>
                 </div>
               ))}
             </div>
