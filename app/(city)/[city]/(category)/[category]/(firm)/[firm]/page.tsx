@@ -2,7 +2,9 @@ import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmIdPage } from './FirmIdPage';
 import {
+  getCategories,
   getCategory,
+  getCities,
   getCity,
   getFirm,
   getFirms,
@@ -71,7 +73,9 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const reviewsPage = searchParams?.reviewsPage ?? '1';
 
   const city = await getCity(cityAbbr);
+  const cities = await getCities();
   const category = await getCategory(categoryAbbr);
+  const categories = await getCategories(1, 10);
   const firm = await getFirm(firmUrl);
   const images = await getImages(firmUrl);
   const reviews = await getReviews(firmUrl, reviewsPage, 10);
@@ -87,7 +91,9 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
       categoryAbbr={categoryAbbr}
       firmUrl={firmUrl}
       city={city}
+      cities={cities}
       category={category}
+      categories={categories}
       firm={firm}
       firms={firms}
       images={images}

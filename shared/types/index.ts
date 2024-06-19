@@ -1,3 +1,4 @@
+import { Category, City } from '@/api';
 import type { ReactNode } from 'react';
 
 export interface CommonProps {
@@ -23,4 +24,9 @@ export interface FirmId {
 
 export interface FirmUrl {
   firmUrl: string;
+}
+
+export interface CommonNavProps {
+  cities: City[] | null;
+  categories: Category[] | null;
 }

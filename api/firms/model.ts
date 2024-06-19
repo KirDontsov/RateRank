@@ -318,7 +318,6 @@ sample({
   clock: setFirmsPageEvt,
   source: { city: $city, category: $category },
   fn: ({ city, category }, page) => {
-    console.log('page', page);
     return {
       page,
       limit: 10,

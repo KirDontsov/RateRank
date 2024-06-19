@@ -3,6 +3,7 @@ import { EffectorNext, getClientScope } from '@effector/next';
 import { attachReduxDevTools } from '@effector/redux-devtools-adapter';
 import { AnimatePresence } from 'framer-motion';
 import type { AppProps } from 'next/app';
+import '../configs/dayjs.config';
 
 const clientScope = getClientScope();
 

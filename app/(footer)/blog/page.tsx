@@ -1,7 +1,7 @@
 import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { BlogPage } from './BlogPage';
-import { getPages } from './api';
+import { getCategories, getCities, getPages } from './api';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -23,6 +23,8 @@ export async function generateMetadata(): Promise<Metadata> {
 /** Список категорий внутри города */
 export default async function Page() {
   const pages = await getPages();
+  const cities = await getCities();
+  const categories = await getCategories(1, 10);
 
-  return <BlogPage pages={pages} />;
+  return <BlogPage pages={pages} cities={cities} categories={categories} />;
 }

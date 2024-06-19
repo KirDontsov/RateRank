@@ -13,6 +13,7 @@
     "@effector/redux-devtools-adapter": "^0.2.0",
     "@sentry/nextjs": "^7.105.0",
     "classnames": "^2.5.1",
+    "dayjs": "^1.11.11",
     "effector": "^23.1.0",
     "effector-localstorage": "^1.0.0",
     "effector-react": "^23.1.0",

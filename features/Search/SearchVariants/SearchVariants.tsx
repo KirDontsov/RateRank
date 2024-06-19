@@ -4,21 +4,26 @@ import {
   $firmsPage,
   $searchVariants,
   $searchVariantsExpanded,
+  Category,
+  City,
   toggleSearchVariantsEvt,
 } from '@/api';
 import { useOnClickOutside } from '@/hooks';
 import { Button } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { MouseEvent, useCallback, useRef } from 'react';
+import { FC, MouseEvent, useCallback, useRef } from 'react';
 
-export const SearchVariants = () => {
+export interface SearchVariantsProps {
+  cities?: City[] | null;
+  categories?: Category[] | null;
+}
+
+export const SearchVariants: FC<SearchVariantsProps> = ({ cities, categories }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const dropdownRef = useRef(null);
-  const { cities, categories, firmsPage, searchVariants, searchVariantsExpanded, toggleSearchVariants } = useUnit({
-    cities: $cities,
-    categories: $categories,
+  const { firmsPage, searchVariants, searchVariantsExpanded, toggleSearchVariants } = useUnit({
     firmsPage: $firmsPage,
     searchVariants: $searchVariants,
     searchVariantsExpanded: $searchVariantsExpanded,
@@ -56,7 +61,7 @@ export const SearchVariants = () => {
           <div className="flex flex-wrap gap-x-4 overflow-auto relative w-full max-h-[100svh] pt-4 pb-[74px]">
             {searchVariants?.map((variant) => (
               <Button id={variant?.url} key={variant?.firm_id} onClick={handleClick}>
-                {`${categories?.find((item) => item?.category_id === variant?.category_id)?.name?.slice(0, -1)} - ${variant?.name}`}
+                {`${categories?.find((item) => item?.category_id === variant?.category_id)?.name?.slice(0, -1)} - ${variant?.name} - ${cities?.find((item) => item?.city_id === variant?.city_id)?.name}`}
               </Button>
             ))}
           </div>

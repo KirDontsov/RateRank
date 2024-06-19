@@ -97,7 +97,7 @@ export const FirmId: FC<FirmIdProps> = ({
             <div className="w-full bg-center bg-cover h-[38rem] relative">
               {!imagesLoading && (
                 <ImageWithFallback
-                  className="w-full h-[38rem] absolute z-[-1] blur-sm"
+                  className="w-full h-[38rem] absolute z-[-1]"
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
@@ -110,7 +110,7 @@ export const FirmId: FC<FirmIdProps> = ({
               )}
               <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                 <div className="text-center">
-                  <h1 className="text-3xl font-semibold text-white lg:text-4xl">{`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`}</h1>
+                  <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`}</h1>
                   {firm?.default_phone && (
                     <Button onClick={() => {}}>
                       <a href={`tel:${firm?.default_phone}`}>Позвонить</a>

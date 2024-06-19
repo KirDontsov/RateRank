@@ -1,19 +1,12 @@
-import { CategoriesQueryResult, Category, CitiesQueryResult, City, PageItem } from '@/api';
+import {
+    CategoriesQueryResult,
+    Category,
+    CitiesQueryResult,
+    City,
+} from '@/api';
 import { BACKEND_PORT } from '@/shared';
 
-export async function getPages(): Promise<PageItem[] | null> {
-  const firms = await fetch(`${BACKEND_PORT}/api/pages`, {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'GET',
-  })
-    .then((res) => res.json())
-    .catch(() => {
-      console.warn('error');
-    });
-
-  return firms?.data?.pages || null;
-}
-
+/** SSR */
 export async function getCities(): Promise<City[] | null> {
   const cities: CitiesQueryResult = await fetch(`${BACKEND_PORT}/api/cities?page=${1}&limit=${10}`, {
     headers: { 'Content-Type': 'application/json' },
