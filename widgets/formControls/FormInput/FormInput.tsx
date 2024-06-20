@@ -59,7 +59,7 @@ export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, 
   return (
     <div className={className}>
       {label && (
-        <label htmlFor={name} className="text-sm text-gray-700 dark:text-gray-200">
+        <label htmlFor={name} className="text-sm xl:text-base text-gray-700 dark:text-gray-200">
           {label}
         </label>
       )}
@@ -79,7 +79,7 @@ export const FormInput: FC<FormInputProps> = ({ rules, type, name, placeholder, 
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}
-          className="block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          className="block w-full px-4 py-4 text-sm xl:text-base placeholder:text-sm placeholder:xl:text-base focus:text-sm focus:xl:text-base text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
         />
       </label>
       {error && showError && <span className="text-red-500 text-xs pt-1 block">{error?.message}</span>}

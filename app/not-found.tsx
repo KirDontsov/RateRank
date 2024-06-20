@@ -12,7 +12,7 @@ export default function NotFound() {
       <CenteredContainer h="screen">
         <div className="container flex flex-col px-4 py-8">
           <p className="mb-8">Ошибка 404</p>
-          <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+          <h1 className="max-w-2xl mb-4 font-extrabold tracking-tight leading-none text-2xl lg:text-3xl xl:text-8xl dark:text-white">
             Такой страницы нет
           </h1>
           <div className="mt-4">

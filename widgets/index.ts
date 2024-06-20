@@ -1,5 +1,6 @@
 export * from './Accordion';
 export * from './Anchors';
+export * from './AnimatedText';
 export * from './BreadCrumbs';
 export * from './Button';
 export * from './CenteredContainer';

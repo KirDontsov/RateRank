@@ -2,7 +2,7 @@
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
 import { Curve, Images } from '@/features';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
-import { Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -35,7 +35,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
         <Section pt={0}>
           <div className="w-full flex flex-col gap-8">
             <header>
-              <div className="w-full bg-center bg-cover h-[38rem] relative">
+              <div className="w-full bg-center bg-cover h-[100svh] relative">
                 <ImageWithFallback
                   className="w-full h-[38rem] absolute z-[-1] blur-sm"
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${cities?.[0]?.abbreviation}/${categories?.[0]?.abbreviation}/${firms?.[0]?.firm_id}/${images.get(sections?.[0]?.page_block_section_id ?? '')?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
@@ -49,13 +49,18 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                 />
                 <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                   <div className="text-center">
-                    <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`${sections?.[0]?.title ?? ''}`}</h1>
+                    <AnimatedText
+                      el="h1"
+                      text={[`${sections?.[0]?.title ?? ''}`.toUpperCase()]}
+                      className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
+                      once
+                    />
                   </div>
                 </div>
               </div>
             </header>
           </div>
-          <div className="w-full flex flex-col items-center gap-4 mt-[-120px] z-[1]">
+          <div className="w-full flex flex-col items-center gap-4 mt-[-120px] z-[1] text-sm xl:text-base">
             <div className="container w-full flex flex-col gap-8 px-8 py-10 bg-white shadow-2xl rounded-xl dark:bg-gray-800">
               {Array.from(map).map(([key, value]) => (
                 <div key={key} className="flex flex-col gap-8" data-test-id="block">
