@@ -37,13 +37,13 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
         })}
       >
         <div
-          className={cn('px-6 py-2 mx-auto pointer-events-none', {
+          className={cn('px-6 py-4 mx-auto pointer-events-none', {
             'flex justify-between items-center': !tablet,
           })}
         >
           <div className="flex items-center justify-between">
             <div className="flex gap-8 items-center justify-center">
-              <Link className="pointer-events-auto" href="/">
+              <Link className="pointer-events-auto text-base xl:text-2xl" href="/">
                 {COMMON_TITLE.toLocaleUpperCase()}
               </Link>
               <div className="pointer-events-auto">

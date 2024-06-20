@@ -11,7 +11,7 @@ import {
   FirmsMap,
 } from '@/features';
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
-import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
+import { CommonHeader, Footer, Nav, Pagination, Section, SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
@@ -66,12 +66,17 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                 <Nav cities={cities} categories={categories} />
                 <Section pt={0}>
                   <div className="flex xl:flex-row xl:w-full flex-col-reverse px-4 xl:px-0">
-                    <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 xl:h-[100svh] xl:overflow-auto pt-[74px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
-                      <CommonHeader title="Компании" subTitle="раздел" />
+                    <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
+                      <div className="p-8">
+                        <SectionHeader
+                          title={`${categories?.find((cat) => cat?.abbreviation === categoryAbbr)?.name?.slice(0, -1)}ы ${cities?.find((city) => city?.abbreviation === cityAbbr)?.name?.slice(0, -1)}ы`}
+                          subTitle="раздел"
+                        />
+                      </div>
                       {firmsCount ? (
                         <FirmsList firms={firms} />
                       ) : (
-                        <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
+                        <SectionHeader title="Что-то пошло не так" subTitle="Нет компаний в данном разделе" />
                       )}
                       <div className="flex flex-col items-center gap-4 py-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-gray-900">
                         {firmsCount && (

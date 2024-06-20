@@ -65,7 +65,10 @@ export const Curve: FC<CommonProps> = ({ children }) => {
   return (
     <div className={`${styles.curve} page`}>
       <div style={{ opacity: dimensions.width == null ? 1 : 0 }} className={styles.background} />
-      <motion.p className={styles.route} {...anim(text)}>
+      <motion.p
+        className={`${styles.route} font-semibold text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter`}
+        {...anim(text)}
+      >
         {COMMON_TITLE.toUpperCase()}
       </motion.p>
       {dimensions.width != null && (

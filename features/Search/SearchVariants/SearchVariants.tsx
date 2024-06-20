@@ -56,9 +56,9 @@ export const SearchVariants: FC<SearchVariantsProps> = ({ cities, categories }) 
       {!!searchVariants?.length && searchVariantsExpanded && (
         <div
           ref={dropdownRef}
-          className="flex flex-col bg-white dark:bg-gray-900 relative w-full h-fit top-[54px] px-8 items-center justify-center overflow-hidden"
+          className="flex flex-col bg-white dark:bg-gray-900 relative w-full h-fit top-[74px] px-8 items-center justify-center overflow-hidden"
         >
-          <div className="flex flex-wrap gap-x-4 overflow-auto relative w-full max-h-[100svh] pt-4 pb-[74px]">
+          <div className="flex flex-wrap gap-x-4 overflow-auto relative w-full max-h-[100svh] pt-4 pb-[96px]">
             {searchVariants?.map((variant) => (
               <Button id={variant?.url} key={variant?.firm_id} onClick={handleClick}>
                 {`${categories?.find((item) => item?.category_id === variant?.category_id)?.name?.slice(0, -1)} - ${variant?.name} - ${cities?.find((item) => item?.city_id === variant?.city_id)?.name}`}

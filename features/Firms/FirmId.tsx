@@ -20,7 +20,17 @@ import {
 import { FirmMap, Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
-import { Accordion, Anchors, Button, Footer, ImageWithFallback, Pagination, Rating, SectionHeader } from '@/widgets';
+import {
+  Accordion,
+  Anchors,
+  AnimatedText,
+  Button,
+  Footer,
+  ImageWithFallback,
+  Pagination,
+  Rating,
+  SectionHeader,
+} from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -94,7 +104,7 @@ export const FirmId: FC<FirmIdProps> = ({
       {!firmLoading ? (
         <div className="w-full flex flex-col gap-8">
           <header>
-            <div className="w-full bg-center bg-cover h-[38rem] relative">
+            <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">
               {!imagesLoading && (
                 <ImageWithFallback
                   className="w-full h-[38rem] absolute z-[-1]"
@@ -108,9 +118,14 @@ export const FirmId: FC<FirmIdProps> = ({
                   priority={true}
                 />
               )}
-              <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
-                <div className="text-center">
-                  <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`}</h1>
+              <div className="flex items-center justify-center w-full h-full bg-gray-900/20 z-[0]">
+                <div className="text-center p-8">
+                  <AnimatedText
+                    el="h1"
+                    text={[`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`.toUpperCase()]}
+                    className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
+                    once
+                  />
                   {firm?.default_phone && (
                     <Button onClick={() => {}}>
                       <a href={`tel:${firm?.default_phone}`}>Позвонить</a>
@@ -121,7 +136,7 @@ export const FirmId: FC<FirmIdProps> = ({
             </div>
           </header>
 
-          <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
+          <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1] text-sm xl:text-base">
             <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
               <div className="w-full flex gap-8">
                 <div className={cn('w-full flex flex-col gap-4')}>

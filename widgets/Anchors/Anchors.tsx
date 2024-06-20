@@ -42,7 +42,7 @@ export const Anchors = () => {
   }, []);
 
   return (
-    <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+    <div className="text-sm xl:text-base font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
       <ul className="flex flex-wrap -mb-px">
         {ANCHORS.map(({ id, title }, index) => (
           <li key={id} className="me-2">

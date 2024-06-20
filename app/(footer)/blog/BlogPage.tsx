@@ -3,7 +3,7 @@
 import { Category, City, PageItem } from '@/api';
 import { Curve } from '@/features';
 import { COMMON_TITLE, HeroBackground } from '@/shared';
-import { Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -22,7 +22,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
         <Section pt={0}>
           <div className="w-full flex flex-col gap-8">
             <header>
-              <div className="w-full bg-center bg-cover h-[38rem] relative">
+              <div className="w-full bg-center bg-cover h-[100svh] relative">
                 <ImageWithFallback
                   className="w-full h-[38rem] absolute z-[-1] blur-sm"
                   src={HeroBackground['3ebc7206-6fed-4ea7-a000-27a74e867c9a']}
@@ -36,7 +36,12 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                 />
                 <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
                   <div className="text-center">
-                    <h1 className="text-3xl font-semibold text-white lg:text-8xl">{`Блог - Подборки - ${COMMON_TITLE}`}</h1>
+                    <AnimatedText
+                      el="h1"
+                      text={[`Блог - Подборки - ${COMMON_TITLE}`.toUpperCase()]}
+                      className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
+                      once
+                    />
                   </div>
                 </div>
               </div>
@@ -50,7 +55,10 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                   key={page.page_id}
                   className="flex flex-col gap-4 divide-y divide-gray-100 shadow dark:divide-gray-600"
                 >
-                  <Link href={`blog/${page.url}`} className="text-3xl font-semibold text-white lg:text-6xl">
+                  <Link
+                    href={`blog/${page.url}`}
+                    className="font-semibold text-white text-base lg:text-2xl xl:text-3xl"
+                  >
                     {page.oai_value}
                   </Link>
                   <p className="py-2">Статья написана: {dayjs(page?.createdTs ?? new Date()).format('DD.MM.YY')}</p>

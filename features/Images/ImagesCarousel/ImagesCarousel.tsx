@@ -1,7 +1,8 @@
 import { Category, City, Firm, ImageType } from '@/api';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT } from '@/shared';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
+import { ImageWithFallback } from '@/widgets';
 import { motion, useMotionValue } from 'framer-motion';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 export interface ImagesCarouselProps {
   images: ImageType[] | null;
@@ -11,8 +12,8 @@ export interface ImagesCarouselProps {
 }
 
 const ONE_SECOND = 1000;
-const AUTO_DELAY = ONE_SECOND * 10;
-const DRAG_BUFFER = 50;
+const AUTO_DELAY = ONE_SECOND * 3;
+const DRAG_BUFFER = 1;
 
 const SPRING_OPTIONS = {
   type: 'spring',
@@ -31,28 +32,32 @@ export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, 
       const x = dragX.get();
 
       if (x === 0) {
-        setImgIndex((pv) => {
-          if (pv === (images?.length ?? 0) - 1) {
+        setImgIndex((prevState) => {
+          if (prevState === (images?.length ?? 0) - 1) {
             return 0;
           }
-          return pv + 1;
+          return prevState + 1;
         });
       }
     }, AUTO_DELAY);
 
     return () => clearInterval(intervalRef);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dragX]);
+  }, [dragX, images?.length]);
 
-  const onDragEnd = () => {
+  const onDragEnd = useCallback(() => {
     const x = dragX.get();
 
-    if (x <= -DRAG_BUFFER && imgIndex < (images?.length ?? 0) - 1) {
-      setImgIndex((pv) => pv + 1);
+    if (x <= -DRAG_BUFFER && imgIndex <= (images?.length ?? 0) - 1) {
+      setImgIndex((prevState) => {
+        if (prevState === (images?.length ?? 0) - 1) {
+          return 0;
+        }
+        return prevState + 1;
+      });
     } else if (x >= DRAG_BUFFER && imgIndex > 0) {
-      setImgIndex((pv) => pv - 1);
+      setImgIndex((prevState) => prevState - 1);
     }
-  };
+  }, [dragX, images?.length, imgIndex]);
 
   return (
     <div className="relative overflow-hidden py-8">
@@ -76,7 +81,6 @@ export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, 
       </motion.div>
 
       <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} images={images} />
-      <GradientEdges />
     </div>
   );
 };
@@ -96,17 +100,24 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
         return (
           <motion.div
             key={idx}
-            style={{
-              backgroundImage: `url(${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
             animate={{
               scale: imgIndex === idx ? 0.95 : 0.85,
             }}
             transition={SPRING_OPTIONS}
-            className="aspect-video w-full shrink-0 rounded-xl object-cover"
-          />
+            className="aspect-video w-full shrink-0 rounded-xl object-cover overflow-hidden"
+          >
+            <ImageWithFallback
+              className="w-full h-[38rem] absolute z-[-1] pointer-events-none"
+              src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+              fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
+              fill
+              alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+              style={{ objectFit: 'cover' }}
+              placeholder="blur"
+              blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
+              priority={true}
+            />
+          </motion.div>
         );
       })}
     </>
@@ -134,14 +145,5 @@ const Dots: FC<DotsProps> = ({ imgIndex, setImgIndex, images }) => {
         );
       })}
     </div>
-  );
-};
-
-const GradientEdges = () => {
-  return (
-    <>
-      <div className="pointer-events-none absolute bottom-0 left-0 top-0 w-[10vw] max-w-[100px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[10vw] max-w-[100px]" />
-    </>
   );
 };
