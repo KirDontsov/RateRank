@@ -6,7 +6,7 @@ import { FOOTER_LINKS } from './constants';
 
 export const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 w-full">
+    <footer className="bg-white dark:bg-eboni-900 w-full">
       <div className="container flex flex-col pt-12 p-8 mx-auto">
         <BreadCrumbs />
       </div>
@@ -36,7 +36,7 @@ export const Footer = () => {
                       key={title}
                       href={href}
                       rel="nofollow"
-                      className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-blue-400 hover:underline hover:text-blue-600 text-sm xl:text-base"
+                      className="text-gray-700 transition-colors duration-200 dark:text-gray-200 dark:hover:text-negroni-400 hover:underline hover:text-negroni-600 text-sm xl:text-base"
                     >
                       {title}
                     </a>
@@ -47,14 +47,14 @@ export const Footer = () => {
           })}
         </div>
 
-        <hr className="my-6 border-gray-200 md:my-10 dark:border-gray-500" />
+        <hr className="my-6 border-zinc-200 md:my-10 dark:border-zinc-500" />
 
         <div className="container flex items-center justify-between sm:flex-row">
-          <a href="#" rel="nofollow" className="text-base xl:text-2xl">
+          <a href="#" rel="nofollow" className="text-sm xl:text-2xl">
             {COMMON_TITLE.toUpperCase()}
           </a>
 
-          <p className="mt-4 text-sm xl:text-base text-gray-500 sm:mt-0 dark:text-gray-300">{`© Все права защищены 2023-${new Date().getFullYear()}`}</p>
+          <p className="text-sm xl:text-base text-gray-500 sm:mt-0 dark:text-gray-300">{`© Все права защищены 2023-${new Date().getFullYear()}`}</p>
         </div>
       </div>
     </footer>

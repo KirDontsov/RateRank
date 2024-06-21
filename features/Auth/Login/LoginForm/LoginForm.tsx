@@ -1,14 +1,17 @@
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { FormInput } from '@/widgets';
+import { api_login } from '@/api';
+import { setStoreEvt } from '@/context';
+import { parseJwt } from '@/shared';
 import { ErrorTypes } from '@/shared/types';
+import { FormInput } from '@/widgets';
+import { useUnit } from 'effector-react';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { api_login } from '@/api';
 import { toast } from 'react-toastify';
-import { parseJwt } from '@/shared';
-import { useUnit } from 'effector-react';
-import { setStoreEvt } from '@/context';
 
 export const MAX_VALUE = 50;
 export const EMAIL_INPUT_REG_EXP = /^\S+@\S+\.\S+$/;
@@ -52,25 +55,31 @@ export const LoginForm = () => {
 
   const handleCancel = useCallback(() => {
     router.push('/', { scroll: false });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
-  const handleSubmit = useCallback(async () => {
-    const values = getValues();
-    const res = await api_login(values);
-    if (res?.status !== 'success') {
-      toast(`ЧТо-то пошло не так`, {
-        hideProgressBar: true,
-        autoClose: 3000,
-        type: 'error',
-        position: 'top-right',
-      });
-    }
-    const decoded = parseJwt(res?.token);
+  const handleSubmit = useCallback(
+    async () => {
+      const values = getValues();
+      const res = await api_login(values);
+      if (res?.status !== 'success') {
+        toast(`ЧТо-то пошло не так`, {
+          hideProgressBar: true,
+          autoClose: 3000,
+          type: 'error',
+          position: 'top-right',
+        });
+      }
+      const decoded = parseJwt(res?.token);
 
-    setUserData(decoded);
-    // storage.setItem('user-data', JSON.stringify(decoded));
-    router.push('/dashboard');
-  }, []);
+      setUserData(decoded);
+      // storage.setItem('user-data', JSON.stringify(decoded));
+      router.push('/dashboard');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getValues, router, setUserData][(getValues, router, setUserData)],
+  );
 
   return (
     <FormProvider {...form}>
@@ -119,7 +128,7 @@ export const LoginForm = () => {
 
           <button
             type="button"
-            className="mt-2 flex items-center rounded py-1.5 px-2 text-sm text-blue-600 transition-colors duration-300 hover:text-blue-400 focus:outline-none dark:text-blue-400 dark:hover:text-blue-500"
+            className="mt-2 flex items-center rounded py-1.5 px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +149,7 @@ export const LoginForm = () => {
           <button
             type="button"
             onClick={handleCancel}
-            className="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transhtmlForm border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+            className="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transhtmlForm border border-zinc-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-zinc-700 dark:hover:bg-eboni-800 hover:bg-eboni-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
           >
             Отмена
           </button>
@@ -149,7 +158,7 @@ export const LoginForm = () => {
             type="button"
             disabled={!isDirty || !isValid}
             onClick={handleSubmit}
-            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
           >
             Войти
           </button>

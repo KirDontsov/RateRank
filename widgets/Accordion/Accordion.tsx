@@ -41,7 +41,8 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
     });
 
     return items;
-  }, [category]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category?.category_id, category?.name, firm?.address, firm?.default_phone, firm?.name]);
 
   return (
     <div id="accordion-flush" className="text-gray-500 dark:text-white flex flex-col w-full">
@@ -51,7 +52,7 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
             <button
               onClick={() => setOpen(index !== open ? index : null)}
               type="button"
-              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-white gap-3 hover:text-blue-400 cursor-pointer"
+              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-zinc-200 dark:border-zinc-700 dark:text-white gap-3 hover:text-negroni-400 cursor-pointer"
             >
               <span className="flex items-center justify-between gap-3">
                 <svg
@@ -99,7 +100,7 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
             id="accordion-flush-body-1"
             aria-labelledby="accordion-flush-heading-1"
           >
-            <div className="flex flex-col py-5 border-b border-gray-200 dark:border-gray-700 w-full">
+            <div className="flex flex-col py-5 border-b border-zinc-200 dark:border-zinc-700 w-full">
               <p className="mb-2 text-gray-500 dark:text-white">{text}</p>
             </div>
           </div>

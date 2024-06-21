@@ -33,20 +33,20 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
       <nav
         className={cn(`w-full absolute z-30 mx-auto left-1/2 translate-x-[-50%] ${styles.nav}`, {
           'dark:bg-[rgba(0,0,0,0.3)] bg-[rgba(255,255,255,0.3)]': !open,
-          'dark:bg-gray-700 bg-white': open,
+          'dark:bg-eboni-700 bg-white': open,
         })}
       >
         <div
-          className={cn('px-6 py-4 mx-auto pointer-events-none', {
+          className={cn('px-6 py-2 xl:py-4 mx-auto pointer-events-none', {
             'flex justify-between items-center': !tablet,
           })}
         >
           <div className="flex items-center justify-between">
             <div className="flex gap-8 items-center justify-center">
-              <Link className="pointer-events-auto text-base xl:text-2xl" href="/">
+              <Link className="pointer-events-auto text-sm xl:text-2xl" href="/">
                 {COMMON_TITLE.toLocaleUpperCase()}
               </Link>
-              <div className="pointer-events-auto">
+              <div className="pointer-events-auto mr-2">
                 <SearchInput />
               </div>
             </div>
@@ -93,14 +93,14 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
                 <CityDropdown />
 
                 {/* <Link
-               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                href="#"
              >
                Добавить организацию
              </Link> */}
                 {!value && !loading && (
                   <Link
-                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
                     Вход
@@ -108,7 +108,7 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
                 )}
 
                 {/* <Link
-               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                href="/dashboard"
              >
                Dashboard
@@ -118,18 +118,18 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
           )}
 
           {tablet && open && (
-            <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-700">
+            <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-eboni-700">
               <div className="flex flex-col items-center pointer-events-auto">
                 <CityDropdown />
                 {/* <Link
-               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                href="#"
              >
                Добавить организацию
              </Link> */}
                 {!value && !loading && (
                   <Link
-                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+                    className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
                     Вход
@@ -137,7 +137,7 @@ export const Nav: FC<NavProps> = ({ cities, categories }) => {
                 )}
 
                 {/* <Link
-               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 md:mx-4 md:my-0"
+               className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-500 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                href="/dashboard"
              >
                Dashboard

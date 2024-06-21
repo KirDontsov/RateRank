@@ -33,9 +33,9 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
             blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
             priority={true}
           />
-          <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
+          <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
             <div className="text-center">
-              <div className="h-16 bg-gray-200 rounded-full dark:bg-gray-700 w-[300px] mb-4 animate-pulse"></div>
+              <div className="h-16 bg-eboni-200 rounded-full dark:bg-eboni-700 w-[300px] mb-4 animate-pulse"></div>
               <Button onClick={() => {}}>Позвонить</Button>
             </div>
           </div>
@@ -43,7 +43,7 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
       </header>
 
       <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
-        <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800 min-h-[1000px]">
+        <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800 min-h-[1000px]">
           <div
             className={cn('w-full flex gap-8', {
               'flex-col': tablet,
@@ -58,7 +58,7 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
                 role="status"
                 className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center w-full"
               >
-                <div className="flex items-center justify-center w-full h-[405px] bg-gray-300 rounded dark:bg-gray-700">
+                <div className="flex items-center justify-center w-full h-[405px] bg-eboni-300 rounded dark:bg-eboni-700">
                   <svg
                     className="w-10 h-10 text-gray-200 dark:text-gray-600"
                     aria-hidden="true"
@@ -80,12 +80,12 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
               <Anchors />
 
               <div className="w-full animate-pulse">
-                <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-                <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
-                <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-                <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
-                <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
-                <div className="h-3 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                <div className="h-4 bg-eboni-200 rounded-full dark:bg-eboni-700 w-48 mb-4"></div>
+                <div className="h-3 bg-eboni-200 rounded-full dark:bg-eboni-700 max-w-[480px] mb-2.5"></div>
+                <div className="h-3 bg-eboni-200 rounded-full dark:bg-eboni-700 mb-2.5"></div>
+                <div className="h-3 bg-eboni-200 rounded-full dark:bg-eboni-700 max-w-[440px] mb-2.5"></div>
+                <div className="h-3 bg-eboni-200 rounded-full dark:bg-eboni-700 max-w-[460px] mb-2.5"></div>
+                <div className="h-3 bg-eboni-200 rounded-full dark:bg-eboni-700 max-w-[360px]"></div>
               </div>
             </div>
           </div>

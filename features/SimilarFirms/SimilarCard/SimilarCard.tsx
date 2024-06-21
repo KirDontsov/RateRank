@@ -38,7 +38,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, al
       key={firmId}
       href={`/${city?.abbreviation}/${category?.abbreviation}/${url ?? transliterate(title ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
-      className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative cursor-pointer min-w-80 max-w-sm md:min-w-[40rem] md:max-w-lg"
+      className="bg-white border border-zinc-200 rounded-lg shadow dark:bg-eboni-800 dark:border-zinc-700 relative cursor-pointer min-w-80 max-w-sm md:min-w-[40rem] md:max-w-lg"
     >
       <div className="relative w-full h-[15rem] md:h-[30rem] overflow-hidden">
         <ImageWithFallback
@@ -52,9 +52,9 @@ export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, al
         />
       </div>
       <div className="p-5">
-        <h4 className="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre">
-          {`${title} `} <br />
-          <span className="my-8 font-normal text-gray-700 dark:text-gray-400">{subTitle}</span>
+        <h4 className="mb-4 font-bold tracking-tight text-gray-900 dark:text-white whitespace-pre text-base xl:text-2xl">
+          {`${title} `} <br className="text-sm leading-3 h-0" />
+          <span className="my-8 font-normal text-gray-700 dark:text-gray-400 text-sm xl:text-base">{subTitle}</span>
         </h4>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-sm xl:text-base">{address}</p>
       </div>

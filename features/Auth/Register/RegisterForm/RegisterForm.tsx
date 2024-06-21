@@ -1,11 +1,12 @@
+/** eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { FormInput } from '@/widgets';
+import { api_auth } from '@/api';
 import { ErrorTypes } from '@/shared/types';
+import { FormInput } from '@/widgets';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { api_auth } from '@/api';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
 
 export const MAX_VALUE = 50;
@@ -66,7 +67,8 @@ export const RegisterForm = () => {
       });
       router.push('/login');
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getValues, router]);
 
   return (
     <FormProvider {...form}>
@@ -158,7 +160,7 @@ export const RegisterForm = () => {
             <Link
               href="/login"
               type="button"
-              className="flex items-center rounded px-2 text-sm text-blue-600 transition-colors duration-300 hover:text-blue-400 focus:outline-none dark:text-blue-400 dark:hover:text-blue-500"
+              className="flex items-center rounded px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-500"
             >
               Войти
             </Link>
@@ -170,7 +172,7 @@ export const RegisterForm = () => {
             type="button"
             disabled={!isDirty || !isValid}
             onClick={handleSubmit}
-            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:mx-2 hover:bg-negroni-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
           >
             Зарегестрироваться
           </button>

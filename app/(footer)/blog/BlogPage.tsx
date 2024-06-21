@@ -34,7 +34,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground['3ebc7206-6fed-4ea7-a000-27a74e867c9a']}`}
                   priority={true}
                 />
-                <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
+                <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                   <div className="text-center">
                     <AnimatedText
                       el="h1"
@@ -49,7 +49,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
           </div>
 
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
-            <div className="container min-h-[500px] w-full flex flex-col gap-8 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container min-h-[500px] w-full flex flex-col gap-8 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               {pages?.map((page) => (
                 <div
                   key={page.page_id}

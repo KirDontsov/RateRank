@@ -12,7 +12,7 @@ export const ContactsPage: FC<CommonNavProps> = ({ cities, categories }) => {
         <Section>
           <CommonHeader title={`Контакты сайта каталога организаций ${COMMON_TITLE}`} />
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px]">
-            <div className="container min-h-[500px] w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container min-h-[500px] w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               <p>Набережные Челны, пр. Московский, 140А (52/03А) деловой центр Форт Диалог, этаж 2, офис 200</p>
               <p>
                 {`Телефон для связи: `}

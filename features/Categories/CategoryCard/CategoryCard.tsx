@@ -22,7 +22,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryId, abbreviation, 
       key={categoryId}
       onClick={handleChangeCategory}
       href={`/${cityId}/${abbreviation}`}
-      className="flex flex-col w-full md:max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      className="flex flex-col w-full md:max-w-sm p-6 bg-white border border-zinc-200 rounded-lg shadow hover:bg-eboni-100 dark:bg-eboni-800 dark:border-zinc-700 dark:hover:bg-eboni-700"
     >
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{name}</h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">Лучшие {name} в городе</p>

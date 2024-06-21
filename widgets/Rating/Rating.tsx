@@ -16,13 +16,13 @@ export const Rating: FC<RatingProps> = ({ rating }) => {
 
   return (
     <span
-      className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-100 dark:bg-gray-600 rounded hover:bg-gray-200 dark:hover:bg-gray-500 flex"
+      className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-eboni-100 dark:bg-eboni-600 rounded hover:bg-eboni-200 dark:hover:bg-eboni-500 flex"
       tabIndex={0}
     >
       {positiveArray.map((x) => (
         <svg
           key={x}
-          className="w-6 h-6 text-blue-500 dark:text-blue-500"
+          className="w-6 h-6 text-negroni-500 dark:text-negroni-500"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"

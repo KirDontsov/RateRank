@@ -12,7 +12,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
         <Section>
           <CommonHeader title={`Политика  ${COMMON_TITLE} в отношении обработки персональных данных`} />
           <div className="w-full flex flex-col items-center gap-4">
-            <div className="container h-fit w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container h-fit w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               <p>
                 Настоящая Политика Топвыбор.рф в отношении обработки персональных данных (далее – Политика) разработана
                 в соответствии с Конституцией Российской Федерации, Гражданским Кодексом Российской Федерации,
@@ -24,7 +24,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 и гражданина при обработке его персональных данных.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ОПРЕДЕЛЕНИЕ ТЕРМИНОВ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">ОПРЕДЕЛЕНИЕ ТЕРМИНОВ</h2>
               <p>Основные понятия, используемые в настоящей Политике:</p>
               <ul className="space-y-1 list-disc list-inside">
                 <li>
@@ -85,7 +85,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                   профессиональные услуги.
                 </li>
               </ul>
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
                 ПРАВОВОЕ ОСНОВАНИЕ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ
               </h2>
               <p>
@@ -110,7 +110,9 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 <li>согласие Субъекта персональных данных на обработку персональных данных.</li>
               </ul>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ЦЕЛИ, ОБЪЕМ И КАТЕГОРИИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
+                ЦЕЛИ, ОБЪЕМ И КАТЕГОРИИ ПЕРСОНАЛЬНЫХ ДАННЫХ
+              </h2>
               <p>
                 Категории Субъектов персональных данных и категории обрабатываемых персональных данных, а также цели их
                 обработки указаны в Приложениях к настоящей Политике в отношении обработки персональных данных.
@@ -142,7 +144,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 данных.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ПРИНЦИПЫ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">ПРИНЦИПЫ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
               <p>Обработка персональных данных у Оператора осуществляется на основании следующих принципов:</p>
               <ul className="space-y-1 list-disc list-inside">
                 <li>законности и справедливой основы;</li>
@@ -170,7 +172,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 </li>
               </ul>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">СРОКИ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">СРОКИ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
               <p>
                 Обработка и хранение персональных данных осуществляются не дольше, чем этого требуют цели обработки
                 персональных данных, если отсутствуют законные основания для дальнейшей обработки, например, если
@@ -196,7 +198,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 </li>
               </ul>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">КОНФИДЕНЦИАЛЬНОСТЬ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">КОНФИДЕНЦИАЛЬНОСТЬ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
               <p>
                 Оператор и иные лица, получившие доступ к персональным данным, обязаны не раскрывать третьим лицам и не
                 распространять персональные данные без согласия субъекта персональных данных, если иное не предусмотрено
@@ -207,7 +209,9 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 по основаниям, предусмотренным действующим законодательством Российской Федерации.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ОБЩЕДОСТУПНЫЕ ИСТОЧНИКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
+                ОБЩЕДОСТУПНЫЕ ИСТОЧНИКИ ПЕРСОНАЛЬНЫХ ДАННЫХ
+              </h2>
               <p>
                 В целях информационного обеспечения могут создаваться общедоступные источники персональных данных (в том
                 числе справочники, адресные книги). В общедоступные источники персональных данных с письменного согласия
@@ -225,7 +229,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 обрабатываются.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
                 ПОРУЧЕНИЕ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ ТРЕТЬЕМУ (ДРУГОМУ) ЛИЦУ
               </h2>
               <p>
@@ -248,7 +252,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 персональных данных по поручению Оператора, несет ответственность перед Оператором.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
                 СОГЛАСИЕ СУБЪЕКТА ПЕРСОНАЛЬНЫХ ДАННЫХ НА ОБРАБОТКУ ЕГО ПЕРСОНАЛЬНЫХ ДАННЫХ
               </h2>
               <p>
@@ -270,7 +274,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 персональных данных возлагается на Оператора.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ПРАВА СУБЪЕКТА ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">ПРАВА СУБЪЕКТА ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
               <p>
                 Субъект персональных данных имеет право отозвать согласие на обработку персональных данных, направив
                 соответствующий запрос Оператору.
@@ -293,7 +297,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 персональных данных.
               </p>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
                 АКТУАЛИЗАЦИЯ, ИСПРАВЛЕНИЕ, УДАЛЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ, ОТВЕТЫ НА ЗАПРОСЫ СУБЪЕКТОВ НА ДОСТУП К
                 ПЕРСОНАЛЬНЫМ ДАННЫМ
               </h2>
@@ -354,7 +358,9 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 <li>иное не предусмотрено другим соглашением между Оператором и Субъектом персональных данных.</li>
               </ul>
 
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ОБЕСПЕЧЕНИЕ БЕЗОПАСНОСТИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
+                ОБЕСПЕЧЕНИЕ БЕЗОПАСНОСТИ ПЕРСОНАЛЬНЫХ ДАННЫХ
+              </h2>
               <p>
                 Безопасность персональных данных, обрабатываемых оператором, обеспечивается реализацией правовых,
                 организационных и технических мер, необходимых для обеспечения требований федерального законодательства
@@ -381,7 +387,7 @@ export const PolicyPage: FC<CommonNavProps> = ({ cities, categories }) => {
                   защищенности и средств криптографической защиты информации
                 </li>
               </ul>
-              <h2 className="text-lg dark:text-blue-400 text-blue-400">ЗАКЛЮЧИТЕЛЬНЫЕ ПОЛОЖЕНИЯ</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">ЗАКЛЮЧИТЕЛЬНЫЕ ПОЛОЖЕНИЯ</h2>
               <p>
                 Иные права и обязанности Оператора, как оператора персональных данных определяются законодательством
                 Российской Федерации в области персональных данных.

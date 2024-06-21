@@ -11,7 +11,7 @@ export interface ReviewCardProps {
 
 export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text, rating }) => {
   return (
-    <div key={review_id} className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div key={review_id} className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">
       <div className="flex items-center w-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
