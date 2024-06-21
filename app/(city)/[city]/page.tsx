@@ -1,4 +1,5 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { Metadata } from 'next';
 import { CategoriesPage } from './CategoriesPage';
 import { getCategories, getCities, getCity } from './api';
 
