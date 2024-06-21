@@ -1,6 +1,3 @@
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { api_login } from '@/api';
 import { setStoreEvt } from '@/context';
@@ -55,31 +52,25 @@ export const LoginForm = () => {
 
   const handleCancel = useCallback(() => {
     router.push('/', { scroll: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  const handleSubmit = useCallback(
-    async () => {
-      const values = getValues();
-      const res = await api_login(values);
-      if (res?.status !== 'success') {
-        toast(`ЧТо-то пошло не так`, {
-          hideProgressBar: true,
-          autoClose: 3000,
-          type: 'error',
-          position: 'top-right',
-        });
-      }
-      const decoded = parseJwt(res?.token);
+  const handleSubmit = useCallback(async () => {
+    const values = getValues();
+    const res = await api_login(values);
+    if (res?.status !== 'success') {
+      toast(`ЧТо-то пошло не так`, {
+        hideProgressBar: true,
+        autoClose: 3000,
+        type: 'error',
+        position: 'top-right',
+      });
+    }
+    const decoded = parseJwt(res?.token);
 
-      setUserData(decoded);
-      // storage.setItem('user-data', JSON.stringify(decoded));
-      router.push('/dashboard');
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [getValues, router, setUserData][(getValues, router, setUserData)],
-  );
+    setUserData(decoded);
+    // storage.setItem('user-data', JSON.stringify(decoded));
+    router.push('/dashboard');
+  }, [getValues, router, setUserData]);
 
   return (
     <FormProvider {...form}>
