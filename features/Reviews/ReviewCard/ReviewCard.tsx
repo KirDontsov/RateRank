@@ -11,7 +11,7 @@ export interface ReviewCardProps {
 
 export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text, rating }) => {
   return (
-    <div key={review_id} className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div key={review_id} className="container w-full p-8 bg-white dark:bg-eboni-800 rounded-lg shadow-md">
       <div className="flex items-center w-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -21,10 +21,10 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text,
         />
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col">
-            <span className="font-bold text-gray-700 dark:text-gray-200" tabIndex={0} role="link">
+            <span className="font-bold text-eboni-600 dark:text-white" tabIndex={0} role="link">
               {author}
             </span>
-            <span className="text-gray-500 dark:text-gray-500" tabIndex={0} role="link">
+            <span tabIndex={0} role="link">
               {date?.replace(', отредактирован', '')}
             </span>
           </div>
@@ -33,7 +33,7 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text,
       </div>
 
       <div className="my-2">
-        <p className="mt-2 text-gray-600 dark:text-gray-300">{text}</p>
+        <p className="mt-2">{text}</p>
       </div>
     </div>
   );

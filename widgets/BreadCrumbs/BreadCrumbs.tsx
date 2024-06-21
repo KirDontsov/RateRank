@@ -150,7 +150,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
           <li className="inline-flex items-center">
             <Link
               href="/"
-              className="inline-flex items-center text-sm xl:text-base font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm xl:text-base font-medium text-eboni-400 dark:text-white hover:text-negroni-400"
             >
               <svg
                 className="w-5 h-10 me-2.5"
@@ -181,7 +181,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
               >
                 <div className="flex items-center">
                   <svg
-                    className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+                    className="rtl:rotate-180 w-3 h-3 text-eboni-400 dark:text-white mx-1"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -197,7 +197,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
                   </svg>
                   <Link
                     href={breadcrumb.href}
-                    className="ms-1 text-sm xl:text-base font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+                    className="ms-1 text-sm xl:text-base font-medium text-eboni-400 dark:text-white hover:text-negroni-400 md:ms-2"
                   >
                     {convertBreadcrumb(breadcrumb.breadcrumb, labelsToUppercase, replaceCharacterList)}
                   </Link>

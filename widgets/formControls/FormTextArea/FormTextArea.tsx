@@ -53,7 +53,7 @@ export const FormTextArea: FC<FormTextAreaProps> = ({ rules, name, placeholder, 
 
   return (
     <div>
-      <label htmlFor={name} className="text-sm xl:text-base text-gray-700 dark:text-gray-200">
+      <label htmlFor={name} className="text-sm xl:text-base">
         {label}
       </label>
 
@@ -69,7 +69,7 @@ export const FormTextArea: FC<FormTextAreaProps> = ({ rules, name, placeholder, 
           value={value}
           onChange={handleChange}
           onBlur={handleBlur}
-          className="block w-full px-4 py-3 text-sm xl:text-base text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+          className="block w-full px-4 py-3 text-sm xl:text-base bg-white border border-eboni-200 rounded-md focus:border-negroni-400 focus:outline-none focus:ring focus:ring-negroni-400 focus:ring-opacity-40 dark:border-eboni-600 dark:bg-eboni-900"
         />
       </label>
       {error && showError && <span className="text-red-500 text-xs xl:text-sm pt-1 block">{error?.message}</span>}

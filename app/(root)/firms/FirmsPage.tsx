@@ -64,14 +64,14 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                 <Nav cities={cities} categories={categories} />
                 <Section pt={0}>
                   <div className="flex xl:flex-row xl:w-full flex-col-reverse px-4 xl:px-0">
-                    <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
+                    <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
                       <CommonHeader title="Компании" subTitle="раздел" />
                       {firmsCount ? (
                         <FirmsList firms={firms} />
                       ) : (
                         <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
                       )}
-                      <div className="flex flex-col items-center gap-4 py-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-gray-900">
+                      <div className="flex flex-col items-center gap-4 py-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-eboni-900">
                         {firmsCount && (
                           <Pagination
                             current={Number(searchParams.get('firmsPage')) || page}

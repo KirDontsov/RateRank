@@ -1,4 +1,5 @@
 import { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 
 const config: Config = {
   // darkMode: 'class',
@@ -10,6 +11,33 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    colors: {
+      ...colors,
+      white: '#f6f6f8',
+      gray: '#8d9196',
+      eboni: {
+        100: '#7b7e81',
+        200: '#676a6d',
+        300: '#54575b',
+        400: '#414548',
+        500: '#383c40',
+        600: '#2f3337',
+        700: '#2d3034',
+        800: '#2a2d31',
+        900: '#202327',
+      },
+      negroni: {
+        100: '#f3dcbd',
+        200: '#f2d7b4',
+        300: '#f0d2ab',
+        400: '#eecda1',
+        500: '#d1b48d',
+        600: '#b39a79',
+        700: '#776751',
+        800: '#3c3429',
+        900: '#1e1a15',
+      },
+    },
     container: {
       screens: {
         '2xl': '1536px',

@@ -47,7 +47,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}`}
                   priority={true}
                 />
-                <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
+                <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                   <div className="text-center">
                     <AnimatedText
                       el="h1"
@@ -61,7 +61,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
             </header>
           </div>
           <div className="w-full flex flex-col items-center gap-4 mt-[-120px] z-[1] text-sm xl:text-base">
-            <div className="container w-full flex flex-col gap-8 px-8 py-10 bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container w-full flex flex-col gap-8 px-8 py-10 bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               {Array.from(map).map(([key, value]) => (
                 <div key={key} className="flex flex-col gap-8" data-test-id="block">
                   {value.map((section, index) => {
@@ -73,14 +73,14 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                     return (
                       <div key={section.page_block_section_id} className="flex flex-col gap-8" data-test-id="section">
                         {Number(section.page_block_section_order) !== 0 && (
-                          <h2 className="text-3xl font-semibold text-blue-400 dark:text-white lg:text-4xl">
+                          <h2 className="text-3xl font-semibold text-negroni-400 dark:text-white lg:text-4xl">
                             {section.title}
                           </h2>
                         )}
                         {!!section.url && (
                           <Link
                             href={`/${city?.abbreviation}/${category?.abbreviation}/${section.url}`}
-                            className="text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+                            className="text-negroni-400 hover:text-negroni-400 dark:text-gray dark:hover:text-white"
                           >
                             Подробнее: {section.title}
                           </Link>

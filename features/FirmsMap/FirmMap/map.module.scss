@@ -1,6 +1,6 @@
 .mainStyle {
-  /* max-width: 100%;
-  height: 100%; */
+  max-width: 100%;
+  height: 100%;
   position: relative;
 }
 .mapStyle {
@@ -14,16 +14,15 @@
   height: 200px;
   content: '';
   position: absolute;
-  top: 5%;
-  left: 69%;
+  /* top: 7%;
+  left: 59%; */
   transform: translateX(-50%) !important;
-  /* color: #000; */
 }
 .popupTitle {
-  background-color: #2563eb;
+  background-color: #414548;
   font-weight: 700;
   font-size: medium;
-  color: ivory;
+  color: #f6f6f8;
   padding: 10px;
 }
 .popupInfo {
@@ -35,7 +34,7 @@
   font-weight: bold;
 }
 .popupWebUrl {
-  color: #2563eb;
+  color: #eecda1;
 }
 .popupWebUrl:active,
 .popupWebUrl:focus {

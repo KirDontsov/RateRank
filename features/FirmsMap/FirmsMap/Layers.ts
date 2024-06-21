@@ -6,7 +6,7 @@ export const clusterLayer: LayerProps = {
   source: 'my-data',
   filter: ['has', 'point_count'],
   paint: {
-    'circle-color': ['step', ['get', 'point_count'], '#60a5fa', 100, '#778FEC', 750, '#8C78D7'],
+    'circle-color': ['step', ['get', 'point_count'], '#eecda1', 100, '#d1b48d', 750, '#b39a79'],
     'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
     'circle-opacity': 0.8,
   },
@@ -30,7 +30,7 @@ export const unclusteredPointLayer: LayerProps = {
   source: 'my-data',
   filter: ['!', ['has', 'point_count']],
   paint: {
-    'circle-color': '#60a5fa',
+    'circle-color': '#eecda1',
     'circle-radius': 3,
     'circle-opacity': 0.5,
   },

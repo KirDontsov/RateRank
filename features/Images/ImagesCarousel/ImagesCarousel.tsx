@@ -139,7 +139,7 @@ const Dots: FC<DotsProps> = ({ imgIndex, setImgIndex, images }) => {
             key={idx}
             onClick={() => setImgIndex(idx)}
             className={`h-3 w-3 rounded-full transition-colors ${
-              idx === imgIndex ? 'bg-neutral-50' : 'bg-neutral-500'
+              idx === imgIndex ? 'bg-negroni-400' : 'bg-negroni-700'
             }`}
           />
         );

@@ -75,10 +75,10 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                     blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
                     priority={true}
                   />
-                  <div className="flex items-center justify-center w-full h-full bg-gray-900/40">
+                  <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                     <div className="text-center">
                       <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`${firm?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a' ? 'Отзыв о ресторане' : 'Отзыв об автосервисе'} ${firm?.name}`}</h1>
-                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md lg:w-auto hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
                         Позвонить
                       </button>
                     </div>
@@ -87,11 +87,11 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
               </header>
 
               <div className="w-full flex flex-col items-center gap-4 min-h-[500px]">
-                <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-900">
+                <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-900">
                   <div className="w-full flex gap-8">
                     <FormProvider {...form}>
                       <div className="w-1/2 flex flex-col gap-4">
-                        <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">{`Оцените организацию`}</h2>
+                        <h2 className="text-2xl font-[500] dark:text-negroni-400 text-negroni-400">{`Оцените организацию`}</h2>
                         <FormInput
                           id={AddReviewFields.Rating}
                           name={AddReviewFields.Rating}
@@ -113,7 +113,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                         />
                       </div>
                       <div className="w-1/2 flex flex-col gap-4">
-                        <h2 className="text-2xl font-[500] dark:text-blue-400 text-blue-400">Оставьте отзыв</h2>
+                        <h2 className="text-2xl font-[500] dark:text-negroni-400 text-negroni-400">Оставьте отзыв</h2>
 
                         <FormInput
                           id={AddReviewFields.Author}
@@ -160,7 +160,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                             type="button"
                             disabled={!isDirty || !isValid}
                             onClick={handleSubmit}
-                            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                           >
                             Отправить отзыв
                           </button>

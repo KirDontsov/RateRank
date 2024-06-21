@@ -118,7 +118,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   priority={true}
                 />
               )}
-              <div className="flex items-center justify-center w-full h-full bg-gray-900/20 z-[0]">
+              <div className="flex items-center justify-center w-full h-full bg-eboni-900/20 z-[0]">
                 <div className="text-center p-8">
                   <AnimatedText
                     el="h1"
@@ -137,7 +137,7 @@ export const FirmId: FC<FirmIdProps> = ({
           </header>
 
           <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1] text-sm xl:text-base">
-            <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-800">
+            <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               <div className="w-full flex gap-8">
                 <div className={cn('w-full flex flex-col gap-4')}>
                   <Anchors />
@@ -186,8 +186,10 @@ export const FirmId: FC<FirmIdProps> = ({
                       })}
                     >
                       {Number(firm?.reviews_count) > 0 && (
-                        <div className="flex h-fit">
-                          <Rating rating={firm?.rating} />
+                        <div className="flex items-center h-[60px]">
+                          <div className="flex h-fit">
+                            <Rating rating={firm?.rating} />
+                          </div>
                           <div className="flex items-center gap-2 ml-4">
                             <span>{firm?.rating}</span> /
                             <span>{`${firm?.reviews_count} ${Number(firm?.reviews_count) === 1 ? 'отзыв' : (Number(firm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
@@ -213,13 +215,13 @@ export const FirmId: FC<FirmIdProps> = ({
                         </svg>
                         Телефон:
                       </div>
-                      <a href={`tel:${firm?.default_phone}`} className="dark:text-blue-400 text-blue-400">
+                      <a href={`tel:${firm?.default_phone}`} className="dark:text-negroni-400 text-negroni-400">
                         {firm?.default_phone}
                       </a>
                     </div>
                   )}
 
-                  {firm?.site !== '' && firm?.site?.indexOf('WhatsApp') === -1 && (
+                  {['Заказать онлайн', 'WhatsApp', '', null].indexOf(firm?.site ?? '') === -1 && (
                     <div className="flex flex-col gap-4">
                       <div className="flex items-center gap-2 text-gray-500">
                         <svg
@@ -278,12 +280,13 @@ export const FirmId: FC<FirmIdProps> = ({
               <>
                 <div className="container my-4 px-8 xl:px-0">
                   <SectionHeader
+                    gold
                     {...(oai_reviews.length ? { id: 'reviews' } : {})}
                     title={`Краткое содержание и анализ отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                     subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                   />
                 </div>
-                <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">
                   <div className={`${styles.myCustomStyle} list-disc`}>{oai_reviews?.[0]?.text ?? ''}</div>
                 </div>
               </>

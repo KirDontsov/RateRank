@@ -35,10 +35,10 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rati
       key={firm_id}
       href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
-      className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 cursor-pointer"
+      className="max-w-2xl w-full px-8 py-4 bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 cursor-pointer hover:scale-[1.03] duration-300"
     >
       <div className="mt-2">
-        <div className="text-xl flex justify-between items-center font-bold text-gray-700 dark:text-white" tabIndex={0}>
+        <div className="text-xl flex justify-between items-center font-bold text-gray dark:text-white" tabIndex={0}>
           {name}
           <Rating rating={rating} />
         </div>
@@ -53,7 +53,7 @@ export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rati
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <div className="text-blue-600 dark:text-blue-400 hover:underline" tabIndex={0}>
+        <div className="text-eboni-600 dark:text-white hover:text-negroni-400 hover:underline" tabIndex={0}>
           Подробнее
         </div>
       </div>

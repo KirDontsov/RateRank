@@ -56,7 +56,7 @@ export const SearchVariants: FC<SearchVariantsProps> = ({ cities, categories }) 
       {!!searchVariants?.length && searchVariantsExpanded && (
         <div
           ref={dropdownRef}
-          className="flex flex-col bg-white dark:bg-gray-900 relative w-full h-fit top-[74px] px-8 items-center justify-center overflow-hidden"
+          className="flex flex-col bg-white dark:bg-eboni-900 relative w-full h-fit top-[74px] px-8 items-center justify-center overflow-hidden"
         >
           <div className="flex flex-wrap gap-x-4 overflow-auto relative w-full max-h-[100svh] pt-4 pb-[96px]">
             {searchVariants?.map((variant) => (
