@@ -186,8 +186,10 @@ export const FirmId: FC<FirmIdProps> = ({
                       })}
                     >
                       {Number(firm?.reviews_count) > 0 && (
-                        <div className="flex h-fit">
-                          <Rating rating={firm?.rating} />
+                        <div className="flex items-center h-[60px]">
+                          <div className="flex h-fit">
+                            <Rating rating={firm?.rating} />
+                          </div>
                           <div className="flex items-center gap-2 ml-4">
                             <span>{firm?.rating}</span> /
                             <span>{`${firm?.reviews_count} ${Number(firm?.reviews_count) === 1 ? 'отзыв' : (Number(firm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
@@ -278,6 +280,7 @@ export const FirmId: FC<FirmIdProps> = ({
               <>
                 <div className="container my-4 px-8 xl:px-0">
                   <SectionHeader
+                    gold
                     {...(oai_reviews.length ? { id: 'reviews' } : {})}
                     title={`Краткое содержание и анализ отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
                     subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}

@@ -119,7 +119,7 @@ export const LoginForm = () => {
 
           <button
             type="button"
-            className="mt-2 flex items-center rounded py-1.5 px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-500"
+            className="mt-2 flex items-center rounded py-1.5 px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ export const LoginForm = () => {
             type="button"
             disabled={!isDirty || !isValid}
             onClick={handleSubmit}
-            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
           >
             Войти
           </button>

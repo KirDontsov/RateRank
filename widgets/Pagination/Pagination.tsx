@@ -17,7 +17,7 @@ const range = (start: number, stop: number) =>
     : [];
 
 const Dots: FC = () => (
-  <div className="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline dark:bg-eboni-800 dark:text-gray-200 hover:bg-negroni-500 dark:hover:bg-negroni-500 hover:text-white dark:hover:text-gray-200">
+  <div className="hidden px-4 py-2 mx-1 transition-colors duration-300 transform bg-eboni-400 rounded-md sm:inline text-white dark:bg-eboni-400 dark:text-white hover:bg-negroni-400 hover:text-eboni-600">
     ...
   </div>
 );
@@ -39,9 +39,9 @@ export const Pagination: FC<PaginationProps> = ({
       key={`${page}`}
       onClick={() => handlePageButtonClick(page)}
       className={cn(
-        'hidden px-4 py-2 text-sm mx-1 transition-colors duration-300 transform rounded-md sm:inline dark:text-gray-200 hover:bg-negroni-500 dark:hover:bg-negroni-500 hover:text-white dark:hover:text-gray-200',
-        { 'bg-negroni-500 dark:bg-negroni-500 text-white': page === currentPage },
-        { 'dark:bg-eboni-800 bg-eboni-100 text-gray-700': page !== currentPage },
+        'hidden px-4 py-2 text-sm text-white mx-1 transition-colors duration-300 transform rounded-md sm:inline dark:text-white hover:bg-negroni-400 hover:text-eboni-600 dark:hover:text-eboni-600',
+        { 'bg-negroni-400 dark:bg-negroni-400 text-white dark:text-eboni-600': page === currentPage },
+        { 'dark:bg-eboni-400 bg-eboni-400': page !== currentPage },
       )}
     >
       {page}
@@ -73,7 +73,7 @@ export const Pagination: FC<PaginationProps> = ({
     <div data-test-id={dataTestId} className="flex items-center">
       <button
         onClick={handlePrevClick}
-        className="flex items-center justify-center px-2 py-2 text-sm mx-1 text-gray-700 transition-colors duration-300 transform bg-eboni-100 rounded-md rtl:-scale-x-100 dark:bg-eboni-800 dark:text-gray-200 hover:bg-negroni-500 dark:hover:bg-negroni-500 hover:text-white dark:hover:text-gray-200"
+        className="flex items-center justify-center px-2 py-2 text-sm text-white mx-1 transition-colors duration-300 transform rounded-md rtl:-scale-x-100 bg-eboni-400 dark:bg-eboni-400 dark:text-white hover:bg-negroni-400 hover:text-eboni-600"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-6" viewBox="0 0 20 20" fill="currentColor">
           <path
@@ -88,7 +88,7 @@ export const Pagination: FC<PaginationProps> = ({
       {totalPages > 1 && renderPageButton(totalPages)}
       <button
         onClick={handleNextClick}
-        className="flex items-center justify-center px-2 py-2 text-sm mx-1 text-gray-700 transition-colors duration-300 transform bg-eboni-100 rounded-md rtl:-scale-x-100 dark:bg-eboni-800 dark:text-gray-200 hover:bg-negroni-500 dark:hover:bg-negroni-500 hover:text-white dark:hover:text-gray-200"
+        className="flex items-center justify-center px-2 py-2 text-sm text-white mx-1 transition-colors duration-300 transform rounded-md rtl:-scale-x-100 bg-eboni-400 dark:bg-eboni-400 hover:bg-negroni-400 hover:text-eboni-600"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-6" viewBox="0 0 20 20" fill="currentColor">
           <path

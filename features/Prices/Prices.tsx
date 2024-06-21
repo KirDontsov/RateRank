@@ -70,7 +70,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
               <td className="px-6 py-4">Laptop</td>
               <td className="px-6 py-4">$2999</td>
               <td className="px-6 py-4">
-                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-500 hover:underline">
+                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-400 hover:underline">
                   Edit
                 </a>
               </td>
@@ -83,7 +83,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
               <td className="px-6 py-4">Laptop PC</td>
               <td className="px-6 py-4">$1999</td>
               <td className="px-6 py-4">
-                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-500 hover:underline">
+                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-400 hover:underline">
                   Edit
                 </a>
               </td>
@@ -96,7 +96,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
               <td className="px-6 py-4">Accessories</td>
               <td className="px-6 py-4">$99</td>
               <td className="px-6 py-4">
-                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-500 hover:underline">
+                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-400 hover:underline">
                   Edit
                 </a>
               </td>
@@ -109,7 +109,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
               <td className="px-6 py-4">Phone</td>
               <td className="px-6 py-4">$799</td>
               <td className="px-6 py-4">
-                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-500 hover:underline">
+                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-400 hover:underline">
                   Edit
                 </a>
               </td>
@@ -122,7 +122,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
               <td className="px-6 py-4">Wearables</td>
               <td className="px-6 py-4">$999</td>
               <td className="px-6 py-4">
-                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-500 hover:underline">
+                <a href="#" className="font-medium text-negroni-600 dark:text-negroni-400 hover:underline">
                   Edit
                 </a>
               </td>

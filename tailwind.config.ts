@@ -14,6 +14,7 @@ const config: Config = {
     colors: {
       ...colors,
       white: '#f6f6f8',
+      gray: '#8d9196',
       eboni: {
         100: '#7b7e81',
         200: '#676a6d',

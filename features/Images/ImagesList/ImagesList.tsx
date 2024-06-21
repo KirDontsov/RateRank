@@ -35,7 +35,7 @@ export const ImagesList: FC<ImagesListProps> = ({ firm, city, category, images }
       >
         <div className="flex items-center justify-center w-full h-[405px] bg-eboni-300 rounded dark:bg-eboni-700">
           <svg
-            className="w-10 h-10 text-gray-200 dark:text-gray-600"
+            className="w-10 h-10 dark:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"

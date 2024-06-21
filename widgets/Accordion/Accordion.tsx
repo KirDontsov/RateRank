@@ -45,18 +45,18 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
   }, [category?.category_id, category?.name, firm?.address, firm?.default_phone, firm?.name]);
 
   return (
-    <div id="accordion-flush" className="text-gray-500 dark:text-white flex flex-col w-full">
+    <div id="accordion-flush" className="flex flex-col w-full">
       {items?.map(({ title, text }, index) => (
         <Fragment key={title}>
           <h2 id="accordion-flush-heading-1">
             <button
               onClick={() => setOpen(index !== open ? index : null)}
               type="button"
-              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-zinc-200 dark:border-zinc-700 dark:text-white gap-3 hover:text-negroni-400 cursor-pointer"
+              className="flex items-center justify-between w-full py-5 font-medium rtl:text-right border-b border-zinc-200 dark:border-zinc-700 gap-3 hover:text-negroni-400 cursor-pointer"
             >
               <span className="flex items-center justify-between gap-3">
                 <svg
-                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  className="w-6 h-6"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -101,7 +101,7 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
             aria-labelledby="accordion-flush-heading-1"
           >
             <div className="flex flex-col py-5 border-b border-zinc-200 dark:border-zinc-700 w-full">
-              <p className="mb-2 text-gray-500 dark:text-white">{text}</p>
+              <p className="mb-2">{text}</p>
             </div>
           </div>
         </Fragment>

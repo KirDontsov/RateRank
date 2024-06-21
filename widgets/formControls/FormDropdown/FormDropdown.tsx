@@ -33,7 +33,7 @@ export const FormDropdown: FC<FormDropdownProps> = ({ options, value, placeholde
       <button
         key={value?.name}
         onClick={handleOpen}
-        className="relative z-10 p-4 flex items-center text-sm xl:text-base text-gray-600 bg-white border border-transparent rounded-md focus:border-negroni-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-eboni-800 focus:outline-none"
+        className="relative z-10 p-4 flex items-center text-sm xl:text-base bg-white border border-transparent rounded-md focus:border-negroni-400 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-negroni-400 focus:ring dark:text-white dark:bg-eboni-800 focus:outline-none"
       >
         <span suppressHydrationWarning className="mx-1">
           {!!value?.name && value?.name !== '' ? value?.name : placeholder}
@@ -57,7 +57,7 @@ export const FormDropdown: FC<FormDropdownProps> = ({ options, value, placeholde
               data-route={abbreviation}
               role="button"
               onClick={onSelect}
-              className="block px-4 py-3 text-sm xl:text-base text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-eboni-100 dark:hover:bg-eboni-700 dark:hover:text-white cursor-pointer"
+              className="block px-4 py-3 text-sm xl:text-base capitalize transition-colors duration-300 transform hover:bg-negroni-400 hover:text-eboni-600 cursor-pointer"
             >
               {name}
             </span>

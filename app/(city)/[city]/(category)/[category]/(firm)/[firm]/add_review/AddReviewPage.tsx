@@ -78,7 +78,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                   <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                     <div className="text-center">
                       <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`${firm?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a' ? 'Отзыв о ресторане' : 'Отзыв об автосервисе'} ${firm?.name}`}</h1>
-                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-500 focus:outline-none focus:bg-negroni-500">
+                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
                         Позвонить
                       </button>
                     </div>
@@ -160,7 +160,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                             type="button"
                             disabled={!isDirty || !isValid}
                             onClick={handleSubmit}
-                            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                            className="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-negroni-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                           >
                             Отправить отзыв
                           </button>

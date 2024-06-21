@@ -80,7 +80,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                         {!!section.url && (
                           <Link
                             href={`/${city?.abbreviation}/${category?.abbreviation}/${section.url}`}
-                            className="text-gray-700 hover:text-negroni-600 dark:text-gray-400 dark:hover:text-white"
+                            className="text-negroni-400 hover:text-negroni-400 dark:text-gray dark:hover:text-white"
                           >
                             Подробнее: {section.title}
                           </Link>
