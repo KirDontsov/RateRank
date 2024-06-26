@@ -4,6 +4,7 @@ import { FC, MouseEvent, useCallback } from 'react';
 export interface ButtonProps {
   id?: string;
   onClick?: (v: MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
 }
 
 export const Button: FC<CommonProps & ButtonProps> = ({ id, onClick, className = '', children }) => {
