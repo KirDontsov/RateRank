@@ -65,7 +65,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
               <Curve>
                 <Nav cities={cities} categories={categories} />
                 <Section pt={0}>
-                  <div className="flex xl:flex-row xl:w-full flex-col-reverse px-4 xl:px-0">
+                  <div className="flex xl:flex-row w-full flex-col-reverse md:px-4 xl:px-0">
                     <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
                       <div className="p-8">
                         <SectionHeader

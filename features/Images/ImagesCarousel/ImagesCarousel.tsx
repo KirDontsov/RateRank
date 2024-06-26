@@ -2,13 +2,14 @@ import { Category, City, Firm, ImageType } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
 import { motion, useMotionValue } from 'framer-motion';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface ImagesCarouselProps {
   images: ImageType[] | null;
   firm: Firm | null;
   city: City | null;
   category: Category | null;
+  tablet: boolean;
 }
 
 const ONE_SECOND = 1000;
@@ -22,8 +23,9 @@ const SPRING_OPTIONS = {
   damping: 50,
 };
 
-export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, images }) => {
+export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, images, tablet }) => {
   const [imgIndex, setImgIndex] = useState(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const dragX = useMotionValue(0);
 
@@ -59,8 +61,20 @@ export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, 
     }
   }, [dragX, images?.length, imgIndex]);
 
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+
+  const handleFullScreen = useCallback(() => {
+    if (!document?.fullscreenElement) {
+      galleryRef?.current?.requestFullscreen();
+      setIsFullScreen(true);
+    } else if (document?.exitFullscreen) {
+      document?.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  }, []);
+
   return (
-    <div className="relative overflow-hidden py-8">
+    <div ref={galleryRef} className="relative overflow-hidden py-8">
       <motion.div
         drag="x"
         dragConstraints={{
@@ -80,6 +94,7 @@ export const ImagesCarousel: FC<ImagesCarouselProps> = ({ firm, city, category, 
         <Images imgIndex={imgIndex} firm={firm} city={city} category={category} images={images} />
       </motion.div>
 
+      {!tablet && <Expand handleFullScreen={handleFullScreen} isFullScreen={isFullScreen} />}
       <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} images={images} />
     </div>
   );
@@ -132,7 +147,7 @@ export interface DotsProps {
 
 const Dots: FC<DotsProps> = ({ imgIndex, setImgIndex, images }) => {
   return (
-    <div className="mt-4 flex w-full justify-center gap-2">
+    <div className="mt-4 flex w-full flex-wrap justify-center gap-2 px-2">
       {images?.map((_, idx) => {
         return (
           <button
@@ -147,3 +162,53 @@ const Dots: FC<DotsProps> = ({ imgIndex, setImgIndex, images }) => {
     </div>
   );
 };
+
+export interface ExpandProps {
+  handleFullScreen: () => void;
+  isFullScreen: boolean;
+}
+
+export const Expand: FC<ExpandProps> = ({ handleFullScreen, isFullScreen }) => (
+  <div
+    className={`flex justify-center items-center absolute cursor-pointer bottom-[20px] ${isFullScreen ? 'right-[20px]' : 'right-[40px]'}`}
+    onClick={handleFullScreen}
+  >
+    {!isFullScreen ? (
+      <svg
+        className="w-6 h-6 text-negroni-400 hover:text-negroni-500"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"
+        />
+      </svg>
+    ) : (
+      <svg
+        className="w-6 h-6 text-negroni-400 hover:text-negroni-500"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M4 8h4V4m12 4h-4V4M4 16h4v4m12-4h-4v4"
+        />
+      </svg>
+    )}
+  </div>
+);

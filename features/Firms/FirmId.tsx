@@ -272,7 +272,7 @@ export const FirmId: FC<FirmIdProps> = ({
                     />
                     <Accordion firm={firm} category={category} />
                   </div>
-                  <Images firm={firm} city={city} category={category} images={images} />
+                  <Images firm={firm} city={city} category={category} images={images} tablet={tablet} />
                 </div>
               </div>
             </div>

@@ -1,5 +1,4 @@
 import { Category, City, Firm, ImageType } from '@/api';
-import { useMediaQuery } from '@/hooks';
 import { SectionHeader } from '@/widgets';
 import cn from 'classnames';
 import { FC } from 'react';
@@ -10,10 +9,10 @@ export interface ImagesProps {
   firm: Firm | null;
   city: City | null;
   category: Category | null;
+  tablet: boolean;
 }
 
-export const Images: FC<ImagesProps> = ({ images, city, firm, category }) => {
-  const tablet = useMediaQuery('(max-width: 768px)');
+export const Images: FC<ImagesProps> = ({ images, city, firm, category, tablet }) => {
   return (
     <div className="w-full flex flex-col gap-4">
       {images?.length ? (
@@ -26,7 +25,7 @@ export const Images: FC<ImagesProps> = ({ images, city, firm, category }) => {
               'w-[calc(100% + 60px)] mx-[-30px]': !tablet,
             })}
           >
-            <ImagesCarousel firm={firm} city={city} category={category} images={images} />
+            <ImagesCarousel firm={firm} city={city} category={category} images={images} tablet={tablet} />
           </div>
         </>
       ) : (

@@ -66,7 +66,7 @@ export const Curve: FC<CommonProps> = ({ children }) => {
     <div className={`${styles.curve} page`}>
       <div style={{ opacity: dimensions.width == null ? 1 : 0 }} className={styles.background} />
       <motion.p
-        className={`${styles.route} font-semibold text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter`}
+        className={`${styles.route} font-semibold text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter w-full`}
         {...anim(text)}
       >
         {COMMON_TITLE.toUpperCase()}

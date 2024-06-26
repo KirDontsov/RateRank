@@ -42,8 +42,11 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
           })}
         >
           <div className="flex items-center justify-between">
-            <div className="flex gap-8 items-center justify-center">
-              <Link className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white" href="/">
+            <div className="flex gap-2 md:gap-8 items-center justify-center">
+              <Link
+                className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white text-nowrap"
+                href="/"
+              >
                 {COMMON_TITLE.toLocaleUpperCase()}
               </Link>
               <div className="pointer-events-auto mr-2">
