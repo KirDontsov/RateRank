@@ -43,6 +43,14 @@ export default function RootLayout({ children }: CommonProps) {
   return (
     <html lang="en" className="overflow-x-hidden">
       <body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WLP6X8Z9"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
         {process.env.PRODUCTION && (
@@ -70,6 +78,13 @@ export default function RootLayout({ children }: CommonProps) {
                       return document.body.querySelectorAll('div').length > 10;
                   },
               }`}
+            </Script>
+            <Script id="google-tag" strategy="afterInteractive">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-WLP6X8Z9');`}
             </Script>
           </>
         )}
