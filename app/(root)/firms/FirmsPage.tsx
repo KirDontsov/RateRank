@@ -81,7 +81,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                         )}
                       </div>
                     </div>
-                    <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full">
+                    <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full px-2 md:px-0">
                       <FirmsMap />
                     </div>
                   </div>
