@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
 import { CookiesProvider } from 'next-client-cookies/server';
 // import { Inter } from 'next/font/google';
@@ -71,6 +72,14 @@ export default function RootLayout({ children }: CommonProps) {
                   },
               }`}
             </Script>
+            <Script id="google-tag" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-8N2W9TPW5X');`}
+            </Script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N2W9TPW5X"></script>
           </>
         )}
       </body>

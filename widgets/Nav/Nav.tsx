@@ -42,8 +42,11 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
           })}
         >
           <div className="flex items-center justify-between">
-            <div className="flex gap-8 items-center justify-center">
-              <Link className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white" href="/">
+            <div className="flex gap-2 md:gap-8 items-center justify-center">
+              <Link
+                className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white text-nowrap"
+                href="/"
+              >
                 {COMMON_TITLE.toLocaleUpperCase()}
               </Link>
               <div className="pointer-events-auto mr-2">
@@ -120,7 +123,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
           {tablet && open && (
             <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-eboni-700">
               <div className="flex flex-col items-center pointer-events-auto">
-                <CityDropdown />
+                <CityDropdown cities={cities} />
                 {/* <Link
                className="my-2 text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-negroni-400 dark:hover:text-negroni-400 md:mx-4 md:my-0"
                href="#"

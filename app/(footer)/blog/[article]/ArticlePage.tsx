@@ -1,6 +1,7 @@
 'use client';
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
 import { Curve, Images } from '@/features';
+import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import Link from 'next/link';
@@ -16,6 +17,7 @@ export interface ArticlePageProps {
 
 export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categories, images }) => {
   const map = new Map<string, SectionItem[]>();
+  const tablet = useMediaQuery('(max-width: 768px)');
 
   const blocks = page?.blocks.sort((a, b) => Number(a?.page_block_order) - Number(b?.page_block_order)) ?? [];
   const sections =
@@ -73,14 +75,14 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                     return (
                       <div key={section.page_block_section_id} className="flex flex-col gap-8" data-test-id="section">
                         {Number(section.page_block_section_order) !== 0 && (
-                          <h2 className="text-3xl font-semibold text-negroni-400 dark:text-white lg:text-4xl">
+                          <h2 className="text-lg font-semibold text-negroni-400 dark:text-white lg:text-4xl">
                             {section.title}
                           </h2>
                         )}
                         {!!section.url && (
                           <Link
                             href={`/${city?.abbreviation}/${category?.abbreviation}/${section.url}`}
-                            className="text-negroni-400 hover:text-negroni-400 dark:text-gray dark:hover:text-white"
+                            className="text-negroni-400 hover:text-negroni-500 dark:hover:text-negroni-500"
                           >
                             Подробнее: {section.title}
                           </Link>
@@ -96,6 +98,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                             city={city}
                             category={category}
                             images={images.get(section?.page_block_section_id ?? '') || null}
+                            tablet={tablet}
                           />
                         )}
                       </div>

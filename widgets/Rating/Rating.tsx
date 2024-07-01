@@ -16,7 +16,7 @@ export const Rating: FC<RatingProps> = ({ rating }) => {
 
   return (
     <span
-      className="px-3 py-1 text-sm font-bold transition-colors duration-300 transform rounded bg-eboni-400 dark:bg-eboni-200 hover:bg-eboni-200 dark:hover:bg-eboni-500 flex"
+      className="px-3 py-1 text-sm font-bold transition-colors duration-300 transform rounded bg-eboni-400 dark:bg-eboni-200 hover:bg-eboni-200 dark:hover:bg-eboni-500 flex w-fit"
       tabIndex={0}
     >
       {positiveArray.map((x) => (
