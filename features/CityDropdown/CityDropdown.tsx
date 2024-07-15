@@ -1,8 +1,8 @@
 'use client';
-import { $cities, $city, City, setCityEvt } from '@/api';
+import { City, setCityEvt } from '@/api';
 import { FormDropdown } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FC, MouseEvent, useCallback, useState } from 'react';
 
 export interface CityDropdownProps {
@@ -11,14 +11,15 @@ export interface CityDropdownProps {
 
 export const CityDropdown: FC<CityDropdownProps> = ({ cities }) => {
   const [open, setOpen] = useState(false);
+  const path = usePathname();
 
   const router = useRouter();
 
-  const { city, setValue } = useUnit({
-    city: $city,
-    cities: $cities,
+  const { setValue } = useUnit({
     setValue: setCityEvt,
   });
+
+  const selectedCity = cities?.find((x) => x?.abbreviation === path?.split('/')[1]);
 
   const options =
     cities?.map((city) => ({
@@ -28,9 +29,9 @@ export const CityDropdown: FC<CityDropdownProps> = ({ cities }) => {
     })) ?? [];
 
   const value = {
-    id: city?.city_id ?? '',
-    name: city?.name ?? '',
-    abbreviation: city?.abbreviation ?? '',
+    id: selectedCity?.city_id ?? '',
+    name: selectedCity?.name ?? '',
+    abbreviation: selectedCity?.abbreviation ?? '',
   };
 
   const handleSelect = useCallback(

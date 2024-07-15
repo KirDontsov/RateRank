@@ -2,7 +2,7 @@ import { Category, City, Firm, ImageType } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
 import { motion, useMotionValue } from 'framer-motion';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface ImagesCarouselProps {
   images: ImageType[] | null;

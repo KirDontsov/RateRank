@@ -1,6 +1,6 @@
 'use client';
 
-import { $category, $city, $firms, $firmsForMap, $firmsPage, Firm } from '@/api';
+import { $category, $city, $firmsForMap, $firmsPage } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
