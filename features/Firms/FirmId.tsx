@@ -17,7 +17,7 @@ import {
   Review,
   setReviewsPageEvt,
 } from '@/api';
-import { FirmMap, Images, Prices, ReviewsList, SimilarFirms } from '@/features';
+import { Images, Prices, ReviewsList, SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
 import {
@@ -33,11 +33,14 @@ import {
 } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
+import dynamic from 'next/dynamic';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 import { FirmLoading } from './FirmLoading';
 import styles from './oaiReviewStyles.module.scss';
+
+const DynamicMap = dynamic(() => import('../../features/FirmsMap/FirmMap'));
 
 export interface FirmIdProps {
   city: City | null;
@@ -246,7 +249,7 @@ export const FirmId: FC<FirmIdProps> = ({
                     </div>
                   )}
 
-                  {!!firm?.coords && <FirmMap />}
+                  {!!firm?.coords && <DynamicMap />}
 
                   {(firm?.description || oai_description?.oai_description_value) && (
                     <>
