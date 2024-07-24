@@ -1,19 +1,8 @@
 import { ErrorBoundary } from '@/features/ErrorBoundary';
-import { EffectorNext, getClientScope } from '@effector/next';
-import { attachReduxDevTools } from '@effector/redux-devtools-adapter';
+import { EffectorNext } from '@effector/next';
 import { AnimatePresence } from 'framer-motion';
 import type { AppProps } from 'next/app';
 import '../configs/dayjs.config';
-
-const clientScope = getClientScope();
-
-if (clientScope) {
-  attachReduxDevTools({
-    scope: clientScope,
-    name: 'playground-app',
-    trace: true,
-  });
-}
 
 function App({ Component, pageProps }: AppProps<{ values: Record<string, unknown> }>) {
   const { values } = pageProps;
