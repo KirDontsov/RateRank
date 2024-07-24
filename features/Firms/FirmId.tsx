@@ -1,8 +1,6 @@
 'use client';
 import {
   $firmError,
-  $firmLoading,
-  $imagesLoading,
   $reviewsCount,
   $reviewsPage,
   Category,
@@ -73,12 +71,10 @@ export const FirmId: FC<FirmIdProps> = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { reviewsCount, setPage, page, imagesLoading, firmLoading, firmError } = useUnit({
+  const { reviewsCount, setPage, page, firmError } = useUnit({
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
-    imagesLoading: $imagesLoading,
-    firmLoading: $firmLoading,
     firmError: $firmError,
   });
 
