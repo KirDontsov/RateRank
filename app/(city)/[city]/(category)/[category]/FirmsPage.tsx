@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsError, $firmsPage, Category, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsError, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -8,19 +8,23 @@ import {
   Curve,
   FirmsGateProvider,
   FirmsList,
-  FirmsMap,
 } from '@/features';
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { Footer, Nav, Pagination, Section, SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
+import dynamic from 'next/dynamic';
 import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
+
+const DynamicMap = dynamic(() => import('../../../../../features/FirmsMap/FirmsMap'));
 
 export interface FirmsPageProps {
   categoryAbbr: string;
   cityAbbr: string;
   category: Category | null;
+  city: City | null;
   firms: Firm[] | null;
+  firmsForMap: Firm[] | null;
 }
 
 export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
@@ -30,6 +34,8 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
   categoryAbbr,
   category,
   firms,
+  firmsForMap,
+  city,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -66,7 +72,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                 <Nav cities={cities} categories={categories} />
                 <Section pt={0}>
                   <div className="flex xl:flex-row w-full flex-col-reverse md:px-4 xl:px-0">
-                    <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
+                    <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit overflow-x-hidden">
                       <div className="p-8">
                         <SectionHeader
                           title={`${categories?.find((cat) => cat?.abbreviation === categoryAbbr)?.name?.slice(0, -1)}ы города ${cities?.find((city) => city?.abbreviation === cityAbbr)?.name}`}
@@ -74,7 +80,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                         />
                       </div>
                       {firmsCount ? (
-                        <FirmsList firms={firms} />
+                        <FirmsList firms={firms} city={city} category={category} />
                       ) : (
                         <SectionHeader title="Что-то пошло не так" subTitle="Нет компаний в данном разделе" />
                       )}
@@ -91,7 +97,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                       </div>
                     </div>
                     <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full px-4 md:px-0">
-                      <FirmsMap />
+                      <DynamicMap firmsForMap={firmsForMap} city={city} category={category} />
                     </div>
                   </div>
 

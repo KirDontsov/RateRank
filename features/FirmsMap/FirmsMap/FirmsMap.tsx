@@ -1,6 +1,6 @@
 'use client';
 
-import { $category, $city, $firmsForMap, $firmsPage } from '@/api';
+import { $firmsPage, Category, City, Firm } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -26,6 +26,12 @@ import styles from './map.module.scss';
 export interface MarkersComponentProps {
   items: MapboxGeoJSONFeature[] | null;
   zoomToSelectedLoc: (e: MouseEvent<HTMLButtonElement>, item: MapboxGeoJSONFeature) => void;
+}
+
+export interface FirmsMapProps {
+  firmsForMap: Firm[] | null;
+  city: City | null;
+  category: Category | null;
 }
 
 /** Работаем с гео-json и itemsInViewPort иначе тормозит */
@@ -56,7 +62,7 @@ const MarkersComponent: FC<MarkersComponentProps> = ({ zoomToSelectedLoc, items 
 
 export const Markers = memo(MarkersComponent);
 
-export const FirmsMap = () => {
+export const FirmsMap: FC<FirmsMapProps> = ({ firmsForMap, city, category }) => {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const searchParams = useSearchParams();
   const [selectedMarker, setSelectedMarker] = useState<MapboxGeoJSONFeature | null>(null);
@@ -64,10 +70,7 @@ export const FirmsMap = () => {
   const [currentZoom, setCurrentZoom] = useState<number | null>(null);
   const mapRef = useRef<MapRef>(null);
 
-  const { firms, city, category, page } = useUnit({
-    firms: $firmsForMap,
-    city: $city,
-    category: $category,
+  const { page } = useUnit({
     page: $firmsPage,
   });
 
@@ -84,7 +87,7 @@ export const FirmsMap = () => {
 
   const geojson = {
     type: 'FeatureCollection',
-    features: firms
+    features: firmsForMap
       ?.filter((x) => !!x?.coords && x?.coords !== `0`)
       ?.map((firm) => {
         const coords = firm?.coords?.split(', ');
@@ -158,7 +161,7 @@ export const FirmsMap = () => {
           }
         }}
       >
-        {!!firms?.length && (
+        {!!firmsForMap?.length && (
           <>
             {!!currentZoom && currentZoom >= 13 && (
               <Markers items={itemsInViewPort} zoomToSelectedLoc={zoomToSelectedLoc} />

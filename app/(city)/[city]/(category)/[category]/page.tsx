@@ -1,7 +1,7 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
-import { getCategories, getCategory, getCities, getFirms } from './api';
+import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from './api';
 
 export interface CategoryPageProps {
   params: { city: string; category: string };
@@ -43,17 +43,21 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
   const cityAbbr = params?.city ?? '';
   const firmsPage = searchParams?.firmsPage ?? '1';
 
-  const category = await getCategory(cityAbbr);
+  const category = await getCategory(categoryAbbr);
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
+  const firmsForMap = await getFirmsForMap(cityAbbr, categoryAbbr);
   const cities = await getCities();
+  const city = await getCity(cityAbbr);
   const categories = await getCategories(1, 10);
 
   return (
     <FirmsPage
       cityAbbr={cityAbbr}
       categoryAbbr={categoryAbbr}
+      city={city}
       category={category}
       firms={firms}
+      firmsForMap={firmsForMap}
       cities={cities}
       categories={categories}
     />

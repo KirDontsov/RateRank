@@ -1,4 +1,4 @@
-import { $category, $city, $firmsPage, setFirmEvt } from '@/api';
+import { $firmsPage, Category, City, setFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { Rating } from '@/widgets';
 import { useUnit } from 'effector-react';
@@ -15,13 +15,22 @@ export interface FirmsCardProps {
   descriptioin?: string;
   rating?: string;
   reviews_count?: string;
+  city: City | null;
+  category: Category | null;
 }
 
-export const FirmCard: FC<FirmsCardProps> = ({ firm_id, url, name, address, rating, reviews_count }) => {
+export const FirmCard: FC<FirmsCardProps> = ({
+  firm_id,
+  url,
+  name,
+  address,
+  rating,
+  reviews_count,
+  city,
+  category,
+}) => {
   const searchParams = useSearchParams();
-  const { city, category, page, setFirm } = useUnit({
-    city: $city,
-    category: $category,
+  const { page, setFirm } = useUnit({
     page: $firmsPage,
     setFirm: setFirmEvt,
   });

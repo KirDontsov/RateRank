@@ -249,7 +249,7 @@ export const FirmId: FC<FirmIdProps> = ({
                     </div>
                   )}
 
-                  {!!firm?.coords && <DynamicMap />}
+                  {!!firm?.coords && <DynamicMap firm={firm} />}
 
                   {(firm?.description || oai_description?.oai_description_value) && (
                     <>
