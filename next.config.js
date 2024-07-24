@@ -5,6 +5,7 @@ const nextConfig = {
   // renders only 1 time
   reactStrictMode: false,
   cssModules: true,
+  swcMinify: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
@@ -13,7 +14,6 @@ const nextConfig = {
   },
   localIdentName: '[]',
   images: {
-    formats: ['image/webp'],
     minimumCacheTTL: 60,
     remotePatterns: [
       {
@@ -32,6 +32,10 @@ const nextConfig = {
       destination: '/yandex_cd50f689e0fff974.html',
     },
   ],
+  experimental: {
+    legacyBrowsers: false,
+    nextScriptWorkers: true,
+  },
   // effector swc нужен для серверных компонентов
   // experimental: {
   //   swcPlugins: [
