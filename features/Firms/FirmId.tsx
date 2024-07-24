@@ -109,19 +109,17 @@ export const FirmId: FC<FirmIdProps> = ({
       <div className="w-full flex flex-col gap-8">
         <header>
           <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">
-            {!imagesLoading && (
-              <ImageWithFallback
-                className="w-full h-[38rem] absolute z-[-1]"
-                src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
-                fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
-                fill
-                alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
-                style={{ objectFit: 'cover' }}
-                placeholder="blur"
-                blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
-                priority={true}
-              />
-            )}
+            <ImageWithFallback
+              className="w-full h-[38rem] absolute z-[-1]"
+              src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+              fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
+              fill
+              alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+              style={{ objectFit: 'cover' }}
+              placeholder="blur"
+              blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
+              priority={true}
+            />
             <div className="flex items-center justify-center w-full h-full bg-eboni-900/30 z-[0]">
               <div className="text-center p-8">
                 <AnimatedText
