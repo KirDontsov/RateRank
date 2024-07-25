@@ -26,7 +26,7 @@ export const Footer = () => {
           {Array.from(FOOTER_LINKS).map(([key, value]: [a: string, b: { title: string; href: string }[]]) => {
             return (
               <div key={key}>
-                <h3 className="text-sm xl:text-base font-medium">{key}</h3>
+                <h4 className="text-sm xl:text-base font-medium">{key}</h4>
 
                 <div className="flex flex-col items-start mt-4 space-y-4">
                   {value.map(({ title, href }) => (
