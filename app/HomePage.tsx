@@ -6,7 +6,7 @@ import { CenteredContainer, Footer, HeroSection, Nav, ThemeProvider } from '@/wi
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useLayoutEffect } from 'react';
 
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
   const pathname = usePathname();
