@@ -1,6 +1,6 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { notFound } from 'next/navigation';
-import { Metadata, ResolvingMetadata } from 'next/types';
+import { Metadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
 import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from './api';
 
@@ -13,13 +13,14 @@ export type CategoryMetaProps = {
   params: { city: string; category: string };
 };
 
-export async function generateMetadata({ params }: CategoryMetaProps, parent: ResolvingMetadata): Promise<Metadata> {
-  const prevPage = await parent;
-  const cityName = prevPage?.other?.city;
+export async function generateMetadata({ params }: CategoryMetaProps): Promise<Metadata> {
+  const cityId = params.city ?? '';
   const categoryId = params.category ?? '';
 
+  const city = await getCity(cityId);
   const category = await getCategory(categoryId);
 
+  const cityName = city?.name;
   const categoryName = category?.name;
 
   return {
