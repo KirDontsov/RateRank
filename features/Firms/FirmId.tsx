@@ -1,6 +1,5 @@
 'use client';
 import {
-  $firmError,
   $reviewsCount,
   $reviewsPage,
   Category,
@@ -31,7 +30,7 @@ import {
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
-import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 import styles from './oaiReviewStyles.module.scss';
@@ -71,16 +70,11 @@ export const FirmId: FC<FirmIdProps> = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { reviewsCount, setPage, page, firmError } = useUnit({
+  const { reviewsCount, setPage, page } = useUnit({
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
     reviewsCount: $reviewsCount,
-    firmError: $firmError,
   });
-
-  if (firmError) {
-    notFound();
-  }
 
   const handleAddReview = useCallback(() => {
     router.push(
@@ -114,16 +108,19 @@ export const FirmId: FC<FirmIdProps> = ({
               style={{ objectFit: 'cover' }}
               placeholder="blur"
               blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
-              priority={true}
+              priority
             />
             <div className="flex items-center justify-center w-full h-full bg-eboni-900/30 z-[0]">
               <div className="text-center p-8">
-                <AnimatedText
-                  el="h1"
-                  text={[`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`.toUpperCase()]}
-                  className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
-                  once
-                />
+                {category?.name && firm?.name && (
+                  <AnimatedText
+                    el="h1"
+                    text={[`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`.toUpperCase()]}
+                    className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
+                    once
+                  />
+                )}
+
                 {firm?.default_phone && (
                   <Button onClick={() => {}}>
                     <a href={`tel:${firm?.default_phone}`}>Позвонить</a>

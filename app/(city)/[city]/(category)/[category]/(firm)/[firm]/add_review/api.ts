@@ -1,9 +1,4 @@
-import {
-    CategoriesQueryResult,
-    Category,
-    CitiesQueryResult,
-    City,
-} from '@/api';
+import { CategoriesQueryResult, Category, CitiesQueryResult, City, Firm, FirmQueryResult } from '@/api';
 import { BACKEND_PORT } from '@/shared';
 
 /** SSR */
@@ -31,4 +26,17 @@ export async function getCategories(page: number, limit: number): Promise<Catego
     });
 
   return categories?.data?.categories || null;
+}
+
+export async function getFirm(firmId: string): Promise<Firm | null> {
+  const firm: FirmQueryResult = await fetch(`${BACKEND_PORT}/api/firm_by_url/${firmId}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error getFirm');
+    });
+
+  return firm?.data?.firm || null;
 }

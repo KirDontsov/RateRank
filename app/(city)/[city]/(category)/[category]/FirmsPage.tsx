@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsError, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -12,7 +12,7 @@ import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { Footer, Nav, Pagination, Section, SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
-import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 const DynamicMap = dynamic(() => import('../../../../../features/FirmsMap/FirmsMap'));
@@ -40,16 +40,11 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { firmsCount, setPage, page, firmsError } = useUnit({
+  const { firmsCount, setPage, page } = useUnit({
     page: $firmsPage,
     setPage: setFirmsPageEvt,
     firmsCount: $firmsCount,
-    firmsError: $firmsError,
   });
-
-  if (firmsError) {
-    notFound();
-  }
 
   const handleChangePage = useCallback(
     (e: number) => {
@@ -77,14 +72,14 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                         subTitle="Раздел отсортирован по рейтингу"
                       />
                     </div>
-                    {firmsCount ? (
+                    {firms?.length ? (
                       <FirmsList firms={firms} city={city} category={category} />
                     ) : (
                       <SectionHeader title="Что-то пошло не так" subTitle="Нет компаний в данном разделе" />
                     )}
                     <div className="py-4 w-full mb-auto sticky bottom-0 bg-white dark:bg-eboni-900">
                       <div className="flex flex-col items-center overflow-x-auto w-full">
-                        {firmsCount && (
+                        {!!firms?.length && (
                           <Pagination
                             current={Number(searchParams.get('firmsPage')) || page}
                             onChange={handleChangePage}

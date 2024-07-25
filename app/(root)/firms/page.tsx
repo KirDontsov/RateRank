@@ -1,4 +1,5 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
 import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from './api';
@@ -48,6 +49,9 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
   const categories = await getCategories(1, 10);
 
   const category = await getCategory(categoryAbbr);
+  if (!category) {
+    notFound();
+  }
   const firmsForMap = await getFirmsForMap(cityAbbr, categoryAbbr);
   const city = await getCity(cityAbbr);
 

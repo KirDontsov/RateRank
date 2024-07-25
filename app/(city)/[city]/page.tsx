@@ -1,5 +1,6 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
 import { getCategories, getCities, getCity } from './api';
 
@@ -45,6 +46,11 @@ export default async function Page({ params }: CityPageProps) {
 
   const cities = await getCities();
   const categories = await getCategories(1, 10);
+  const city = await getCity(cityId);
+
+  if (!city) {
+    notFound();
+  }
 
   return <CategoriesPage cityId={cityId} cities={cities} categories={categories} />;
 }
