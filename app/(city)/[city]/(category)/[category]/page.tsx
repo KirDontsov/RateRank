@@ -1,7 +1,8 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
-import { Metadata, ResolvingMetadata } from 'next/types';
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
-import { getCategories, getCategory, getCities, getFirms } from './api';
+import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from './api';
 
 export interface CategoryPageProps {
   params: { city: string; category: string };
@@ -12,13 +13,14 @@ export type CategoryMetaProps = {
   params: { city: string; category: string };
 };
 
-export async function generateMetadata({ params }: CategoryMetaProps, parent: ResolvingMetadata): Promise<Metadata> {
-  const prevPage = await parent;
-  const cityName = prevPage?.other?.city;
+export async function generateMetadata({ params }: CategoryMetaProps): Promise<Metadata> {
+  const cityId = params.city ?? '';
   const categoryId = params.category ?? '';
 
+  const city = await getCity(cityId);
   const category = await getCategory(categoryId);
 
+  const cityName = city?.name;
   const categoryName = category?.name;
 
   return {
@@ -43,17 +45,24 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
   const cityAbbr = params?.city ?? '';
   const firmsPage = searchParams?.firmsPage ?? '1';
 
-  const category = await getCategory(cityAbbr);
+  const category = await getCategory(categoryAbbr);
+  if (!category) {
+    notFound();
+  }
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
+  const firmsForMap = await getFirmsForMap(cityAbbr, categoryAbbr);
   const cities = await getCities();
+  const city = await getCity(cityAbbr);
   const categories = await getCategories(1, 10);
 
   return (
     <FirmsPage
       cityAbbr={cityAbbr}
       categoryAbbr={categoryAbbr}
+      city={city}
       category={category}
       firms={firms}
+      firmsForMap={firmsForMap}
       cities={cities}
       categories={categories}
     />

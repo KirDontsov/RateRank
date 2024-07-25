@@ -1,5 +1,6 @@
+import { notFound } from 'next/navigation';
 import { AddReviewPage } from './AddReviewPage';
-import { getCategories, getCities } from './api';
+import { getCategories, getCities, getFirm } from './api';
 
 type Props = {
   params: { city: string; category: string; firm: string };
@@ -7,6 +8,12 @@ type Props = {
 };
 
 export default async function Page({ params }: Props) {
+  const firmUrl = params.firm ?? '';
+  const firm = await getFirm(firmUrl);
+  if (!firm) {
+    notFound();
+  }
+
   const cities = await getCities();
   const categories = await getCategories(1, 10);
 

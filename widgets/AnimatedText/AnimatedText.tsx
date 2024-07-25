@@ -70,7 +70,7 @@ export const AnimatedText = ({
       <motion.span
         ref={ref}
         initial="hidden"
-        animate={controls}
+        {...(controls ? { animate: controls } : {})}
         variants={{
           visible: { transition: { staggerChildren: duration } },
           hidden: {},

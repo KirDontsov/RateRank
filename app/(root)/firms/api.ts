@@ -76,3 +76,16 @@ export async function getFirms(
 
   return firms?.data?.firms || null;
 }
+
+export async function getFirmsForMap(cityId: string, categoryId: string): Promise<Firm[] | null> {
+  const firms = await fetch(`${BACKEND_PORT}/api/firms_by_abbr_for_map?city_id=${cityId}&category_id=${categoryId}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
+
+  return firms?.data?.firms || null;
+}

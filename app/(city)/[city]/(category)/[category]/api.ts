@@ -44,6 +44,9 @@ export async function getCity(cityId: string): Promise<City | null> {
 }
 
 export async function getCategory(categoryId: string): Promise<Category | null> {
+  if (!categoryId) {
+    return null;
+  }
   const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
@@ -69,6 +72,19 @@ export async function getFirms(
       method: 'GET',
     },
   )
+    .then((res) => res.json())
+    .catch(() => {
+      console.warn('error');
+    });
+
+  return firms?.data?.firms || null;
+}
+
+export async function getFirmsForMap(cityId: string, categoryId: string): Promise<Firm[] | null> {
+  const firms = await fetch(`${BACKEND_PORT}/api/firms_by_abbr_for_map?city_id=${cityId}&category_id=${categoryId}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  })
     .then((res) => res.json())
     .catch(() => {
       console.warn('error');

@@ -14,7 +14,7 @@ export const Footer = () => {
       <div className="container px-6 py-12 mx-auto">
         <div className="text-center">
           <AnimatedText
-            el="h2"
+            el="h3"
             text={[`Помогаем людям выбрать лучшие места`.toUpperCase()]}
             className="font-semibold text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl"
             once
@@ -26,7 +26,7 @@ export const Footer = () => {
           {Array.from(FOOTER_LINKS).map(([key, value]: [a: string, b: { title: string; href: string }[]]) => {
             return (
               <div key={key}>
-                <h3 className="text-sm xl:text-base font-medium">{key}</h3>
+                <h4 className="text-sm xl:text-base font-medium">{key}</h4>
 
                 <div className="flex flex-col items-start mt-4 space-y-4">
                   {value.map(({ title, href }) => (

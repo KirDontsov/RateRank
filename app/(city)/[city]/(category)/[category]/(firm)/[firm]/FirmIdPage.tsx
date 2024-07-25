@@ -16,7 +16,6 @@ import {
   CategoryIdGateProvider,
   CitiesGateProvider,
   CityIdGateProvider,
-  Curve,
   FirmId,
   FirmIdGateProvider,
   FirmsGateProvider,
@@ -80,23 +79,21 @@ export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
                     <ReviewsGateProvider firmUrl={firmUrl} reviewsPage={Number(searchParams.get('reviewsPage')) || 1}>
                       <OaiDescriptionGateProvider firmUrl={firmUrl}>
                         <SimilarImagesGateProvider key={firmUrl}>
-                          <Curve>
-                            <Nav cities={cities} categories={categories} />
-                            <Section pt={0}>
-                              <FirmId
-                                city={city}
-                                category={category}
-                                firm={firm}
-                                firms={firms}
-                                images={images}
-                                reviews={reviews}
-                                oai_reviews={oai_reviews}
-                                oai_description={oai_description}
-                                prices={prices}
-                                similarFirmsImages={similarFirmsImages}
-                              />
-                            </Section>
-                          </Curve>
+                          <Nav cities={cities} categories={categories} />
+                          <Section pt={0}>
+                            <FirmId
+                              city={city}
+                              category={category}
+                              firm={firm}
+                              firms={firms}
+                              images={images}
+                              reviews={reviews}
+                              oai_reviews={oai_reviews}
+                              oai_description={oai_description}
+                              prices={prices}
+                              similarFirmsImages={similarFirmsImages}
+                            />
+                          </Section>
                         </SimilarImagesGateProvider>
                       </OaiDescriptionGateProvider>
                     </ReviewsGateProvider>

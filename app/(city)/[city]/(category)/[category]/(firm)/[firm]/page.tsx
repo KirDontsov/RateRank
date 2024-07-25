@@ -1,4 +1,5 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmIdPage } from './FirmIdPage';
 import {
@@ -72,11 +73,14 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const firmsPage = searchParams?.firmsPage ?? '1';
   const reviewsPage = searchParams?.reviewsPage ?? '1';
 
+  const firm = await getFirm(firmUrl);
+  if (!firm) {
+    notFound();
+  }
   const city = await getCity(cityAbbr);
   const cities = await getCities();
   const category = await getCategory(categoryAbbr);
   const categories = await getCategories(1, 10);
-  const firm = await getFirm(firmUrl);
   const images = await getImages(firmUrl);
   const reviews = await getReviews(firmUrl, reviewsPage, 10);
   const oai_description = await getOaiDescription(firmUrl);

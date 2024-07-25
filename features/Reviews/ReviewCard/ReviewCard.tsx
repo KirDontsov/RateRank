@@ -1,6 +1,6 @@
-import { Rating } from '@/widgets';
+import { ImageWithFallback, Rating } from '@/widgets';
 import { FC } from 'react';
-
+import avatar from '../../../public/images/avatar_placeholder.png';
 export interface ReviewCardProps {
   review_id: string;
   date?: string;
@@ -14,9 +14,9 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text,
     <div key={review_id} className="container w-full p-8 bg-white dark:bg-eboni-800 rounded-lg shadow-md">
       <div className="flex items-center w-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block"
-          src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80"
+        <ImageWithFallback
+          className="hidden object-cover w-10 h-10 mr-4 rounded-full sm:block bg-negroni-400"
+          src={avatar}
           alt="avatar"
         />
         <div className="flex items-center justify-between w-full">

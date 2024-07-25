@@ -1,19 +1,20 @@
 'use client';
-import { $firm, Firm } from '@/api';
+import { Firm } from '@/api';
 import { Button } from '@/widgets';
-import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { MouseEvent, useRef, useState } from 'react';
+import { FC, MouseEvent, useRef, useState } from 'react';
 import Map, { FullscreenControl, GeolocateControl, Marker, NavigationControl, Popup } from 'react-map-gl';
 import styles from './map.module.scss';
 
-export const FirmMap = () => {
+export interface FirmMapProps {
+  firm: Firm | null;
+}
+
+export const FirmMap: FC<FirmMapProps> = ({ firm }) => {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [showMap, setShowMap] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState<{ firm: Firm | null } | null>(null);
   const mapRef = useRef(null);
-
-  const firm = useUnit($firm);
 
   const zoomToSelectedLoc = (e: MouseEvent<HTMLButtonElement>, firm: Firm | null) => {
     // stop event bubble-up which triggers unnecessary events

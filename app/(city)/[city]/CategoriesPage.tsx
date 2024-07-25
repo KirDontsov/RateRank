@@ -1,10 +1,7 @@
 'use client';
-import { $cityError } from '@/api';
 import { CategoriesGateProvider, CategoriesList, CitiesGateProvider, CityIdGateProvider, Curve } from '@/features';
 import { CommonNavProps } from '@/shared';
 import { CommonHeader, Footer, Nav, Section } from '@/widgets';
-import { useUnit } from 'effector-react';
-import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 export interface CategoriesPageProps {
@@ -13,10 +10,6 @@ export interface CategoriesPageProps {
 
 /** Список категорий внутри города */
 export const CategoriesPage: FC<CategoriesPageProps & CommonNavProps> = ({ cityId, cities, categories }) => {
-  const cityError = useUnit($cityError);
-  if (cityError) {
-    notFound();
-  }
   return (
     <CitiesGateProvider>
       <CityIdGateProvider cityId={cityId}>

@@ -1,5 +1,5 @@
 'use client';
-import { $firmsCount, $firmsError, $firmsPage, Category, Firm, setFirmsPageEvt } from '@/api';
+import { $firmsCount, $firmsPage, Category, City, Firm, setFirmsPageEvt } from '@/api';
 import {
   CategoriesGateProvider,
   CategoryIdGateProvider,
@@ -13,13 +13,16 @@ import {
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { notFound, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 export interface FirmsPageProps {
   categoryAbbr: string;
   cityAbbr: string;
   firms: Firm[] | null;
+  firmsForMap: Firm[] | null;
+  category: Category | null;
+  city: City | null;
 }
 
 export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
@@ -28,21 +31,19 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
   firms,
   cities,
   categories,
+  city,
+  category,
+  firmsForMap,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { firmsCount, setPage, page, firmsError } = useUnit({
+  const { firmsCount, setPage, page } = useUnit({
     page: $firmsPage,
     setPage: setFirmsPageEvt,
     firmsCount: $firmsCount,
-    firmsError: $firmsError,
   });
-
-  if (firmsError) {
-    notFound();
-  }
 
   const handleChangePage = useCallback(
     (e: number) => {
@@ -67,7 +68,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                     <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] xl:overflow-y-auto pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit">
                       <CommonHeader title="Компании" subTitle="раздел" />
                       {firmsCount ? (
-                        <FirmsList firms={firms} />
+                        <FirmsList firms={firms} city={city} category={category} />
                       ) : (
                         <CommonHeader title="Нет отзывов" subTitle="Напишите отзыв первым" />
                       )}
@@ -82,7 +83,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                       </div>
                     </div>
                     <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full px-4 md:px-0">
-                      <FirmsMap />
+                      <FirmsMap firmsForMap={firmsForMap} city={city} category={category} />
                     </div>
                   </div>
 
