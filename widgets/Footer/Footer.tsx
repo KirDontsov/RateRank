@@ -14,7 +14,7 @@ export const Footer = () => {
       <div className="container px-6 py-12 mx-auto">
         <div className="text-center">
           <AnimatedText
-            el="h2"
+            el="h3"
             text={[`Помогаем людям выбрать лучшие места`.toUpperCase()]}
             className="font-semibold text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl"
             once
