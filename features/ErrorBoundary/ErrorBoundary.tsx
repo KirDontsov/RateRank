@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import React, { ComponentType, PureComponent, ReactNode } from 'react';
+import { ComponentType, PureComponent, ReactNode } from 'react';
 
 import type { ErrorBoundaryProps, ErrorBoundaryState } from './interfaces';
 
