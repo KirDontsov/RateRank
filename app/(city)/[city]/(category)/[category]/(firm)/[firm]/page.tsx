@@ -1,7 +1,3 @@
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
-import { notFound } from 'next/navigation';
-import { Metadata, ResolvingMetadata } from 'next/types';
-import { FirmIdPage } from './FirmIdPage';
 import {
   getCategories,
   getCategory,
@@ -15,7 +11,11 @@ import {
   getPrices,
   getReviews,
   getSimilarFirmsImages,
-} from './api';
+} from '@/app/api';
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { notFound } from 'next/navigation';
+import { Metadata, ResolvingMetadata } from 'next/types';
+import { FirmIdPage } from './FirmIdPage';
 
 type Props = {
   params: { city: string; category: string; firm: string };
@@ -84,7 +84,7 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const images = await getImages(firmUrl);
   const reviews = await getReviews(firmUrl, reviewsPage, 10);
   const oai_description = await getOaiDescription(firmUrl);
-  const oai_reviews = await getOaiReviews(firmUrl, reviewsPage, 10);
+  const oai_reviews = await getOaiReviews(firmUrl);
   const prices = await getPrices(firmUrl);
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);

@@ -1,5 +1,5 @@
 import { HomePage } from './HomePage';
-import { getCategories, getCities } from './api';
+import { getCategories, getCities } from '@/app/api';
 
 export default async function Page() {
   const cities = await getCities();

@@ -2,13 +2,13 @@ import { BACKEND_PORT, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { persist } from 'effector-storage/local';
-import { notFound } from 'next/navigation';
 
 export const DEFAULT_DROPDOWN_VALUE = {
   city_id: 'Выберите город',
   name: 'Выберите город',
   abbreviation: 'Выберите город',
   coords: null,
+  is_active: false,
 };
 
 export interface City {
@@ -16,6 +16,7 @@ export interface City {
   name: string;
   abbreviation: string;
   coords: string | null;
+  is_active: boolean;
 }
 
 export interface CitiesQueryResult {

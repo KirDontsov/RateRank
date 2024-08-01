@@ -1,7 +1,7 @@
+import { getCategories, getCities } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { ReviewsPage } from './ReviewsPage';
-import { getCategories, getCities } from './api';
 
 export const metadata: Metadata = {
   title: `${COMMON_TITLE} — отзывы клиентов`,

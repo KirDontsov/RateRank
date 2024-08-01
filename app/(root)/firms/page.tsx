@@ -1,8 +1,16 @@
+import {
+  getCategories,
+  getCategory,
+  getCities,
+  getCity,
+  getFirms,
+  getFirmsForMap,
+  getOaiReviewsForFirms,
+} from '@/app/api';
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
-import { getCategories, getCategory, getCities, getCity, getFirms, getFirmsForMap } from './api';
 
 export interface CategoryPageProps {
   params: { city: string; category: string };
@@ -54,6 +62,7 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
   }
   const firmsForMap = await getFirmsForMap(cityAbbr, categoryAbbr);
   const city = await getCity(cityAbbr);
+  const oai_reviews = await getOaiReviewsForFirms(firms);
 
   return (
     <FirmsPage
@@ -65,6 +74,7 @@ export default async function Page({ params, searchParams }: CategoryPageProps) 
       categories={categories}
       city={city}
       category={category}
+      oai_reviews={oai_reviews}
     />
   );
 }
