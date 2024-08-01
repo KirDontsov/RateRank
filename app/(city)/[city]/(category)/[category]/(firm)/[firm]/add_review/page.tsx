@@ -1,6 +1,6 @@
+import { getCategories, getCities, getFirm } from '@/app/api';
 import { notFound } from 'next/navigation';
 import { AddReviewPage } from './AddReviewPage';
-import { getCategories, getCities, getFirm } from './api';
 
 type Props = {
   params: { city: string; category: string; firm: string };

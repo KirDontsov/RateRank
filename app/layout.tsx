@@ -2,7 +2,6 @@
 import type { CommonProps } from '@/shared/types';
 import { CookiesProvider } from 'next-client-cookies/server';
 // import { Inter } from 'next/font/google';
-import Script from 'next/script';
 import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
@@ -46,7 +45,7 @@ export default function RootLayout({ children }: CommonProps) {
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
-        {process.env.PRODUCTION && (
+        {/* {process.env.PRODUCTION && (
           <>
             <Script id="metrika-counter" strategy="afterInteractive">
               {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -81,7 +80,7 @@ export default function RootLayout({ children }: CommonProps) {
             </Script>
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N2W9TPW5X"></script>
           </>
-        )}
+        )} */}
       </body>
     </html>
   );

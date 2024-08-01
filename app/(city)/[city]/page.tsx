@@ -2,7 +2,7 @@ import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
-import { getCategories, getCities, getCity } from './api';
+import { getCategories, getCities, getCity } from '@/app/api';
 
 export interface CityPageProps {
   params: {

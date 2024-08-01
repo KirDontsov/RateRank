@@ -2,7 +2,7 @@ import { Firm, ImageType } from '@/api';
 import { COMMON_DOMAIN } from '@/shared';
 import { Metadata } from 'next';
 import { ArticlePage } from './ArticlePage';
-import { getCategories, getCities, getFirm, getImages, getPageByUrl } from './api';
+import { getCategories, getCities, getFirm, getImages, getPageByUrl } from '@/app/api';
 
 export interface ArticlePageProps {
   params: {
