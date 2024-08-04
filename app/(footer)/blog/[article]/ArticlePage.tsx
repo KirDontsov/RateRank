@@ -72,8 +72,6 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                     const category =
                       categories?.find((category) => category?.category_id === currentFirm?.category_id) || null;
 
-                    console.log('category', category);
-
                     return (
                       <div key={section.page_block_section_id} className="flex flex-col gap-8" data-test-id="section">
                         {Number(section.page_block_section_order) !== 0 && (
