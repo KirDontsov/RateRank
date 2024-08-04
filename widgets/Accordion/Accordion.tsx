@@ -1,6 +1,6 @@
 'use client';
 import { Category, Firm } from '@/api';
-import { COMMON_TITLE } from '@/shared';
+import { COMMON_TITLE, getCategoryName } from '@/shared';
 import cn from 'classnames';
 import { FC, Fragment, useMemo, useState } from 'react';
 
@@ -15,12 +15,12 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
   const items = useMemo(() => {
     const items = [
       {
-        title: `Какой адрес у ${category?.name.slice(0, -1)}а ${firm?.name}?`,
-        text: `${category?.name.slice(0, -1)} ${firm?.name} расположен по адресу: ${firm?.address}`,
+        title: `Какой адрес у ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name}?`,
+        text: `${getCategoryName({ name: category?.name, single: true })} ${firm?.name} расположен по адресу: ${firm?.address}`,
       },
       {
-        title: `Какой номер телефона у ${category?.name.slice(0, -1)}а ${firm?.name}?`,
-        text: `Номер телефона для звонков в ${category?.name.slice(0, -1)} ${firm?.name}: ${firm?.default_phone}`,
+        title: `Какой номер телефона у ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name}?`,
+        text: `Номер телефона для звонков в ${getCategoryName({ name: category?.name, dat: true }).toLowerCase()} ${firm?.name}: ${firm?.default_phone}`,
       },
     ];
 
@@ -36,8 +36,8 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
     }
 
     items.push({
-      title: `Насколько точна информация о ${category?.name.slice(0, -1)}е ${firm?.name}?`,
-      text: `Если вы нашли ошибку и/или являетесь владельцем ${category?.name.slice(0, -1)}а ${firm?.name}, то можете заполнить форму обратной связи. ${COMMON_TITLE} старается сделать всё что в наших силах, чтобы предоставлять вам максимально точные и свежие данные о заведениях. `,
+      title: `Насколько точна информация о ${getCategoryName({ name: category?.name, tv: true }).toLowerCase()} ${firm?.name}?`,
+      text: `Если вы нашли ошибку и/или являетесь владельцем ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name}, то можете заполнить форму обратной связи. ${COMMON_TITLE} старается сделать всё что в наших силах, чтобы предоставлять вам максимально точные и свежие данные о заведениях. `,
     });
 
     return items;

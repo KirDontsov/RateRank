@@ -15,7 +15,14 @@ import {
   setReviewsPageEvt,
 } from '@/api';
 import { useMediaQuery } from '@/hooks';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
+import {
+  DEFAULT_PHOTOS_ENDPOINT,
+  DEFAULT_PHOTOS_EXT,
+  FETCH_LIMIT,
+  HeroBackground,
+  getCategoryName,
+  transliterate,
+} from '@/shared';
 import {
   Accordion,
   Anchors,
@@ -94,6 +101,12 @@ export const FirmId: FC<FirmIdProps> = ({
 
   const tablet = useMediaQuery('(max-width: 768px)');
 
+  const firmName = firm?.name ?? '';
+  const categoryNameAndFirmName =
+    firmName?.indexOf(getCategoryName({ name: category?.name, single: true })) !== -1
+      ? firmName
+      : `${getCategoryName({ name: category?.name, single: true })} ${firmName}`;
+
   return (
     <div className="h-screen w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-8">
@@ -104,7 +117,7 @@ export const FirmId: FC<FirmIdProps> = ({
               src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
-              alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+              alt={`${categoryNameAndFirmName} - ${city?.name ?? ''}`}
               style={{ objectFit: 'cover' }}
               placeholder="blur"
               blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -115,7 +128,7 @@ export const FirmId: FC<FirmIdProps> = ({
                 {category?.name && firm?.name && (
                   <AnimatedText
                     el="h1"
-                    text={[`${category?.name?.slice(0, -1)} ${firm?.name ?? ''}`.toUpperCase()]}
+                    text={[categoryNameAndFirmName.toUpperCase()]}
                     className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                     once
                   />
@@ -149,7 +162,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   >
                     <SectionHeader
                       id="contacts"
-                      title={`Контакты ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
+                      title={`Контакты ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name ?? ''}`}
                     />
                     <div className="flex flex-col gap-4">
                       <div className="flex gap-2 text-gray-500">
@@ -247,7 +260,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   <>
                     <SectionHeader
                       id="description"
-                      title={`Описание ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name ?? ''}`}
+                      title={`Описание ${getCategoryName({ name: category?.name }).toLowerCase()} ${firm?.name ?? ''}`}
                     />
                     <div className={`${styles.myCustomStyle} list-disc`}>
                       {!oai_description?.oai_description_value || oai_description?.oai_description_value === ''
@@ -263,7 +276,7 @@ export const FirmId: FC<FirmIdProps> = ({
                 <div className="flex flex-col gap-4 my-4">
                   <SectionHeader
                     id="faq"
-                    title={`Часто задаваемые вопросы о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                    title={`Часто задаваемые вопросы о ${getCategoryName({ name: category?.name }).toLowerCase().slice(0, -1)}е ${firm?.name ?? ''}`}
                   />
                   <Accordion firm={firm} category={category} />
                 </div>
@@ -277,8 +290,8 @@ export const FirmId: FC<FirmIdProps> = ({
                 <SectionHeader
                   gold
                   {...(oai_reviews.length ? { id: 'reviews' } : {})}
-                  title={`Краткое содержание и анализ отзывов о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
-                  subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                  title={`Краткое содержание и анализ отзывов о ${getCategoryName({ name: category?.name, tv: true }).toLowerCase()} ${firm?.name ?? ''}`}
+                  subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${getCategoryName({ name: category?.name, tv: true }).toLowerCase()} ${firm?.name ?? ''}`}
                 />
               </div>
               <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">
@@ -293,7 +306,7 @@ export const FirmId: FC<FirmIdProps> = ({
               <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
                 <SectionHeader
                   {...(reviewsCount && !oai_reviews?.length ? { id: 'reviews' } : {})}
-                  title={`Отзывы пользователей о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                  title={`Отзывы пользователей о ${getCategoryName({ name: category?.name, tv: true }).toLowerCase()} ${firm?.name ?? ''}`}
                 />
                 <Button onClick={handleAddReview}>Написать отзыв</Button>
               </div>
@@ -303,7 +316,7 @@ export const FirmId: FC<FirmIdProps> = ({
             <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
               <SectionHeader
                 title="Нет отзывов"
-                subTitle={`Напишите отзыв первым о ${category?.name?.slice(0, -1).toLowerCase()}е ${firm?.name ?? ''}`}
+                subTitle={`Напишите отзыв первым о ${getCategoryName({ name: category?.name, tv: true }).toLowerCase()} ${firm?.name ?? ''}`}
               />
               <Button onClick={handleAddReview}>Написать отзыв</Button>
             </div>

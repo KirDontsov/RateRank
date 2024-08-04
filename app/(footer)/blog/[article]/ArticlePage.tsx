@@ -2,7 +2,7 @@
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
 import { Curve, Images } from '@/features';
 import { useMediaQuery } from '@/hooks';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground, getCategoryName } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -43,7 +43,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${cities?.[0]?.abbreviation}/${categories?.[0]?.abbreviation}/${firms?.[0]?.firm_id}/${images.get(sections?.[0]?.page_block_section_id ?? '')?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
-                  alt={`${categories?.[0]?.name?.slice(0, -1)} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
+                  alt={`${getCategoryName({ name: categories?.[0]?.name, single: true })} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -71,6 +71,8 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                     const city = cities?.find((city) => city?.city_id === currentFirm?.city_id) || null;
                     const category =
                       categories?.find((category) => category?.category_id === currentFirm?.category_id) || null;
+
+                    console.log('category', category);
 
                     return (
                       <div key={section.page_block_section_id} className="flex flex-col gap-8" data-test-id="section">

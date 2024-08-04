@@ -2,7 +2,7 @@
 import { Category, City, Firm, ImagesQueryResult } from '@/api';
 import { SimilarFirms } from '@/features';
 import { useMediaQuery } from '@/hooks';
-import { HeroBackground } from '@/shared';
+import { HeroBackground, getCategoryName } from '@/shared';
 import { Anchors, Button, Footer, ImageWithFallback, SectionHeader } from '@/widgets';
 import cn from 'classnames';
 import { FC } from 'react';
@@ -27,7 +27,7 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
             src={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
             fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
             fill
-            alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
+            alt={`${getCategoryName({ name: category?.name, single: true })} ${firm?.name ?? ''} - ${city?.name}`}
             style={{ objectFit: 'cover' }}
             placeholder="blur"
             blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}

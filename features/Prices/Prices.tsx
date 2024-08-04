@@ -1,4 +1,5 @@
 import { $category, $firm, PriceCategory, PriceItem } from '@/api';
+import { getCategoryName } from '@/shared';
 import { SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import groupBy from 'lodash/groupBy';
@@ -22,7 +23,10 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
   }
   return (
     <>
-      <SectionHeader id="prices" title={`Цены ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
+      <SectionHeader
+        id="prices"
+        title={`Цены ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name}`}
+      />
       <div className={`${styles.myCustomStyle} list-disc`}>
         {Object.entries(itemsByCategories)?.map(([category, items]) => (
           <div key={category}>

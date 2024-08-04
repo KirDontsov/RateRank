@@ -1,7 +1,6 @@
-import { $category, $city, $firm, $imagesLoading, Category, City, Firm, ImageType } from '@/api';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
+import { Category, City, Firm, ImageType } from '@/api';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground, getCategoryName } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
-import { useUnit } from 'effector-react';
 import { FC } from 'react';
 
 export interface ImagesListProps {
@@ -20,7 +19,7 @@ export const ImagesList: FC<ImagesListProps> = ({ firm, city, category, images }
           src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
           fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
           fill
-          alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
+          alt={`${getCategoryName({ name: category?.name, single: true })} ${firm?.name ?? ''} - ${city?.name}`}
           style={{ objectFit: 'cover' }}
         />
       </div>

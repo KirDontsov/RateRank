@@ -1,18 +1,18 @@
 import {
-  getCategories,
-  getCategory,
-  getCities,
-  getCity,
-  getFirm,
-  getFirms,
-  getImages,
-  getOaiDescription,
-  getOaiReviews,
-  getPrices,
-  getReviews,
-  getSimilarFirmsImages,
+	getCategories,
+	getCategory,
+	getCities,
+	getCity,
+	getFirm,
+	getFirms,
+	getImages,
+	getOaiDescription,
+	getOaiReviews,
+	getPrices,
+	getReviews,
+	getSimilarFirmsImages,
 } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, getCategoryName } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next/types';
 import { FirmIdPage } from './FirmIdPage';
@@ -47,16 +47,18 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
   const categoriesWithMenu = ['3ebc7206-6fed-4ea7-a000-27a74e867c9a'];
 
+	const categoryNameAndFirmName = firmName?.indexOf(getCategoryName({ name: categoryName, single: true })) !== -1 ? firmName : `${getCategoryName({ name: categoryName, single: true })} ${firmName}`;
+
   return {
-    title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
-    description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
+    title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
+    description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
     alternates: {
       canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
-      title: `${categoryName?.slice(0, -1)} ${firmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
-      description: `${categoryName?.slice(0, -1)} ${firmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
+      title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
+      description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${categoryName?.slice(0, -1)}ов города ${cityName}, соседние и похожие ${categoryName?.slice(0, -1)}ы на ${COMMON_DOMAIN}`,
       url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
