@@ -2,7 +2,6 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   // renders only 1 time
   reactStrictMode: false,
   cssModules: true,
