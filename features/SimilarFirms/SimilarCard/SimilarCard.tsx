@@ -53,7 +53,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, al
       </div>
       <div className="p-5 flex flex-col gap-8">
         <h3 className="font-bold tracking-tight whitespace-pre text-base xl:text-2xl flex flex-col">
-          <span className="text-eboni-400 dark:text-white">{`${title} `}</span>{' '}
+          <span className="text-eboni-400 dark:text-white truncate">{`${title} `}</span>{' '}
           <span className="font-normal text-sm xl:text-base">{subTitle}</span>
         </h3>
         <p className="mb-3 font-normal text-sm xl:text-base">{address}</p>

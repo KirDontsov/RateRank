@@ -49,7 +49,7 @@ export const Anchors = () => {
             <a
               href={`#${id}`}
               className={cn('inline-block p-4 border-b border-transparent rounded-t-lg hover:text-negroni-400', {
-                'text-white border-negroni-400 active bg-eboni-800 dark:bg-negroni-400 hover:text-eboni-700':
+                'text-white dark:text-eboni-400 border-negroni-400 active bg-eboni-800 dark:bg-negroni-400 hover:text-eboni-700':
                   hash === id || (hash === '' && index === 0),
               })}
               aria-current="page"
