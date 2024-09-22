@@ -1,5 +1,5 @@
 'use client';
-import { $category, $city, $firmsPage, setFirmEvt, setFirmLoadingEvt } from '@/api';
+import { $firmsPage, Category, City, setFirmEvt, setFirmLoadingEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
 import { useUnit } from 'effector-react';
@@ -16,13 +16,24 @@ export interface SimilarCardProps {
   address: string;
   firmId: string;
   url: string;
+  city: City | null;
+  category: Category | null;
 }
 
-export const SimilarCard: FC<SimilarCardProps> = ({ firmId, src, fallbackSrc, alt, title, subTitle, address, url }) => {
+export const SimilarCard: FC<SimilarCardProps> = ({
+  firmId,
+  city,
+  category,
+  src,
+  fallbackSrc,
+  alt,
+  title,
+  subTitle,
+  address,
+  url,
+}) => {
   const searchParams = useSearchParams();
-  const { city, category, page, setFirm, setFirmLoading } = useUnit({
-    city: $city,
-    category: $category,
+  const { page, setFirm, setFirmLoading } = useUnit({
     page: $firmsPage,
     setFirm: setFirmEvt,
     setFirmLoading: setFirmLoadingEvt,

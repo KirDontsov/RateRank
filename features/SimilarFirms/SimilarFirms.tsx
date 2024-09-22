@@ -25,6 +25,8 @@ export const SimilarFirms: FC<SimilarFirmsProps> = ({ firm, firms, city, categor
               <SimilarCard
                 key={firm?.firm_id}
                 firmId={firm?.firm_id}
+                city={city}
+                category={category}
                 src={
                   src
                     ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${src}.${DEFAULT_PHOTOS_EXT}`
