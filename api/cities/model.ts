@@ -3,11 +3,12 @@ import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { persist } from 'effector-storage/local';
 
-export const DEFAULT_DROPDOWN_VALUE = {
+export const DEFAULT_DROPDOWN_VALUE: City = {
   city_id: 'Выберите город',
   name: 'Выберите город',
   abbreviation: 'Выберите город',
   coords: null,
+  order_number: null,
   is_active: 'false',
 };
 
