@@ -6,6 +6,7 @@ import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
@@ -45,7 +46,42 @@ export default function RootLayout({ children }: CommonProps) {
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
+        {process.env.PRODUCTION && (
+          <>
+            <Script id="metrika-counter" strategy="afterInteractive">
+              {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+		        m[i].l=1*new Date();
+		        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+		        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+		        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
+		        ym(97095336, "init", {
+		             clickmap:true,
+		             trackLinks:true,
+		             accurateTrackBounce:true,
+		             webvisor:true
+		        });`}
+            </Script>
+            <Script id="webmaster-waiter" strategy="beforeInteractive">
+              {`window.YandexRotorSettings = {
+                  WaiterEnabled: true,
+                  FailOnTimeout: false,
+                  NoJsRedirectsToMain: true,
+                  IsLoaded: function() {
+                      return document.body.querySelectorAll('div').length > 10;
+                  },
+              }`}
+            </Script>
+            <Script id="google-tag" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-8N2W9TPW5X');`}
+            </Script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N2W9TPW5X"></script>
+          </>
+        )}
       </body>
     </html>
   );
