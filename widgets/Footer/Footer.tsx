@@ -7,11 +7,11 @@ import { FOOTER_LINKS } from './constants';
 export const Footer = () => {
   return (
     <footer className="bg-white dark:bg-eboni-900 w-full">
-      <div className="container flex flex-col pt-12 p-8 mx-auto">
+      <div className="container flex flex-col pt-12 p-6 2xl:p-8 mx-auto">
         <BreadCrumbs />
       </div>
 
-      <div className="container px-6 py-12 mx-auto">
+      <div className="container px-6 2xl:px-8 py-12 mx-auto">
         <div className="text-center">
           <AnimatedText
             el="h3"

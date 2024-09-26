@@ -27,10 +27,6 @@ export async function generateMetadata({ params }: CityIdProps): Promise<Metadat
   return {
     title: `Лучшие компании города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы — ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-    other: {
-      cityId: city?.city_id ?? '',
-      city: cityName ?? '',
-    },
   };
 }
 

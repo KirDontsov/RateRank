@@ -9,9 +9,11 @@ export const CitiesList: FC<CitiesListListProps> = ({ cities }) => {
   return (
     <>
       {!!cities?.length &&
-        cities?.map(({ city_id, name, abbreviation }) => {
-          return <CitiesCard key={city_id} cityId={city_id} name={name} abbreviation={abbreviation} />;
-        })}
+        cities
+          ?.sort((a, b) => Number(a?.order_number) - Number(b?.order_number))
+          ?.map(({ city_id, name, abbreviation }) => {
+            return <CitiesCard key={city_id} cityId={city_id} name={name} abbreviation={abbreviation} />;
+          })}
     </>
   );
 };

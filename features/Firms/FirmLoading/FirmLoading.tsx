@@ -27,7 +27,7 @@ export const FirmLoading: FC<FirmLoadingProps> = ({ city, category, firm, firms,
             src={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
             fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
             fill
-            alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
+            alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name}`}
             style={{ objectFit: 'cover' }}
             placeholder="blur"
             blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}

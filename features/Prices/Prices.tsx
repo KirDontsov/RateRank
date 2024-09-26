@@ -22,7 +22,7 @@ export const Prices: FC<PricesProps> = ({ prices }) => {
   }
   return (
     <>
-      <SectionHeader id="prices" title={`Цены ${category?.name?.slice(0, -1).toLowerCase()}а ${firm?.name}`} />
+      <SectionHeader id="prices" title={`Цены ${(category?.rod_name ?? '').toLowerCase()} ${firm?.name}`} />
       <div className={`${styles.myCustomStyle} list-disc`}>
         {Object.entries(itemsByCategories)?.map(([category, items]) => (
           <div key={category}>

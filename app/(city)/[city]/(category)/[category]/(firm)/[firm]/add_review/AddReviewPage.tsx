@@ -69,7 +69,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                     src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                     fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                     fill
-                    alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name}`}
+                    alt={`${category?.single_name} ${firm?.name ?? ''} - ${city?.name}`}
                     style={{ objectFit: 'cover' }}
                     placeholder="blur"
                     blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -77,7 +77,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                   />
                   <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                     <div className="text-center">
-                      <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`${firm?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a' ? 'Отзыв о ресторане' : 'Отзыв об автосервисе'} ${firm?.name}`}</h1>
+                      <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`Отзыв о ${(category?.pred_name ?? '').toLowerCase()} ${firm?.name}`}</h1>
                       <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
                         Позвонить
                       </button>

@@ -1,8 +1,8 @@
+import { getCategories, getCities, getCity } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
-import { getCategories, getCities, getCity } from '@/app/api';
 
 export interface CityPageProps {
   params: {
@@ -32,10 +32,6 @@ export async function generateMetadata({ params }: CityIdProps): Promise<Metadat
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
-    },
-    other: {
-      cityId: city?.city_id ?? '',
-      city: cityName ?? '',
     },
   };
 }

@@ -7,7 +7,12 @@ export interface Category {
   category_id: string;
   name: string;
   abbreviation: string;
-  is_active: boolean;
+  single_name?: string;
+  rod_name?: string;
+  pred_name?: string;
+  vin_name?: string;
+  order_number?: string | null;
+  is_active: string;
 }
 
 export interface CategoriesQueryResult {
@@ -34,7 +39,7 @@ export const $category = categoryD.createStore<Category | null>({
   category_id: '',
   name: '',
   abbreviation: '',
-  is_active: false,
+  is_active: 'false',
 });
 persist({ store: $category, key: 'category' });
 

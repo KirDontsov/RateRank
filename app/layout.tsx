@@ -6,6 +6,7 @@ import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: CommonProps) {
       <body>
         <CookiesProvider>{children}</CookiesProvider>
         <ToastContainer />
-        {/* {process.env.PRODUCTION && (
+        {process.env.PRODUCTION && (
           <>
             <Script id="metrika-counter" strategy="afterInteractive">
               {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: CommonProps) {
             </Script>
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N2W9TPW5X"></script>
           </>
-        )} */}
+        )}
       </body>
     </html>
   );

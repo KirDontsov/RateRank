@@ -25,16 +25,18 @@ export const SimilarFirms: FC<SimilarFirmsProps> = ({ firm, firms, city, categor
               <SimilarCard
                 key={firm?.firm_id}
                 firmId={firm?.firm_id}
+                city={city}
+                category={category}
                 src={
                   src
                     ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${src}.${DEFAULT_PHOTOS_EXT}`
                     : ''
                 }
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
-                alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+                alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
                 title={firm?.name ?? ''}
                 url={firm?.url ?? ''}
-                subTitle={category?.name.slice(0, -1) || ''}
+                subTitle={category?.single_name ?? ''}
                 address={firm?.address}
               />
             );

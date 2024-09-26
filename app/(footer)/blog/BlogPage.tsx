@@ -48,8 +48,8 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
             </header>
           </div>
 
-          <div className="w-full flex flex-col items-center gap-4 min-h-[500px] mt-[-120px] z-[1]">
-            <div className="container min-h-[500px] w-full flex flex-col gap-8 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
+          <div className="w-full flex flex-col items-center gap-4 mt-[-120px] z-[1]">
+            <div className="container w-full flex flex-col gap-8 px-8 py-10 bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               {pages?.map((page) => (
                 <div
                   key={page.page_id}

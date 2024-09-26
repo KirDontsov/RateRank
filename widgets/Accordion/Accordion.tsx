@@ -12,37 +12,40 @@ export interface AccordionProps {
 export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
   const [open, setOpen] = useState<number | null>(null);
 
+  const rodName = (category?.rod_name ?? '').toLowerCase();
+  const predName = (category?.pred_name ?? '').toLowerCase();
+
   const items = useMemo(() => {
     const items = [
       {
-        title: `Какой адрес у ${category?.name.slice(0, -1)}а ${firm?.name}?`,
-        text: `${category?.name.slice(0, -1)} ${firm?.name} расположен по адресу: ${firm?.address}`,
+        title: `Какой адрес у ${rodName} ${firm?.name}?`,
+        text: `${category?.single_name ?? ''} ${firm?.name} расположен по адресу: ${firm?.address}`,
       },
       {
-        title: `Какой номер телефона у ${category?.name.slice(0, -1)}а ${firm?.name}?`,
-        text: `Номер телефона для звонков в ${category?.name.slice(0, -1)} ${firm?.name}: ${firm?.default_phone}`,
+        title: `Какой номер телефона у ${rodName} ${firm?.name}?`,
+        text: `Номер телефона для звонков в ${(category?.single_name ?? '').toLowerCase()} ${firm?.name}: ${firm?.default_phone}`,
       },
     ];
 
     if (category?.category_id === '3ebc7206-6fed-4ea7-a000-27a74e867c9a') {
       items.push({
-        title: `Есть ли в ${category?.name.slice(0, -1)}е ${firm?.name} услуга "кофе с собой"?`,
-        text: `Да, ${category?.name.slice(0, -1)}е ${firm?.name} любой бодрящий напиток вы можете взять навынос.`,
+        title: `Есть ли в ${predName} ${firm?.name} услуга "кофе с собой"?`,
+        text: `Да, в ${predName} ${firm?.name} любой бодрящий напиток вы можете взять навынос.`,
       });
       items.push({
-        title: `Дорого ли поужинать в ${category?.name.slice(0, -1)}е ${firm?.name}?`,
-        text: `В ${category?.name.slice(0, -1)}е ${firm?.name} есть блюда и по высоким и по низким ценам.`,
+        title: `Дорого ли поужинать в ${predName} ${firm?.name}?`,
+        text: `В ${predName} ${firm?.name} есть блюда и по высоким и по низким ценам.`,
       });
     }
 
     items.push({
-      title: `Насколько точна информация о ${category?.name.slice(0, -1)}е ${firm?.name}?`,
-      text: `Если вы нашли ошибку и/или являетесь владельцем ${category?.name.slice(0, -1)}а ${firm?.name}, то можете заполнить форму обратной связи. ${COMMON_TITLE} старается сделать всё что в наших силах, чтобы предоставлять вам максимально точные и свежие данные о заведениях. `,
+      title: `Насколько точна информация о ${predName} ${firm?.name}?`,
+      text: `Если вы нашли ошибку и/или являетесь владельцем ${rodName} ${firm?.name}, то можете заполнить форму обратной связи. ${COMMON_TITLE} старается сделать всё что в наших силах, чтобы предоставлять вам максимально точные и свежие данные о заведениях. `,
     });
 
     return items;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category?.category_id, category?.name, firm?.address, firm?.default_phone, firm?.name]);
+  }, [category?.category_id, rodName, predName, firm]);
 
   return (
     <div id="accordion-flush" className="flex flex-col w-full">

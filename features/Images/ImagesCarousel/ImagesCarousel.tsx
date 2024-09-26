@@ -126,7 +126,7 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
               src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
-              alt={`${category?.name?.slice(0, -1)} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+              alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
               style={{ objectFit: 'cover' }}
               placeholder="blur"
               blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}

@@ -1,13 +1,4 @@
-import {
-  $categories,
-  $cities,
-  $firmsPage,
-  $searchVariants,
-  $searchVariantsExpanded,
-  Category,
-  City,
-  toggleSearchVariantsEvt,
-} from '@/api';
+import { $firmsPage, $searchVariants, $searchVariantsExpanded, Category, City, toggleSearchVariantsEvt } from '@/api';
 import { useOnClickOutside } from '@/hooks';
 import { Button } from '@/widgets';
 import { useUnit } from 'effector-react';
@@ -61,7 +52,7 @@ export const SearchVariants: FC<SearchVariantsProps> = ({ cities, categories }) 
           <div className="flex flex-wrap gap-x-4 overflow-auto relative w-full max-h-[100svh] pt-4 pb-[96px]">
             {searchVariants?.map((variant) => (
               <Button id={variant?.url} key={variant?.firm_id} onClick={handleClick}>
-                {`${categories?.find((item) => item?.category_id === variant?.category_id)?.name?.slice(0, -1)} - ${variant?.name} - ${cities?.find((item) => item?.city_id === variant?.city_id)?.name}`}
+                {`${categories?.find((item) => item?.category_id === variant?.category_id)?.single_name ?? ''} - ${variant?.name} - ${cities?.find((item) => item?.city_id === variant?.city_id)?.name} - ${variant?.address}`}
               </Button>
             ))}
           </div>

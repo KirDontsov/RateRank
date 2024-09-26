@@ -3,7 +3,8 @@ import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
 import { Curve, Images } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
-import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import { AnimatedText, Footer, ImageWithFallback, Nav, Rating, Section } from '@/widgets';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -43,7 +44,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${cities?.[0]?.abbreviation}/${categories?.[0]?.abbreviation}/${firms?.[0]?.firm_id}/${images.get(sections?.[0]?.page_block_section_id ?? '')?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
-                  alt={`${categories?.[0]?.name?.slice(0, -1)} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
+                  alt={`${categories?.[0]?.single_name ?? ''} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}`}
@@ -64,6 +65,11 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
           </div>
           <div className="w-full flex flex-col items-center gap-4 mt-[-120px] z-[1] text-sm xl:text-base">
             <div className="container w-full flex flex-col gap-8 px-8 py-10 bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
+              <div className="flex flex-col gap-4 divide-y divide-gray-100 shadow dark:divide-white">
+                <p>Опубликовано: {dayjs(page?.page?.createdTs ?? new Date()).format('DD.MM.YY')}</p>
+                <span />
+              </div>
+
               {Array.from(map).map(([key, value]) => (
                 <div key={key} className="flex flex-col gap-8" data-test-id="block">
                   {value.map((section, index) => {
@@ -74,11 +80,26 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
 
                     return (
                       <div key={section.page_block_section_id} className="flex flex-col gap-8" data-test-id="section">
-                        {Number(section.page_block_section_order) !== 0 && (
-                          <h2 className="text-lg font-semibold text-negroni-400 dark:text-white lg:text-4xl">
-                            {section.title}
-                          </h2>
-                        )}
+                        <div className="flex items-center justify-between">
+                          {Number(section.page_block_section_order) !== 0 && (
+                            <h2 className="text-lg font-semibold text-negroni-400 dark:text-white lg:text-4xl">
+                              {section.title}
+                            </h2>
+                          )}
+
+                          {section?.url && Number(currentFirm?.reviews_count) > 0 && (
+                            <div className="flex items-center h-[60px]">
+                              <div className="flex h-fit">
+                                <Rating rating={currentFirm?.rating} />
+                              </div>
+                              <div className="flex items-center gap-2 ml-4">
+                                <span>{currentFirm?.rating}</span> /
+                                <span>{`${currentFirm?.reviews_count} ${Number(currentFirm?.reviews_count) === 1 ? 'отзыв' : (Number(currentFirm?.reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
                         {!!section.url && (
                           <Link
                             href={`/${city?.abbreviation}/${category?.abbreviation}/${section.url}`}
@@ -87,7 +108,6 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                             Подробнее: {section.title}
                           </Link>
                         )}
-
                         <p>{section.subtitle}</p>
                         {section?.url && <p>Адрес: {currentFirm?.address}</p>}
                         <p>{section.text}</p>

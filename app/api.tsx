@@ -42,7 +42,7 @@ export async function getCategories(page: number, limit: number): Promise<Catego
       console.warn('error');
     });
 
-  return categories?.data?.categories?.filter((x) => x?.is_active) || null;
+  return categories?.data?.categories?.filter((x) => x?.is_active === 'true') || null;
 }
 
 export async function getCities(): Promise<City[] | null> {
@@ -55,7 +55,7 @@ export async function getCities(): Promise<City[] | null> {
       console.warn('error');
     });
 
-  return cities?.data?.cities?.filter((x) => x?.is_active) || null;
+  return cities?.data?.cities?.filter((x) => x?.is_active === 'true') || null;
 }
 
 export async function getCity(cityId: string): Promise<City | null> {
