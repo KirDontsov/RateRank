@@ -2,7 +2,7 @@
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
 import { Curve, Images } from '@/features';
 import { useMediaQuery } from '@/hooks';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground, getCategoryName } from '@/shared';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Rating, Section } from '@/widgets';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -44,7 +44,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                   src={`${DEFAULT_PHOTOS_ENDPOINT}/${cities?.[0]?.abbreviation}/${categories?.[0]?.abbreviation}/${firms?.[0]?.firm_id}/${images.get(sections?.[0]?.page_block_section_id ?? '')?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
                   fallbackSrc={HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}
                   fill
-                  alt={`${getCategoryName({ name: categories?.[0]?.name, single: true })} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
+                  alt={`${categories?.[0]?.single_name ?? ''} ${firms?.[0]?.name ?? ''} - ${cities?.[0]?.name ?? ''}`}
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
                   blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firms?.[0]?.category_id ?? '') as keyof typeof HeroBackground]}`}

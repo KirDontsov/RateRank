@@ -1,5 +1,5 @@
 import { Category, City, Firm, ImagesQueryResult } from '@/api';
-import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground, getCategoryName } from '@/shared';
+import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 
 import { FC } from 'react';
 import { SimilarCard } from './SimilarCard';
@@ -33,10 +33,10 @@ export const SimilarFirms: FC<SimilarFirmsProps> = ({ firm, firms, city, categor
                     : ''
                 }
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
-                alt={`${getCategoryName({ name: category?.name, single: true })} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
+                alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
                 title={firm?.name ?? ''}
                 url={firm?.url ?? ''}
-                subTitle={getCategoryName({ name: category?.name, single: true })}
+                subTitle={category?.single_name ?? ''}
                 address={firm?.address}
               />
             );

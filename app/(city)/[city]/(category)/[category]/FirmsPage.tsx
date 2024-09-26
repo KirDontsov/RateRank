@@ -8,7 +8,7 @@ import {
   FirmsGateProvider,
   FirmsList,
 } from '@/features';
-import { CommonNavProps, FETCH_LIMIT, getCategoryName } from '@/shared';
+import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { Footer, Nav, Pagination, Section, SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
@@ -70,7 +70,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                   <div className="flex flex-col gap-2 bg-white dark:bg-eboni-900 xl:h-[100svh] pt-[96px] relative w-full 2xl:w-[21%] xl:w-[41%] h-fit overflow-x-hidden">
                     <div className="p-8">
                       <SectionHeader
-                        title={`${getCategoryName({ name: categories?.find((cat) => cat?.abbreviation === categoryAbbr)?.name })} города ${cities?.find((city) => city?.abbreviation === cityAbbr)?.name}`}
+                        title={`${categories?.find((cat) => cat?.abbreviation === categoryAbbr)?.name} города ${cities?.find((city) => city?.abbreviation === cityAbbr)?.name}`}
                         subTitle="Раздел отсортирован по рейтингу"
                       />
                     </div>

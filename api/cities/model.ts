@@ -16,6 +16,7 @@ export interface City {
   name: string;
   abbreviation: string;
   coords: string | null;
+  order_number: string | null;
   is_active: string;
 }
 

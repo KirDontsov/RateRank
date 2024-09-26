@@ -1,5 +1,4 @@
 import { Category, City, Firm, ImageType } from '@/api';
-import { getCategoryName } from '@/shared';
 import { SectionHeader } from '@/widgets';
 import cn from 'classnames';
 import { FC } from 'react';
@@ -18,9 +17,7 @@ export const Images: FC<ImagesProps> = ({ images, city, firm, category, tablet }
     <div className="w-full flex flex-col gap-4">
       {images?.length ? (
         <>
-          <SectionHeader
-            title={`Фотографии ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name}`}
-          />
+          <SectionHeader title={`Фотографии ${(category?.rod_name ?? '').toLowerCase()} ${firm?.name}`} />
 
           <div
             className={cn('flex flex-col gap-4', {
@@ -32,9 +29,7 @@ export const Images: FC<ImagesProps> = ({ images, city, firm, category, tablet }
           </div>
         </>
       ) : (
-        <SectionHeader
-          title={`У ${getCategoryName({ name: category?.name, rod: true }).toLowerCase()} ${firm?.name} нет фотографий`}
-        />
+        <SectionHeader title={`У ${(category?.rod_name ?? '').toLowerCase()} ${firm?.name} нет фотографий`} />
       )}
     </div>
   );

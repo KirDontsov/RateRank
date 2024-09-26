@@ -7,6 +7,11 @@ export interface Category {
   category_id: string;
   name: string;
   abbreviation: string;
+  single_name?: string;
+  rod_name?: string;
+  pred_name?: string;
+  vin_name?: string;
+  order_number?: string | null;
   is_active: string;
 }
 
