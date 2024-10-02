@@ -1,11 +1,11 @@
 'use client';
-import { $firmsPage, Category, City, setFirmEvt } from '@/api';
+import { $firmsPage, Category, City } from '@/api';
 import { transliterate } from '@/shared';
 import { Rating } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { FC, MouseEvent, useCallback, useState } from 'react';
 
 import styles from '../oaiReviewStyles.module.scss';
@@ -36,18 +36,9 @@ export const FirmCard: FC<FirmsCardProps> = ({
   oai_review,
 }) => {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const { page, setFirm } = useUnit({
-    page: $firmsPage,
-    setFirm: setFirmEvt,
-  });
-
-  const handleClick = useCallback(() => {
-    setFirm({ firmUrl: url });
-    router.push(url);
-  }, [setFirm, url, router]);
+  const page = useUnit($firmsPage);
 
   const handleToggle = useCallback((e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -57,9 +48,7 @@ export const FirmCard: FC<FirmsCardProps> = ({
 
   return (
     <Link
-      key={firm_id}
       href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
-      onClick={handleClick}
       className="w-full px-8 py-4 bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 cursor-pointer hover:scale-[1.005] duration-300"
     >
       <div className="flex flex-col gap-2">
