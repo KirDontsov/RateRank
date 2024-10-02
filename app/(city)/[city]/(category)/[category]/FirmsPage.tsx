@@ -7,15 +7,15 @@ import {
   CityIdGateProvider,
   FirmsGateProvider,
   FirmsList,
+  FirmsMap,
 } from '@/features';
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { Footer, LoadingComponent, Nav, Pagination, Section, SectionHeader } from '@/widgets';
 import { useUnit } from 'effector-react';
-import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FC, Suspense, useCallback } from 'react';
 
-const DynamicMap = dynamic(() => import('../../../../../features/FirmsMap/FirmsMap'), { ssr: false });
+// const DynamicMap = dynamic(() => import('../../../../../features/FirmsMap/FirmsMap'), { ssr: false });
 
 export interface FirmsPageProps {
   categoryAbbr: string;
@@ -95,7 +95,7 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                   </div>
                   <div className="flex flex-col 2xl:w-[79%] xl:w-[59%] md:w-full w-full px-4 md:px-0">
                     <Suspense fallback={<LoadingComponent />}>
-                      <DynamicMap firmsForMap={firmsForMap} city={city} category={category} />
+                      <FirmsMap firmsForMap={firmsForMap} city={city} category={category} />
                     </Suspense>
                   </div>
                 </div>
