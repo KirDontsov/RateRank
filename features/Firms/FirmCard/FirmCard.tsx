@@ -5,7 +5,7 @@ import { Rating } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FC, MouseEvent, useCallback, useState } from 'react';
 
 import styles from '../oaiReviewStyles.module.scss';
@@ -36,6 +36,7 @@ export const FirmCard: FC<FirmsCardProps> = ({
   oai_review,
 }) => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const { page, setFirm } = useUnit({
@@ -44,9 +45,9 @@ export const FirmCard: FC<FirmsCardProps> = ({
   });
 
   const handleClick = useCallback(() => {
-    console.log('url', url);
     setFirm({ firmUrl: url });
-  }, [setFirm, url]);
+    router.push(url);
+  }, [setFirm, url, router]);
 
   const handleToggle = useCallback((e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
