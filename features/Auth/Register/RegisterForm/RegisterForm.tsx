@@ -162,7 +162,7 @@ export const RegisterForm = () => {
               type="button"
               className="flex items-center rounded px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-400"
             >
-              Войти
+              <a>Войти</a>
             </Link>
           </div>
         </div>

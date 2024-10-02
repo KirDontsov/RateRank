@@ -60,40 +60,46 @@ export const FirmCard: FC<FirmsCardProps> = ({
       onClick={handleClick}
       className="w-full px-8 py-4 bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 cursor-pointer hover:scale-[1.005] duration-300"
     >
-      <div className="flex flex-col gap-2">
-        <div
-          className="text-lg md:text-xl flex flex-col gap-2 xl:flex-row justify-between xl:items-center font-bold text-gray dark:text-white"
-          tabIndex={0}
-        >
-          <span className="max-w-[314.34px] break-words">{name}</span>
-          <Rating rating={rating} />
-        </div>
-        {Number(reviews_count) > 0 && !!rating && (
-          <p className="mt-2 text-gray-600 dark:text-gray-300">
-            <span>Рейтинг: {rating}</span> /{' '}
-            <span>{`${reviews_count} ${Number(reviews_count) === 1 ? 'отзыв' : (Number(reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
-          </p>
-        )}
-
-        <p className="mt-2 text-gray-600 dark:text-gray-300">{address}</p>
-        {!!oai_review && (
-          <p
-            className={cn(`mt-2 text-gray-600 dark:text-gray-300 h-12 overflow-hidden ${styles.myCustomStyle}`, {
-              'h-auto overflow-visible': open,
-              'h-12 overflow-hidden': !open,
-            })}
+      <a>
+        <div className="flex flex-col gap-2">
+          <div
+            className="text-lg md:text-xl flex flex-col gap-2 xl:flex-row justify-between xl:items-center font-bold text-gray dark:text-white"
+            tabIndex={0}
           >
-            {oai_review}
-          </p>
-        )}
-      </div>
-      {!!oai_review && (
-        <div className="flex items-center justify-between mt-4">
-          <div className="text-negroni-400 hover:text-negroni-500 hover:underline" tabIndex={0} onClick={handleToggle}>
-            {!open ? 'Читать полностью' : 'Скрыть'}
+            <span className="max-w-[314.34px] break-words">{name}</span>
+            <Rating rating={rating} />
           </div>
+          {Number(reviews_count) > 0 && !!rating && (
+            <p className="mt-2 text-gray-600 dark:text-gray-300">
+              <span>Рейтинг: {rating}</span> /{' '}
+              <span>{`${reviews_count} ${Number(reviews_count) === 1 ? 'отзыв' : (Number(reviews_count) ?? 0) <= 4 ? 'отзывa' : 'отзывов'}`}</span>
+            </p>
+          )}
+
+          <p className="mt-2 text-gray-600 dark:text-gray-300">{address}</p>
+          {!!oai_review && (
+            <p
+              className={cn(`mt-2 text-gray-600 dark:text-gray-300 h-12 overflow-hidden ${styles.myCustomStyle}`, {
+                'h-auto overflow-visible': open,
+                'h-12 overflow-hidden': !open,
+              })}
+            >
+              {oai_review}
+            </p>
+          )}
         </div>
-      )}
+        {!!oai_review && (
+          <div className="flex items-center justify-between mt-4">
+            <div
+              className="text-negroni-400 hover:text-negroni-500 hover:underline"
+              tabIndex={0}
+              onClick={handleToggle}
+            >
+              {!open ? 'Читать полностью' : 'Скрыть'}
+            </div>
+          </div>
+        )}
+      </a>
     </Link>
   );
 };

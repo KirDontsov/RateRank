@@ -11,7 +11,7 @@ export interface TypesProps {
 export const Types: FC<TypesProps> = ({ cityId, categoryId }) => {
   return useList($types, ({ type_id, name, abbreviation }) => (
     <Link href={`/${cityId}/${categoryId}/type/${abbreviation}`} key={type_id}>
-      {name}
+      <a>{name}</a>
     </Link>
   ));
 };

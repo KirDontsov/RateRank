@@ -206,7 +206,7 @@ export const FirmsMap: FC<FirmsMapProps> = ({ firmsForMap, city, category }) => 
                 // target={selectedMarker?.firm?.url === '' ? null : '_blank'}
                 className={styles.popupWebUrl}
               >
-                Подробнее
+                <a>Подробнее</a>
               </Link>
             </div>
           </Popup>

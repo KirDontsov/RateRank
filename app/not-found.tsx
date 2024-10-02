@@ -24,7 +24,7 @@ export default function NotFound() {
             </h1>
             <div className="mt-4">
               <Link href="/" className="text-negroni-400">
-                Перейти на главную
+                <a>Перейти на главную</a>
               </Link>
             </div>
           </div>
