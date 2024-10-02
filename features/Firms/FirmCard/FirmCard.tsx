@@ -44,6 +44,7 @@ export const FirmCard: FC<FirmsCardProps> = ({
   });
 
   const handleClick = useCallback(() => {
+    console.log('url', url);
     setFirm({ firmUrl: url });
   }, [setFirm, url]);
 
