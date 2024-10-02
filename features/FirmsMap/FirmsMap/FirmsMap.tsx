@@ -6,7 +6,7 @@ import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { FC, MouseEvent, memo, useRef, useState } from 'react';
+import { FC, MouseEvent, useRef, useState } from 'react';
 import Map, {
   FullscreenControl,
   GeoJSONSource,
@@ -35,7 +35,7 @@ export interface FirmsMapProps {
 }
 
 /** Работаем с гео-json и itemsInViewPort иначе тормозит */
-const MarkersComponent: FC<MarkersComponentProps> = ({ zoomToSelectedLoc, items }) => {
+const Markers: FC<MarkersComponentProps> = ({ zoomToSelectedLoc, items }) => {
   const markerRef = useRef<mapboxgl.Marker>(null);
 
   return (
@@ -59,8 +59,6 @@ const MarkersComponent: FC<MarkersComponentProps> = ({ zoomToSelectedLoc, items 
     </>
   );
 };
-
-export const Markers = memo(MarkersComponent);
 
 export const FirmsMap: FC<FirmsMapProps> = ({ firmsForMap, city, category }) => {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
