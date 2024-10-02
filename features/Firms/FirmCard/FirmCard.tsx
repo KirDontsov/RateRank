@@ -4,7 +4,6 @@ import { transliterate } from '@/shared';
 import { Rating } from '@/widgets';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FC, MouseEvent, useCallback, useState } from 'react';
 
@@ -47,7 +46,8 @@ export const FirmCard: FC<FirmsCardProps> = ({
   }, []);
 
   return (
-    <Link
+    <a
+      key={firm_id}
       href={`/${city?.abbreviation}/${category?.abbreviation}/${url || transliterate(name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       className="w-full px-8 py-4 bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 cursor-pointer hover:scale-[1.005] duration-300"
     >
@@ -85,6 +85,6 @@ export const FirmCard: FC<FirmsCardProps> = ({
           </div>
         </div>
       )}
-    </Link>
+    </a>
   );
 };
