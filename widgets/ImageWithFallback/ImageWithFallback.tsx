@@ -19,6 +19,7 @@ export const ImageWithFallback = (props: ImageWithFallbackProps) => {
       alt={alt}
       {...rest}
       src={imgSrc}
+      sizes="(max-width: 1280px) 100vw, 33vw"
       placeholder="blur"
       blurDataURL={`data:image/jpeg;base64,${fallbackSrc}`}
       onLoad={(result) => {
