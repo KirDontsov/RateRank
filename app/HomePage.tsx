@@ -11,15 +11,11 @@ import { FC, useLayoutEffect } from 'react';
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const prod = process.env.PRODUCTION;
 
   useLayoutEffect(() => {
-    if (prod) {
-      const url = `${pathname}?${searchParams}`;
-      // @ts-ignore
-      ym(97095336, 'hit', url);
-    }
-  }, [pathname, searchParams, prod]);
+    // @ts-ignore
+    ym(97095336, 'hit', `${pathname}?${searchParams}`);
+  }, [pathname, searchParams]);
 
   return (
     <ThemeProvider>
