@@ -12,7 +12,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next/types';
 import { Suspense } from 'react';
 import { FirmsPage } from './FirmsPage';
-import Loading from './loading';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
@@ -61,7 +60,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const oai_reviews = await getOaiReviewsForFirms(firms);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<></>}>
       <FirmsPage
         cityAbbr={cityAbbr}
         categoryAbbr={categoryAbbr}

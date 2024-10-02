@@ -10,6 +10,7 @@ import {
 import { COMMON_DOMAIN, COMMON_TITLE, PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next/types';
+import { Suspense } from 'react';
 import { FirmsPage } from './FirmsPage';
 
 export type CategoryMetaProps = {
@@ -64,16 +65,18 @@ export default async function Page({ params, searchParams }: PageProps) {
   const oai_reviews = await getOaiReviewsForFirms(firms);
 
   return (
-    <FirmsPage
-      cityAbbr={cityAbbr}
-      categoryAbbr={categoryAbbr}
-      firms={firms}
-      firmsForMap={firmsForMap}
-      cities={cities}
-      categories={categories}
-      city={city}
-      category={category}
-      oai_reviews={oai_reviews}
-    />
+    <Suspense fallback={<></>}>
+      <FirmsPage
+        cityAbbr={cityAbbr}
+        categoryAbbr={categoryAbbr}
+        firms={firms}
+        firmsForMap={firmsForMap}
+        cities={cities}
+        categories={categories}
+        city={city}
+        category={category}
+        oai_reviews={oai_reviews}
+      />
+    </Suspense>
   );
 }

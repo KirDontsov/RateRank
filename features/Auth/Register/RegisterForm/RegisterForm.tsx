@@ -3,7 +3,6 @@
 import { api_auth } from '@/api';
 import { ErrorTypes } from '@/shared/types';
 import { FormInput } from '@/widgets';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -157,13 +156,13 @@ export const RegisterForm = () => {
           />
           <div className="flex gap-2 items-center mt-2 ext-sm">
             <span>Уже есть аккаунт?</span>
-            <Link
+            <a
               href="/login"
               type="button"
               className="flex items-center rounded px-2 text-sm text-negroni-600 transition-colors duration-300 hover:text-negroni-400 focus:outline-none dark:text-negroni-400 dark:hover:text-negroni-400"
             >
               Войти
-            </Link>
+            </a>
           </div>
         </div>
 

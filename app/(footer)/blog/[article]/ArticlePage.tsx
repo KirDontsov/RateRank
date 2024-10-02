@@ -6,7 +6,6 @@ import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/s
 import { AnimatedText, Footer, ImageWithFallback, LoadingComponent, Nav, Rating, Section } from '@/widgets';
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { FC, Suspense } from 'react';
 
 const DynamicImages = dynamic(() => import('../../../../features/Images'));
@@ -104,12 +103,12 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                         </div>
 
                         {!!section.url && (
-                          <Link
+                          <a
                             href={`/${city?.abbreviation}/${category?.abbreviation}/${section.url}`}
                             className="text-negroni-400 hover:text-negroni-500 dark:hover:text-negroni-500"
                           >
                             Подробнее: {section.title}
-                          </Link>
+                          </a>
                         )}
                         <p>{section.subtitle}</p>
                         {section?.url && <p>Адрес: {currentFirm?.address}</p>}

@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 export default function NotFound() {
   return (
     <main className="flex h-screen flex-col bg-white dark:bg-eboni-900 w-full overflow-hidden">
@@ -23,9 +21,9 @@ export default function NotFound() {
               Такой страницы нет
             </h1>
             <div className="mt-4">
-              <Link href="/" className="text-negroni-400">
+              <a href="/" className="text-negroni-400">
                 Перейти на главную
-              </Link>
+              </a>
             </div>
           </div>
         </div>

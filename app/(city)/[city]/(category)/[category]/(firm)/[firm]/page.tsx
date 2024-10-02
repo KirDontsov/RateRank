@@ -17,7 +17,6 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next/types';
 import { Suspense } from 'react';
 import { FirmIdPage } from './FirmIdPage';
-import Loading from './loading';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
@@ -86,7 +85,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<></>}>
       <FirmIdPage
         cityId={cityAbbr}
         categoryAbbr={categoryAbbr}

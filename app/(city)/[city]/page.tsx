@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { CategoriesPage } from './CategoriesPage';
-import Loading from './loading';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
@@ -43,7 +42,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<></>}>
       <CategoriesPage cityId={cityId} cities={cities} categories={categories} />
     </Suspense>
   );

@@ -6,7 +6,6 @@ import { useMediaQuery } from '@/hooks';
 import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
-import Link from 'next/link';
 import { FC, useCallback, useState } from 'react';
 import styles from './nav.module.scss';
 
@@ -43,12 +42,12 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
         >
           <div className="flex items-center justify-between">
             <div className="flex gap-2 md:gap-8 items-center justify-center">
-              <Link
+              <a
                 className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white text-nowrap"
                 href="/"
               >
                 {COMMON_TITLE.toLocaleUpperCase()}
-              </Link>
+              </a>
               <div className="pointer-events-auto mr-2">
                 <SearchInput />
               </div>
@@ -102,12 +101,12 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
                Добавить организацию
              </Link> */}
                 {!value && !loading && (
-                  <Link
+                  <a
                     className="my-2 transition-colors duration-300 transform hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
                     Вход
-                  </Link>
+                  </a>
                 )}
 
                 {/* <Link
@@ -131,12 +130,12 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
                Добавить организацию
              </Link> */}
                 {!value && !loading && (
-                  <Link
+                  <a
                     className="my-2 transition-colors duration-300 transform hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
                     Вход
-                  </Link>
+                  </a>
                 )}
 
                 {/* <Link

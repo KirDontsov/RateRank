@@ -1,6 +1,5 @@
 import { setCategoryEvt } from '@/api';
 import { useUnit } from 'effector-react';
-import Link from 'next/link';
 import { FC, useCallback } from 'react';
 
 export interface CategoryCardProps {
@@ -18,7 +17,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryId, abbreviation, 
   }, [setCategory, categoryId]);
 
   return (
-    <Link
+    <a
       key={categoryId}
       onClick={handleChangeCategory}
       href={`/${cityId}/${abbreviation}`}
@@ -26,6 +25,6 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryId, abbreviation, 
     >
       <h5 className="mb-2 text-2xl font-bold tracking-tight dark:text-white">{name}</h5>
       <p className="font-normal">Лучшие {name} в городе</p>
-    </Link>
+    </a>
   );
 };
