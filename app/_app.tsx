@@ -5,13 +5,11 @@ import { Suspense } from 'react';
 
 import '../configs/dayjs.config';
 
-import Loading from './loading';
-
 function App({ Component, pageProps }: AppProps<{ values: Record<string, unknown> }>) {
   const { values } = pageProps;
 
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<></>}>
       <EffectorNext values={values}>
         <AnimatePresence mode="wait">
           <Component />
