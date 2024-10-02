@@ -59,7 +59,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                     href={`blog/${page.url}`}
                     className="font-semibold text-eboni-400 dark:text-white text-base lg:text-2xl xl:text-3xl hover:text-negroni-400"
                   >
-                    <a>{page.oai_value}</a>
+                    {page.oai_value}
                   </Link>
                   <p className="py-2 text-sm xl:text-base">
                     Статья написана: {dayjs(page?.createdTs ?? new Date()).format('DD.MM.YY')}

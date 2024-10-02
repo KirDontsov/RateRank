@@ -23,10 +23,8 @@ export const CitiesCard: FC<CitiesCardProps> = ({ abbreviation, name, cityId }) 
       href={`/${abbreviation}`}
       className="flex flex-col w-full md:max-w-sm p-6 bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 hover:scale-[1.03] duration-300"
     >
-      <a>
-        <h5 className="mb-2 text-2xl font-bold tracking-tight dark:text-white">{name}</h5>
-        <p className="font-normal">Лучшие заведения в городе {name}</p>
-      </a>
+      <h5 className="mb-2 text-2xl font-bold tracking-tight dark:text-white">{name}</h5>
+      <p className="font-normal">Лучшие заведения в городе {name}</p>
     </Link>
   );
 };

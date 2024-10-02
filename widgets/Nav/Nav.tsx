@@ -47,7 +47,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
                 className="pointer-events-auto text-sm xl:text-2xl text-eboni-400 dark:text-white text-nowrap"
                 href="/"
               >
-                <a>{COMMON_TITLE.toLocaleUpperCase()}</a>
+                {COMMON_TITLE.toLocaleUpperCase()}
               </Link>
               <div className="pointer-events-auto mr-2">
                 <SearchInput />
@@ -106,7 +106,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
                     className="my-2 transition-colors duration-300 transform hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
-                    <a>Вход</a>
+                    Вход
                   </Link>
                 )}
 
@@ -135,7 +135,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
                     className="my-2 transition-colors duration-300 transform hover:text-negroni-400 md:mx-4 md:my-0"
                     href="/login"
                   >
-                    <a>Вход</a>
+                    Вход
                   </Link>
                 )}
 

@@ -51,26 +51,24 @@ export const SimilarCard: FC<SimilarCardProps> = ({
       onClick={handleClick}
       className="bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 relative cursor-pointer min-w-80 max-w-sm md:min-w-[40rem] md:max-w-lg"
     >
-      <a>
-        <div className="relative w-full h-[15rem] md:h-[30rem] overflow-hidden">
-          <ImageWithFallback
-            key={firmId}
-            className="w-full h-[15rem] md:h-[30rem] hover:scale-[1.1] duration-300"
-            src={src}
-            fallbackSrc={fallbackSrc}
-            fill
-            alt={alt}
-            style={{ objectFit: 'cover' }}
-          />
-        </div>
-        <div className="p-5 flex flex-col gap-8">
-          <h3 className="font-bold tracking-tight whitespace-pre text-base xl:text-2xl flex flex-col">
-            <span className="text-eboni-400 dark:text-white truncate">{`${title} `}</span>{' '}
-            <span className="font-normal text-sm xl:text-base">{subTitle}</span>
-          </h3>
-          <p className="mb-3 font-normal text-sm xl:text-base">{address}</p>
-        </div>
-      </a>
+      <div className="relative w-full h-[15rem] md:h-[30rem] overflow-hidden">
+        <ImageWithFallback
+          key={firmId}
+          className="w-full h-[15rem] md:h-[30rem] hover:scale-[1.1] duration-300"
+          src={src}
+          fallbackSrc={fallbackSrc}
+          fill
+          alt={alt}
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
+      <div className="p-5 flex flex-col gap-8">
+        <h3 className="font-bold tracking-tight whitespace-pre text-base xl:text-2xl flex flex-col">
+          <span className="text-eboni-400 dark:text-white truncate">{`${title} `}</span>{' '}
+          <span className="font-normal text-sm xl:text-base">{subTitle}</span>
+        </h3>
+        <p className="mb-3 font-normal text-sm xl:text-base">{address}</p>
+      </div>
     </Link>
   );
 };
