@@ -12,29 +12,18 @@ import {
   getReviews,
   getSimilarFirmsImages,
 } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next/types';
+import { Suspense } from 'react';
 import { FirmIdPage } from './FirmIdPage';
+import Loading from './loading';
 
-type Props = {
-  params: { city: string; category: string; firm: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export interface FirmPageProps {
-  params: {
-    city: string;
-    category: string;
-    firm: string;
-  };
-  searchParams: { [key: string]: string | undefined };
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const firmUrl = params?.firm ?? '';
-  const categoryId = params?.category ?? '';
-  const cityId = params?.city ?? '';
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const paramsRes = await params;
+  const firmUrl = `${paramsRes?.firm ?? ''}`;
+  const categoryId = `${paramsRes?.category ?? ''}`;
+  const cityId = `${paramsRes?.city ?? ''}`;
 
   const city = await getCity(cityId);
   const cityName = city?.name || '';
@@ -56,13 +45,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
     alternates: {
-      canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
+      canonical: `https://топвыбор.рф/${cityId}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
       description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
-      url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}/${firmUrl}`,
+      url: `https://топвыбор.рф/${cityId}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -71,12 +60,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /** Страница фирмы с отзывами */
-export default async function Page({ params, searchParams }: FirmPageProps) {
-  const cityAbbr = params.city ?? '';
-  const categoryAbbr = params.category ?? '';
-  const firmUrl = params.firm ?? '';
-  const firmsPage = searchParams?.firmsPage ?? '1';
-  const reviewsPage = searchParams?.reviewsPage ?? '1';
+export default async function Page({ params, searchParams }: PageProps) {
+  const paramsRes = await params;
+  const searchParamsRes = await searchParams;
+  const cityAbbr = `${paramsRes?.city ?? ''}`;
+  const categoryAbbr = `${paramsRes?.category ?? ''}`;
+  const firmUrl = `${paramsRes?.firm ?? ''}`;
+  const firmsPage = `${searchParamsRes?.firmsPage ?? '1'}`;
+  const reviewsPage = `${searchParamsRes?.reviewsPage ?? '1'}`;
 
   const firm = await getFirm(firmUrl);
   if (!firm) {
@@ -95,22 +86,24 @@ export default async function Page({ params, searchParams }: FirmPageProps) {
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
   return (
-    <FirmIdPage
-      cityId={cityAbbr}
-      categoryAbbr={categoryAbbr}
-      firmUrl={firmUrl}
-      city={city}
-      cities={cities}
-      category={category}
-      categories={categories}
-      firm={firm}
-      firms={firms}
-      images={images}
-      reviews={reviews}
-      oai_description={oai_description}
-      oai_reviews={oai_reviews}
-      prices={prices}
-      similarFirmsImages={similarFirmsImages}
-    />
+    <Suspense fallback={<Loading />}>
+      <FirmIdPage
+        cityId={cityAbbr}
+        categoryAbbr={categoryAbbr}
+        firmUrl={firmUrl}
+        city={city}
+        cities={cities}
+        category={category}
+        categories={categories}
+        firm={firm}
+        firms={firms}
+        images={images}
+        reviews={reviews}
+        oai_description={oai_description}
+        oai_reviews={oai_reviews}
+        prices={prices}
+        similarFirmsImages={similarFirmsImages}
+      />
+    </Suspense>
   );
 }

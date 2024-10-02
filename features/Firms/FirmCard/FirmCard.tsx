@@ -1,3 +1,4 @@
+'use client';
 import { $firmsPage, Category, City, setFirmEvt } from '@/api';
 import { transliterate } from '@/shared';
 import { Rating } from '@/widgets';

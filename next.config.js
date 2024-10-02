@@ -34,6 +34,7 @@ const nextConfig = {
   ],
   experimental: {
     legacyBrowsers: false,
+    ppr: true,
   },
   // effector swc нужен для серверных компонентов
   // experimental: {

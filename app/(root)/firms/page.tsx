@@ -7,23 +7,19 @@ import {
   getFirmsForMap,
   getOaiReviewsForFirms,
 } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next/types';
 import { FirmsPage } from './FirmsPage';
-
-export interface CategoryPageProps {
-  params: { city: string; category: string };
-  searchParams: { [key: string]: string | undefined };
-}
 
 export type CategoryMetaProps = {
   params: { city: string; category: string };
 };
 
-export async function generateMetadata({ params }: CategoryMetaProps): Promise<Metadata> {
-  const cityId = params.city ?? '';
-  const categoryId = params.category ?? '';
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const paramsRes = await params;
+  const cityId = `${paramsRes?.city ?? ''}`;
+  const categoryId = `${paramsRes?.category ?? ''}`;
 
   const city = await getCity(cityId);
   const category = await getCategory(categoryId);
@@ -34,12 +30,12 @@ export async function generateMetadata({ params }: CategoryMetaProps): Promise<M
   return {
     title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
     description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-    alternates: { canonical: `https://топвыбор.рф/${params.city}/${category?.abbreviation}` },
+    alternates: { canonical: `https://топвыбор.рф/${cityId}/${category?.abbreviation}` },
     keywords: [`${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `Лучшие ${categoryName} города ${cityName} - рейтинг кафе, баров, фастфудов, цены, фото, телефоны, адреса, отзывы - ${COMMON_TITLE}`,
       description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
-      url: `https://топвыбор.рф/${params.city}/${category?.abbreviation}`,
+      url: `https://топвыбор.рф/${cityId}/${category?.abbreviation}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',
@@ -48,10 +44,12 @@ export async function generateMetadata({ params }: CategoryMetaProps): Promise<M
 }
 
 /** Список фирм внутри категории */
-export default async function Page({ params, searchParams }: CategoryPageProps) {
-  const categoryAbbr = params?.category ?? '';
-  const cityAbbr = params?.city ?? '';
-  const firmsPage = searchParams?.firmsPage ?? '1';
+export default async function Page({ params, searchParams }: PageProps) {
+  const paramsRes = await params;
+  const searchParamsRes = await searchParams;
+  const categoryAbbr = `${paramsRes?.category ?? ''}`;
+  const cityAbbr = `${paramsRes?.city ?? ''}`;
+  const firmsPage = `${searchParamsRes?.firmsPage ?? '1'}`;
 
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const cities = await getCities();

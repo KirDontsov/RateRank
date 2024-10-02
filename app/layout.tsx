@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { CookiesProvider } from 'next-client-cookies/server';
-// import { Inter } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
@@ -10,7 +11,7 @@ import Script from 'next/script';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
-// const inter = Inter({ subsets: ['cyrillic'] });
+const inter = Inter({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
@@ -79,7 +80,7 @@ export default function RootLayout({ children }: CommonProps) {
 
               gtag('config', 'G-8N2W9TPW5X');`}
             </Script>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-8N2W9TPW5X"></script>
+            <GoogleTagManager gtmId="G-8N2W9TPW5X" />
           </>
         )}
       </body>

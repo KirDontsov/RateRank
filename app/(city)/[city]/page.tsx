@@ -1,21 +1,14 @@
 import { getCategories, getCities, getCity } from '@/app/api';
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, PageProps } from '@/shared';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 import { CategoriesPage } from './CategoriesPage';
+import Loading from './loading';
 
-export interface CityPageProps {
-  params: {
-    city: string;
-  };
-}
-
-type CityIdProps = {
-  params: { city: string };
-};
-
-export async function generateMetadata({ params }: CityIdProps): Promise<Metadata> {
-  const cityId = params.city;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const paramsRes = await params;
+  const cityId = `${paramsRes?.city ?? ''}`;
 
   const city = await getCity(cityId);
   const cityName = city?.name;
@@ -37,8 +30,9 @@ export async function generateMetadata({ params }: CityIdProps): Promise<Metadat
 }
 
 /** Список категорий внутри города */
-export default async function Page({ params }: CityPageProps) {
-  const cityId = params.city ?? '';
+export default async function Page({ params }: PageProps) {
+  const paramsRes = await params;
+  const cityId = `${paramsRes?.city ?? ''}`;
 
   const cities = await getCities();
   const categories = await getCategories(1, 10);
@@ -48,5 +42,9 @@ export default async function Page({ params }: CityPageProps) {
     notFound();
   }
 
-  return <CategoriesPage cityId={cityId} cities={cities} categories={categories} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <CategoriesPage cityId={cityId} cities={cities} categories={categories} />
+    </Suspense>
+  );
 }

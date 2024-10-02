@@ -1,3 +1,4 @@
+'use client';
 import { Category, City, Firm, ImageType } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { ImageWithFallback } from '@/widgets';

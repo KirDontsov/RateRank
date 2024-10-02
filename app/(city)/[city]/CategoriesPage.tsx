@@ -1,8 +1,8 @@
 'use client';
 import { CategoriesGateProvider, CategoriesList, CitiesGateProvider, CityIdGateProvider, Curve } from '@/features';
 import { CommonNavProps } from '@/shared';
-import { Footer, Nav, Section, SectionHeader } from '@/widgets';
-import { FC } from 'react';
+import { Footer, LoadingComponent, Nav, Section, SectionHeader } from '@/widgets';
+import { FC, Suspense } from 'react';
 
 export interface CategoriesPageProps {
   cityId: string;
@@ -20,7 +20,9 @@ export const CategoriesPage: FC<CategoriesPageProps & CommonNavProps> = ({ cityI
               <div className="py-8 flex flex-col gap-4 items-center mb-auto">
                 <SectionHeader title="Категории" subTitle="раздел" />
                 <div className="py-8 flex gap-4 mb-auto flex-wrap">
-                  <CategoriesList cityId={cityId} categories={categories} />
+                  <Suspense fallback={<LoadingComponent />}>
+                    <CategoriesList cityId={cityId} categories={categories} />
+                  </Suspense>
                 </div>
               </div>
 

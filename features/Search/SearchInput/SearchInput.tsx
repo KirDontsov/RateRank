@@ -1,3 +1,4 @@
+'use client';
 import { getSearchVariantsEvt } from '@/api';
 import { FormInput } from '@/widgets';
 import { useUnit } from 'effector-react';

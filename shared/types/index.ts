@@ -30,3 +30,14 @@ export interface CommonNavProps {
   cities: City[] | null;
   categories: Category[] | null;
 }
+
+export interface SegmentParams {
+  [param: string]: string | string[] | undefined;
+}
+
+export type SearchParams = { [key: string]: string | undefined } | any;
+
+export interface PageProps {
+  params?: Promise<SegmentParams>;
+  searchParams?: Promise<SearchParams>;
+}

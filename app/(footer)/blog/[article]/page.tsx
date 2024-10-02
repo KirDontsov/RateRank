@@ -1,26 +1,14 @@
 import { Firm, ImageType } from '@/api';
-import { COMMON_DOMAIN } from '@/shared';
-import { Metadata } from 'next';
-import { ArticlePage } from './ArticlePage';
 import { getCategories, getCities, getFirm, getImages, getPageByUrl } from '@/app/api';
+import { COMMON_DOMAIN, PageProps } from '@/shared';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { ArticlePage } from './ArticlePage';
+import Loading from './loading';
 
-export interface ArticlePageProps {
-  params: {
-    article: string;
-  };
-}
-
-export interface CategoryPageProps {
-  params: { cityId: string; categoryId: string };
-  searchParams: { [key: string]: string | undefined };
-}
-
-export type ArticleMetaProps = {
-  params: { article: string };
-};
-
-export async function generateMetadata({ params }: ArticleMetaProps): Promise<Metadata> {
-  const pageUrl = params.article ?? '';
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const paramsRes = await params;
+  const pageUrl = `${paramsRes?.article ?? ''}`;
 
   const page = await getPageByUrl(pageUrl);
 
@@ -45,8 +33,9 @@ export async function generateMetadata({ params }: ArticleMetaProps): Promise<Me
 }
 
 /** Страница статьи */
-export default async function Page({ params }: ArticlePageProps) {
-  const pageUrl = params.article ?? '';
+export default async function Page({ params }: PageProps) {
+  const paramsRes = await params;
+  const pageUrl = `${paramsRes?.article ?? ''}`;
 
   const page = await getPageByUrl(pageUrl);
 
@@ -74,5 +63,9 @@ export default async function Page({ params }: ArticlePageProps) {
   const cities = await getCities();
   const categories = await getCategories(1, 10);
 
-  return <ArticlePage page={page} cities={cities} categories={categories} firms={firms} images={map} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <ArticlePage page={page} cities={cities} categories={categories} firms={firms} images={map} />
+    </Suspense>
+  );
 }

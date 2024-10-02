@@ -1,12 +1,15 @@
 'use client';
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
-import { Curve, Images } from '@/features';
+import { Curve } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
-import { AnimatedText, Footer, ImageWithFallback, Nav, Rating, Section } from '@/widgets';
+import { AnimatedText, Footer, ImageWithFallback, LoadingComponent, Nav, Rating, Section } from '@/widgets';
 import dayjs from 'dayjs';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
+
+const DynamicImages = dynamic(() => import('../../../../features/Images'));
 
 export interface ArticlePageProps {
   page: Page | null;
@@ -112,15 +115,17 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
                         {section?.url && <p>Адрес: {currentFirm?.address}</p>}
                         <p>{section.text}</p>
 
-                        {section.url && Number(section?.page_block_section_id) !== 0 && (
-                          <Images
-                            firm={currentFirm}
-                            city={city}
-                            category={category}
-                            images={images.get(section?.page_block_section_id ?? '') || null}
-                            tablet={tablet}
-                          />
-                        )}
+                        <Suspense fallback={<LoadingComponent />}>
+                          {section.url && Number(section?.page_block_section_id) !== 0 && (
+                            <DynamicImages
+                              firm={currentFirm}
+                              city={city}
+                              category={category}
+                              images={images.get(section?.page_block_section_id ?? '') || null}
+                              tablet={tablet}
+                            />
+                          )}
+                        </Suspense>
                       </div>
                     );
                   })}

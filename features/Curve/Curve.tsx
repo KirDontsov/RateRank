@@ -1,6 +1,7 @@
+'use client';
 import { COMMON_TITLE, CommonProps } from '@/shared';
 import { Variants, motion } from 'framer-motion';
-import React, { FC, useLayoutEffect, useState } from 'react';
+import { FC, useLayoutEffect, useState } from 'react';
 import { curve, text, translate } from './anim';
 import styles from './curve.module.scss';
 

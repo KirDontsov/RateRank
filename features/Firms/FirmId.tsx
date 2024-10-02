@@ -23,6 +23,7 @@ import {
   Button,
   Footer,
   ImageWithFallback,
+  LoadingComponent,
   Pagination,
   Rating,
   SectionHeader,
@@ -31,11 +32,11 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FC, useCallback } from 'react';
+import { FC, Suspense, useCallback } from 'react';
 
 import styles from './oaiReviewStyles.module.scss';
 
-const DynamicMap = dynamic(() => import('../../features/FirmsMap/FirmMap'));
+const DynamicMap = dynamic(() => import('../../features/FirmsMap/FirmMap'), { ssr: false });
 const DynamicGallery = dynamic(() => import('../../features/Images'));
 const DynamicSimilarFirms = dynamic(() => import('../../features/SimilarFirms'));
 const DynamicReviewsList = dynamic(() => import('../../features/Reviews/ReviewsList'));
@@ -244,8 +245,7 @@ export const FirmId: FC<FirmIdProps> = ({
                     <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
                   </div>
                 )}
-
-                {!!firm?.coords && <DynamicMap firm={firm} />}
+                <Suspense fallback={<LoadingComponent />}>{!!firm?.coords && <DynamicMap firm={firm} />}</Suspense>
 
                 {(firm?.description || oai_description?.oai_description_value) && (
                   <>
@@ -260,7 +260,9 @@ export const FirmId: FC<FirmIdProps> = ({
                     </div>
                   </>
                 )}
-                <DynamicPrices prices={prices} />
+                <Suspense fallback={<LoadingComponent />}>
+                  <DynamicPrices prices={prices} />
+                </Suspense>
                 <div className="flex flex-col gap-4 my-4">
                   <SectionHeader
                     id="faq"
@@ -268,7 +270,9 @@ export const FirmId: FC<FirmIdProps> = ({
                   />
                   <Accordion firm={firm} category={category} />
                 </div>
-                <DynamicGallery firm={firm} city={city} category={category} images={images} tablet={tablet} />
+                <Suspense fallback={<LoadingComponent />}>
+                  <DynamicGallery firm={firm} city={city} category={category} images={images} tablet={tablet} />
+                </Suspense>
               </div>
             </div>
           </div>
@@ -298,7 +302,9 @@ export const FirmId: FC<FirmIdProps> = ({
                 />
                 <Button onClick={handleAddReview}>Написать отзыв</Button>
               </div>
-              <DynamicReviewsList reviews={reviews} />
+              <Suspense fallback={<LoadingComponent />}>
+                <DynamicReviewsList reviews={reviews} />
+              </Suspense>
             </>
           ) : (
             <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
@@ -319,13 +325,15 @@ export const FirmId: FC<FirmIdProps> = ({
             <SectionHeader title={`Похожие ${category?.name ?? ''}:`} />
           </div>
           <div className="w-full px-8">
-            <DynamicSimilarFirms
-              city={city}
-              category={category}
-              firm={firm}
-              firms={firms}
-              similarFirmsImages={similarFirmsImages}
-            />
+            <Suspense fallback={<LoadingComponent />}>
+              <DynamicSimilarFirms
+                city={city}
+                category={category}
+                firm={firm}
+                firms={firms}
+                similarFirmsImages={similarFirmsImages}
+              />
+            </Suspense>
           </div>
           <Footer />
         </div>
