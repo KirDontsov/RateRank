@@ -4,7 +4,6 @@ import { $firmsPage, Category, City, Firm } from '@/api';
 import { transliterate } from '@/shared';
 import { useUnit } from 'effector-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FC, MouseEvent, useRef, useState } from 'react';
 import Map, {
@@ -199,13 +198,13 @@ export const FirmsMap: FC<FirmsMapProps> = ({ firmsForMap, city, category }) => 
               <p>{selectedMarker?.properties?.address}</p>
               <br />
 
-              <Link
+              <a
                 href={`/${city?.abbreviation}/${category?.abbreviation}/${selectedMarker?.properties?.url || transliterate(selectedMarker?.properties?.name ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
                 // target={selectedMarker?.firm?.url === '' ? null : '_blank'}
                 className={styles.popupWebUrl}
               >
                 Подробнее
-              </Link>
+              </a>
             </div>
           </Popup>
         ) : null}
