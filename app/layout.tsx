@@ -49,7 +49,7 @@ export default function RootLayout({ children }: CommonProps) {
         <ToastContainer />
         {process.env.PRODUCTION && (
           <>
-            <Script id="yandex-metrika" strategy="afterInteractive">
+            {/* <Script id="yandex-metrika" strategy="afterInteractive">
               {`
                 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                 m[i].l=1*new Date();
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: CommonProps) {
 
                 ym(97095336, "init", { defer: true, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
               `}
-            </Script>
+            </Script> */}
             <Script id="webmaster-waiter" strategy="beforeInteractive">
               {`window.YandexRotorSettings = {
                   WaiterEnabled: true,
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: CommonProps) {
               }`}
             </Script>
             <GoogleTagManager gtmId="G-8N2W9TPW5X" />
-            <noscript>
+            {/* <noscript>
               <div>
                 <img
                   src="https://mc.yandex.ru/watch/97095336"
@@ -78,7 +78,7 @@ export default function RootLayout({ children }: CommonProps) {
                   alt=""
                 />
               </div>
-            </noscript>
+            </noscript> */}
           </>
         )}
       </body>

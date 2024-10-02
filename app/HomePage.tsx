@@ -6,16 +6,16 @@ import { COMMON_TITLE, CommonNavProps } from '@/shared';
 import { Footer, HeroSection, Nav, Section, SectionHeader, ThemeProvider } from '@/widgets';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { FC, useLayoutEffect } from 'react';
+import { FC } from 'react';
 
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  useLayoutEffect(() => {
-    // @ts-ignore
-    ym(97095336, 'hit', `${pathname}?${searchParams}`);
-  }, [pathname, searchParams]);
+  // useLayoutEffect(() => {
+  //   // @ts-ignore
+  //   ym(97095336, 'hit', `${pathname}?${searchParams}`);
+  // }, [pathname, searchParams]);
 
   return (
     <ThemeProvider>
