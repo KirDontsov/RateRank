@@ -1,21 +1,12 @@
 'use client';
 import { AuthPageGateProvider, PageGateProvider } from '@/context';
-import { Curve } from '@/features';
+import { Curve, YandexMetric } from '@/features';
 import { CitiesList } from '@/features/Cities/CitiesList/CitiesList';
 import { COMMON_TITLE, CommonNavProps } from '@/shared';
 import { Footer, HeroSection, Nav, Section, SectionHeader, ThemeProvider } from '@/widgets';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { FC, useLayoutEffect } from 'react';
+import { FC, Suspense } from 'react';
 
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useLayoutEffect(() => {
-    // @ts-ignore
-    ym(97095336, 'hit', `${pathname}?${searchParams}`);
-  }, [pathname, searchParams]);
-
   return (
     <ThemeProvider>
       <AuthPageGateProvider>
@@ -69,6 +60,9 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
               </Section>
             </HeroSection>
           </Curve>
+          <Suspense fallback={<></>}>
+            <YandexMetric />
+          </Suspense>
         </PageGateProvider>
       </AuthPageGateProvider>
     </ThemeProvider>

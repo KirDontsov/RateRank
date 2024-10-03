@@ -12,4 +12,4 @@ export * from './Reviews';
 export * from './Search';
 export * from './SimilarFirms';
 export * from './Types';
-
+export * from './YandexMetric';
