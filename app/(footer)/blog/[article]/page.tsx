@@ -52,7 +52,7 @@ export default async function Page({ params }: PageProps) {
       }
 
       if (images?.length) {
-        map.set(section?.page_block_section_id ?? '', images);
+        map.set(section?.page_block_section_id ?? '', images.slice(0, 3));
       }
 
       return map;
