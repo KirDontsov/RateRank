@@ -59,6 +59,8 @@ export const SimilarCard: FC<SimilarCardProps> = ({
           fill
           alt={alt}
           style={{ objectFit: 'cover' }}
+          priority={false}
+          loading="lazy"
         />
       </div>
       <div className="p-5 flex flex-col gap-8">

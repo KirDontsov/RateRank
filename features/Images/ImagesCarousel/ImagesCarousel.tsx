@@ -128,10 +128,11 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
               alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'contain' }}
               placeholder="blur"
               blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
-              priority={true}
+              priority={false}
+              loading="lazy"
             />
           </motion.div>
         );
