@@ -130,9 +130,9 @@ export const FirmId: FC<FirmIdProps> = ({
                 )}
 
                 {firm?.default_phone && (
-                  <Button onClick={() => {}}>
-                    <a href={`tel:${firm?.default_phone}`}>Позвонить</a>
-                  </Button>
+                  <a href={`tel:${firm?.default_phone}`}>
+                    <Button onClick={() => {}}>Позвонить</Button>
+                  </a>
                 )}
               </div>
             </div>
