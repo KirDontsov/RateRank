@@ -70,15 +70,7 @@ export default function RootLayout({ children }: CommonProps) {
               }`}
             </Script>
             <GoogleTagManager gtmId="G-8N2W9TPW5X" />
-            <noscript>
-              <div>
-                <img
-                  src="https://mc.yandex.ru/watch/97095336"
-                  style={{ position: 'absolute', left: '-9999px' }}
-                  alt=""
-                />
-              </div>
-            </noscript>
+            <img src="https://mc.yandex.ru/watch/97095336" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </>
         )}
       </body>
