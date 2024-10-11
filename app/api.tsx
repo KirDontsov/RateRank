@@ -210,7 +210,7 @@ export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQ
 
   firmUrls.forEach((url: string) => {
     requests.push(
-      fetch(`${BACKEND_PORT}/api/images_by_url/${url}`, {
+      fetch(`${BACKEND_PORT}/api/image_by_url/${url}`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'GET',
       })
