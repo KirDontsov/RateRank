@@ -17,6 +17,7 @@ import {
   ReviewsQueryResult,
 } from '@/api';
 import { BACKEND_PORT } from '@/shared';
+import { notFound } from 'next/navigation';
 
 /** SSR */
 export async function getPages(): Promise<PageItem[] | null> {
@@ -88,6 +89,10 @@ export async function getFirms(
   page: string,
   limit: number,
 ): Promise<Firm[] | null> {
+  if (!cityId || !categoryId) {
+    notFound();
+  }
+
   const firms = await fetch(
     `${BACKEND_PORT}/api/firms_by_abbr?city_id=${cityId}&category_id=${categoryId}&page=${page}&limit=${limit}`,
     {
@@ -104,6 +109,10 @@ export async function getFirms(
 }
 
 export async function getFirmsForMap(cityId: string, categoryId: string): Promise<Firm[] | null> {
+  if (!cityId || !categoryId) {
+    notFound();
+  }
+
   const firms = await fetch(`${BACKEND_PORT}/api/firms_by_abbr_for_map?city_id=${cityId}&category_id=${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
