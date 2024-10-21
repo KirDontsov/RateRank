@@ -1,3 +1,34 @@
+import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: `Каталог организаций: отзывы, фото, рейтинг — 404 ${COMMON_TITLE}`,
+  description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+  metadataBase: new URL('https://топвыбор.рф'),
+  applicationName: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
+  icons: [
+    { rel: 'shortcut icon', url: '/favicon.ico' },
+    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '57x57' },
+    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '72x72' },
+    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '114x114' },
+    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '144x144' },
+    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '57x57' },
+    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '72x72' },
+    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '114x114' },
+    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '144x144' },
+  ],
+  alternates: { canonical: 'https://топвыбор.рф' },
+  keywords: ['отзывы', ' рестораны', ' салоны красоты', ' автосервисы', ' медицина', ' Москва', ' Санкт-петербург'],
+  openGraph: {
+    title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
+    description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
+    url: 'https://топвыбор.рф',
+    siteName: `${COMMON_DOMAIN}`,
+    locale: 'ru_RU',
+    type: 'website',
+  },
+};
+
 export default function NotFound() {
   return (
     <main className="flex h-screen flex-col bg-white dark:bg-eboni-900 w-full overflow-hidden">
