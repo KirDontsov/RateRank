@@ -89,7 +89,17 @@ export async function getFirms(
   page: string,
   limit: number,
 ): Promise<Firm[] | null> {
-  if (!cityId || !categoryId) {
+  console.log(cityId);
+  console.log(categoryId);
+  if (
+    !cityId ||
+    !categoryId ||
+    cityId === 'Выберите город' ||
+    cityId === 'jobs' ||
+    cityId === 'analytics' ||
+    cityId === 'catalog' ||
+    cityId === 'help'
+  ) {
     notFound();
   }
 
