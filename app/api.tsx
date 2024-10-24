@@ -89,8 +89,6 @@ export async function getFirms(
   page: string,
   limit: number,
 ): Promise<Firm[] | null> {
-  console.log(cityId);
-  console.log(categoryId);
   if (
     !cityId ||
     !categoryId ||

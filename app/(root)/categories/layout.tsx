@@ -4,6 +4,7 @@ import { Metadata } from 'next/types';
 
 import { CitiesQueryResult } from '@/api';
 import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { Suspense } from 'react';
 
 export interface Props {
   params: Promise<SegmentParams>;
@@ -32,5 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function CategoriesLayout({ children }: CommonProps) {
-  return <HeroSection>{children}</HeroSection>;
+  return (
+    <HeroSection>
+      <Suspense fallback={<></>}>{children}</Suspense>
+    </HeroSection>
+  );
 }

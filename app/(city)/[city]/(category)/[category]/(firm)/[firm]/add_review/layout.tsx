@@ -1,6 +1,7 @@
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { Metadata } from 'next/types';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: `Оставить отзыв — ${COMMON_TITLE}`,
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function FirmLayout({ children }: CommonProps) {
-  return <>{children}</>;
+  return <Suspense fallback={<></>}>{children}</Suspense>;
 }

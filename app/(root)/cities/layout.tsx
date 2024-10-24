@@ -1,6 +1,11 @@
-import { HeroSection } from '@/widgets';
 import { CommonProps } from '@/shared/types';
+import { HeroSection } from '@/widgets';
+import { Suspense } from 'react';
 
 export default function CitiesLayout({ children }: CommonProps) {
-  return <HeroSection>{children}</HeroSection>;
+  return (
+    <HeroSection>
+      <Suspense fallback={<></>}>{children}</Suspense>
+    </HeroSection>
+  );
 }

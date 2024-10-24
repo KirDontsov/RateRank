@@ -2,6 +2,7 @@ import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { CommonProps } from '@/shared/types';
 import { HeroSection } from '@/widgets';
 import { Metadata } from 'next/types';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default function FirmsLayout({ children }: CommonProps) {
-  return <HeroSection>{children}</HeroSection>;
+  return (
+    <HeroSection>
+      <Suspense fallback={<></>}>{children}</Suspense>
+    </HeroSection>
+  );
 }
