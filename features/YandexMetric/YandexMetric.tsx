@@ -7,6 +7,7 @@ export const YandexMetric = () => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    // @ts-ignore
     if (typeof window.ym != 'undefined') {
       // @ts-ignore
       ym(97095336, 'hit', `${pathname}?${searchParams}`);

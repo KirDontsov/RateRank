@@ -72,10 +72,10 @@ export default function RootLayout({ children }: CommonProps) {
               </Script>
               <Script id="google-tag" strategy="afterInteractive">
                 {`window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
 
-              gtag('config', 'G-8N2W9TPW5X');`}
+                gtag('config', 'G-8N2W9TPW5X');`}
               </Script>
               <img src="https://mc.yandex.ru/watch/97095336" style={{ position: 'absolute', left: '-9999px' }} alt="" />
             </>
