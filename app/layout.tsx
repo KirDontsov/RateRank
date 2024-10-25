@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
-import { GoogleTagManager } from '@next/third-parties/google';
 import { CookiesProvider } from 'next-client-cookies/server';
 import { Inter } from 'next/font/google';
 import { Metadata } from 'next/types';
@@ -71,7 +70,13 @@ export default function RootLayout({ children }: CommonProps) {
                   },
               }`}
               </Script>
-              <GoogleTagManager gtmId="G-8N2W9TPW5X" />
+              <Script id="google-tag" strategy="afterInteractive">
+                {`window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-8N2W9TPW5X');`}
+              </Script>
               <img src="https://mc.yandex.ru/watch/97095336" style={{ position: 'absolute', left: '-9999px' }} alt="" />
             </>
           )}
