@@ -68,8 +68,8 @@ export async function getCity(cityId: string): Promise<City | null> {
 }
 
 export async function getCategory(categoryId: string): Promise<Category | null> {
-  if (!categoryId) {
-    return null;
+  if (!categoryId || categoryId === 'undefined') {
+    notFound();
   }
   const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryId}`, {
     headers: { 'Content-Type': 'application/json' },
@@ -91,12 +91,14 @@ export async function getFirms(
 ): Promise<Firm[] | null> {
   if (
     !cityId ||
-    !categoryId ||
     cityId === 'Выберите город' ||
     cityId === 'jobs' ||
     cityId === 'analytics' ||
     cityId === 'catalog' ||
-    cityId === 'help'
+    cityId === 'help' ||
+    cityId === 'undefined' ||
+    !categoryId ||
+    categoryId === 'undefined'
   ) {
     notFound();
   }
