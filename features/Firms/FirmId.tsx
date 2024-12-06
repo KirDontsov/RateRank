@@ -283,7 +283,7 @@ export const FirmId: FC<FirmIdProps> = ({
                   gold
                   {...(oai_reviews.length ? { id: 'reviews' } : {})}
                   title={`Краткое содержание и анализ отзывов о ${predName} ${firm?.name ?? ''}`}
-                  subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${predName} ${firm?.name ?? ''}`}
+                  subTitle={`Выводы сделаны на основе реальных отзывов пользователей о ${predName} ${firm?.name ?? ''}`}
                 />
               </div>
               <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">

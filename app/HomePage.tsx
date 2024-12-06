@@ -21,7 +21,7 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
                       {COMMON_TITLE.toUpperCase()}
                     </h1>
                     <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl dark:text-gray">
-                      2 миллиона реальных отзывов пользователей проанализированных нейросетью
+                      Анализ и краткое содержание реальных отзывов пользователей
                     </p>
                     <div>
                       <a
