@@ -18,6 +18,8 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review_id, date, author, text,
           className="hidden object-cover w-10 h-10 mr-4 rounded-full sm:block bg-negroni-400"
           src={avatar}
           alt="avatar"
+          priority={false}
+          loading="lazy"
         />
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-col">

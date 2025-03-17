@@ -1,7 +1,14 @@
 'use client';
 import { $category, $city, $firm, $images, addReviewEvt } from '@/api';
 import { Curve, FirmIdGateProvider } from '@/features';
-import { CommonNavProps, DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, ErrorTypes, HeroBackground } from '@/shared';
+import {
+  CommonNavProps,
+  DEFAULT_PHOTOS_ENDPOINT,
+  DEFAULT_PHOTOS_EXT,
+  ErrorTypes,
+  HeroBackground,
+  SegmentParams,
+} from '@/shared';
 import { Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { FC, useCallback, useEffect } from 'react';
@@ -17,7 +24,7 @@ import {
 import { AddReviewValues } from './interfaces';
 
 export interface AddReviewPageProps {
-  params: { city: string; category: string; firm: string };
+  params: SegmentParams;
 }
 
 export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities, categories, params }) => {
@@ -29,7 +36,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
     addReview: addReviewEvt,
   });
 
-  const firmUrl = params?.firm ?? '';
+  const firmUrl = `${params?.firm ?? ''}`;
   const firmId = firm?.firm_id ?? '';
 
   const form = useForm<AddReviewValues>({

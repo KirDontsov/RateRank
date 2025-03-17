@@ -1,6 +1,5 @@
 import { setCityEvt } from '@/api';
 import { useUnit } from 'effector-react';
-import Link from 'next/link';
 import { FC, useCallback } from 'react';
 
 export interface CitiesCardProps {
@@ -17,7 +16,7 @@ export const CitiesCard: FC<CitiesCardProps> = ({ abbreviation, name, cityId }) 
   }, [setCity, cityId]);
 
   return (
-    <Link
+    <a
       key={cityId}
       onClick={handleChangeCity}
       href={`/${abbreviation}`}
@@ -25,6 +24,6 @@ export const CitiesCard: FC<CitiesCardProps> = ({ abbreviation, name, cityId }) 
     >
       <h5 className="mb-2 text-2xl font-bold tracking-tight dark:text-white">{name}</h5>
       <p className="font-normal">Лучшие заведения в городе {name}</p>
-    </Link>
+    </a>
   );
 };

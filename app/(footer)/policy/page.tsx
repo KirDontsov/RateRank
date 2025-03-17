@@ -2,6 +2,7 @@ import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { PolicyPage } from './PolicyPage';
 import { getCategories, getCities } from '@/app/api';
+import React, { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -23,5 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const cities = await getCities();
   const categories = await getCategories(1, 10);
-  return <PolicyPage cities={cities} categories={categories} />;
+  return (
+    <Suspense fallback={<></>}>
+      <PolicyPage cities={cities} categories={categories} />
+    </Suspense>
+  );
 }

@@ -1,16 +1,17 @@
-import { CommonProps } from '@/shared/types';
+import { CommonProps, SegmentParams } from '@/shared';
 import { HeroSection } from '@/widgets';
 import { Metadata } from 'next/types';
 
 import { CitiesQueryResult } from '@/api';
 import { BACKEND_PORT, COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 
-type CityIdProps = {
-  params: { cityId: string };
-};
+export interface Props {
+  params: Promise<SegmentParams>;
+}
 
-export async function generateMetadata({ params }: CityIdProps): Promise<Metadata> {
-  const cityId = params.cityId;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const paramsRes = await params;
+  const cityId = `${paramsRes?.cityId ?? ''}`;
 
   const cities: CitiesQueryResult = await fetch(`${BACKEND_PORT}/api/cities?page=${1}&limit=${10}`, {
     headers: { 'Content-Type': 'application/json' },

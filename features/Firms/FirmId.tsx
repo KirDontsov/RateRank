@@ -23,6 +23,7 @@ import {
   Button,
   Footer,
   ImageWithFallback,
+  LoadingComponent,
   Pagination,
   Rating,
   SectionHeader,
@@ -31,11 +32,12 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FC, useCallback } from 'react';
+import { ElementType, FC, Suspense, useCallback } from 'react';
+import { prepareTextDevidedByGroups } from '@/shared/lib/prepareTextDevidedByGroups';
 
 import styles from './oaiReviewStyles.module.scss';
 
-const DynamicMap = dynamic(() => import('../../features/FirmsMap/FirmMap'));
+const DynamicMap = dynamic(() => import('../../features/FirmsMap/FirmMap'), { ssr: false });
 const DynamicGallery = dynamic(() => import('../../features/Images'));
 const DynamicSimilarFirms = dynamic(() => import('../../features/SimilarFirms'));
 const DynamicReviewsList = dynamic(() => import('../../features/Reviews/ReviewsList'));
@@ -101,6 +103,15 @@ export const FirmId: FC<FirmIdProps> = ({
   const rodName = (category?.rod_name ?? '').toLowerCase();
   const predName = (category?.pred_name ?? '').toLowerCase();
 
+  const desc =
+    !oai_description?.oai_description_value || oai_description?.oai_description_value === ''
+      ? firm?.description
+      : oai_description?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')?.replaceAll(',,,', ', доб. ');
+
+  const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
+
+  const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
+
   return (
     <div className="h-screen w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-8">
@@ -121,7 +132,7 @@ export const FirmId: FC<FirmIdProps> = ({
               <div className="text-center p-8">
                 {category?.single_name && firm?.name && (
                   <AnimatedText
-                    el="h1"
+                    el={'h1' as unknown as ElementType}
                     text={[categoryNameAndFirmName.toUpperCase()]}
                     className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                     once
@@ -129,9 +140,9 @@ export const FirmId: FC<FirmIdProps> = ({
                 )}
 
                 {firm?.default_phone && (
-                  <Button onClick={() => {}}>
-                    <a href={`tel:${firm?.default_phone}`}>Позвонить</a>
-                  </Button>
+                  <a href={`tel:${firm?.default_phone}`}>
+                    <Button onClick={() => {}}>Позвонить</Button>
+                  </a>
                 )}
               </div>
             </div>
@@ -142,7 +153,7 @@ export const FirmId: FC<FirmIdProps> = ({
           <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
             <div className="w-full flex gap-8">
               <div className={cn('w-full flex flex-col gap-4')}>
-                <Anchors />
+                <Anchors rodName={rodName} firmName={firm?.name ?? ''} />
                 <div
                   className={cn('w-full flex', {
                     'gap-8 flex-col-reverse': tablet,
@@ -244,23 +255,26 @@ export const FirmId: FC<FirmIdProps> = ({
                     <p>{firm?.site.indexOf('Показать телефон') !== -1 ? '' : firm?.site}</p>
                   </div>
                 )}
-
-                {!!firm?.coords && <DynamicMap firm={firm} />}
+                <Suspense fallback={<LoadingComponent />}>{!!firm?.coords && <DynamicMap firm={firm} />}</Suspense>
 
                 {(firm?.description || oai_description?.oai_description_value) && (
                   <>
                     <SectionHeader id="description" title={`Описание ${rodName} ${firm?.name ?? ''}`} />
-                    <div className={`${styles.myCustomStyle} list-disc`}>
-                      {!oai_description?.oai_description_value || oai_description?.oai_description_value === ''
-                        ? firm?.description
-                        : oai_description?.oai_description_value
-                            ?.replaceAll('*', '')
-                            ?.replaceAll('#', '')
-                            ?.replaceAll(',,,', ', доб. ')}
+                    <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
+                      {res_desc?.map((item, index) => (
+                        <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
+                          <h3 className="mb-4">
+                            Интересный момент из описания {rodName} {firm?.name ?? ''}
+                          </h3>
+                          {item}
+                        </div>
+                      ))}
                     </div>
                   </>
                 )}
-                <DynamicPrices prices={prices} />
+                <Suspense fallback={<LoadingComponent />}>
+                  <DynamicPrices prices={prices} />
+                </Suspense>
                 <div className="flex flex-col gap-4 my-4">
                   <SectionHeader
                     id="faq"
@@ -268,7 +282,9 @@ export const FirmId: FC<FirmIdProps> = ({
                   />
                   <Accordion firm={firm} category={category} />
                 </div>
-                <DynamicGallery firm={firm} city={city} category={category} images={images} tablet={tablet} />
+                <Suspense fallback={<LoadingComponent />}>
+                  <DynamicGallery firm={firm} city={city} category={category} images={images} tablet={tablet} />
+                </Suspense>
               </div>
             </div>
           </div>
@@ -279,11 +295,20 @@ export const FirmId: FC<FirmIdProps> = ({
                   gold
                   {...(oai_reviews.length ? { id: 'reviews' } : {})}
                   title={`Краткое содержание и анализ отзывов о ${predName} ${firm?.name ?? ''}`}
-                  subTitle={`Выводы сделаны нейросетью на основе реальных отзывов пользователей о ${predName} ${firm?.name ?? ''}`}
+                  subTitle={`Выводы сделаны на основе реальных отзывов пользователей о ${predName} ${firm?.name ?? ''}`}
                 />
               </div>
               <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">
-                <div className={`${styles.myCustomStyle} list-disc`}>{oai_reviews?.[0]?.text ?? ''}</div>
+                <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
+                  {oai_reviews_analysis?.map((item, index) => (
+                    <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
+                      <h3 className="mb-4">
+                        Анализ отзывов о {predName} {firm?.name ?? ''}
+                      </h3>
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           ) : (
@@ -298,7 +323,9 @@ export const FirmId: FC<FirmIdProps> = ({
                 />
                 <Button onClick={handleAddReview}>Написать отзыв</Button>
               </div>
-              <DynamicReviewsList reviews={reviews} />
+              <Suspense fallback={<LoadingComponent />}>
+                <DynamicReviewsList reviews={reviews} />
+              </Suspense>
             </>
           ) : (
             <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
@@ -316,16 +343,20 @@ export const FirmId: FC<FirmIdProps> = ({
             />
           )}
           <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
-            <SectionHeader title={`Похожие ${category?.name ?? ''}:`} />
+            <SectionHeader
+              title={`Похожие ${category?.name ?? ''} на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
+            />
           </div>
           <div className="w-full px-8">
-            <DynamicSimilarFirms
-              city={city}
-              category={category}
-              firm={firm}
-              firms={firms}
-              similarFirmsImages={similarFirmsImages}
-            />
+            <Suspense fallback={<LoadingComponent />}>
+              <DynamicSimilarFirms
+                city={city}
+                category={category}
+                firm={firm}
+                firms={firms}
+                similarFirmsImages={similarFirmsImages}
+              />
+            </Suspense>
           </div>
           <Footer />
         </div>

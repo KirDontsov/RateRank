@@ -5,8 +5,7 @@ import { Curve } from '@/features';
 import { COMMON_TITLE, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import dayjs from 'dayjs';
-import Link from 'next/link';
-import { FC } from 'react';
+import { ElementType, FC } from 'react';
 
 export interface BlogPageProps {
   pages: PageItem[] | null;
@@ -37,7 +36,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                 <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                   <div className="text-center">
                     <AnimatedText
-                      el="h1"
+                      el={'h1' as unknown as ElementType}
                       text={[`Блог - Подборки - ${COMMON_TITLE}`.toUpperCase()]}
                       className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                       once
@@ -55,12 +54,12 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                   key={page.page_id}
                   className="flex flex-col gap-4 divide-y divide-gray-100 shadow dark:divide-gray-600"
                 >
-                  <Link
+                  <a
                     href={`blog/${page.url}`}
                     className="font-semibold text-eboni-400 dark:text-white text-base lg:text-2xl xl:text-3xl hover:text-negroni-400"
                   >
                     {page.oai_value}
-                  </Link>
+                  </a>
                   <p className="py-2 text-sm xl:text-base">
                     Статья написана: {dayjs(page?.createdTs ?? new Date()).format('DD.MM.YY')}
                   </p>

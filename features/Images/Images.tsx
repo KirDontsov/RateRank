@@ -22,7 +22,7 @@ export const Images: FC<ImagesProps> = ({ images, city, firm, category, tablet }
           <div
             className={cn('flex flex-col gap-4', {
               'w-[calc(100% + 80px)] mx-[-40px]': tablet,
-              'w-[calc(100% + 60px)] mx-[-30px]': !tablet,
+              'w-[calc(100% + 86px)] mx-[-43px]': !tablet,
             })}
           >
             <ImagesCarousel firm={firm} city={city} category={category} images={images} tablet={tablet} />

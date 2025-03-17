@@ -1,13 +1,10 @@
-import { CenteredContainer, HeroSection } from '@/widgets';
 import { CommonProps } from '@/shared/types';
-import { EffectorNext } from '@effector/next';
+import { CenteredContainer, HeroSection } from '@/widgets';
 
 export default function RegisterLayout({ children }: CommonProps) {
   return (
-    <EffectorNext>
-      <HeroSection>
-        <CenteredContainer h="screen">{children}</CenteredContainer>
-      </HeroSection>
-    </EffectorNext>
+    <HeroSection>
+      <CenteredContainer h="screen">{children}</CenteredContainer>
+    </HeroSection>
   );
 }

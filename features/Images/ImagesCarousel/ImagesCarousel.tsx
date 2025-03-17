@@ -1,3 +1,4 @@
+'use client';
 import { Category, City, Firm, ImageType } from '@/api';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
@@ -127,10 +128,11 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
               alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: 'contain' }}
               placeholder="blur"
               blurDataURL={`data:image/jpeg;base64,${HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}`}
-              priority={true}
+              priority={false}
+              loading="lazy"
             />
           </motion.div>
         );

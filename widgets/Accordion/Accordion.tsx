@@ -51,7 +51,7 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
     <div id="accordion-flush" className="flex flex-col w-full">
       {items?.map(({ title, text }, index) => (
         <Fragment key={title}>
-          <h2 id="accordion-flush-heading-1">
+          <h3 id="accordion-flush-heading-1">
             <button
               onClick={() => setOpen(index !== open ? index : null)}
               type="button"
@@ -76,7 +76,6 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
                 {title}
               </span>
               <svg
-                data-accordion-icon
                 className={cn('w-3 h-3 shrink-0', {
                   'rotate-180': open === index,
                 })}
@@ -94,7 +93,7 @@ export const Accordion: FC<AccordionProps> = ({ firm, category }) => {
                 />
               </svg>
             </button>
-          </h2>
+          </h3>
 
           <div
             className={cn('flex w-full', {

@@ -1,10 +1,10 @@
 'use client';
 import { Variant, motion, useAnimation, useInView } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { ElementType, useEffect, useRef } from 'react';
 
 type AnimatedTextProps = {
   text?: string | string[];
-  el?: keyof JSX.IntrinsicElements;
+  el?: ElementType;
   className?: string;
   once?: boolean;
   repeatDelay?: number;
@@ -31,7 +31,7 @@ const defaultAnimations = {
 
 export const AnimatedText = ({
   text = '',
-  el: Wrapper = 'p',
+  el: Wrapper = 'p' as unknown as ElementType,
   className,
   once,
   repeatDelay,

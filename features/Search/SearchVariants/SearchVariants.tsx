@@ -1,3 +1,4 @@
+'use client';
 import { $firmsPage, $searchVariants, $searchVariantsExpanded, Category, City, toggleSearchVariantsEvt } from '@/api';
 import { useOnClickOutside } from '@/hooks';
 import { Button } from '@/widgets';

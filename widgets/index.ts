@@ -8,6 +8,7 @@ export * from './CommonHeader';
 export * from './Footer';
 export * from './HeroSection';
 export * from './ImageWithFallback';
+export * from './LoadingComponent';
 export * from './LoadingScreen';
 export * from './Nav';
 export * from './Pagination';

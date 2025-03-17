@@ -2,6 +2,7 @@ import { getCategories, getCities, getPages } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_HOST, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { BlogPage } from './BlogPage';
+import { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -26,5 +27,9 @@ export default async function Page() {
   const cities = await getCities();
   const categories = await getCategories(1, 10);
 
-  return <BlogPage pages={pages} cities={cities} categories={categories} />;
+  return (
+    <Suspense fallback={<></>}>
+      <BlogPage pages={pages} cities={cities} categories={categories} />
+    </Suspense>
+  );
 }

@@ -3,7 +3,6 @@ import { $firmsPage, Category, City, setFirmEvt, setFirmLoadingEvt } from '@/api
 import { transliterate } from '@/shared';
 import { ImageWithFallback } from '@/widgets';
 import { useUnit } from 'effector-react';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
@@ -45,7 +44,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({
   }, [setFirm, setFirmLoading, url]);
 
   return (
-    <Link
+    <a
       key={firmId}
       href={`/${city?.abbreviation}/${category?.abbreviation}/${url ?? transliterate(title ?? '')}?firmsPage=${Number(searchParams.get('firmsPage')) || page}`}
       onClick={handleClick}
@@ -60,6 +59,8 @@ export const SimilarCard: FC<SimilarCardProps> = ({
           fill
           alt={alt}
           style={{ objectFit: 'cover' }}
+          priority={false}
+          loading="lazy"
         />
       </div>
       <div className="p-5 flex flex-col gap-8">
@@ -69,6 +70,6 @@ export const SimilarCard: FC<SimilarCardProps> = ({
         </h3>
         <p className="mb-3 font-normal text-sm xl:text-base">{address}</p>
       </div>
-    </Link>
+    </a>
   );
 };

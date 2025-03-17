@@ -1,26 +1,13 @@
 'use client';
 import { AuthPageGateProvider, PageGateProvider } from '@/context';
-import { Curve } from '@/features';
+import { Curve, YandexMetric } from '@/features';
 import { CitiesList } from '@/features/Cities/CitiesList/CitiesList';
 import { COMMON_TITLE, CommonNavProps } from '@/shared';
 import { Footer, HeroSection, Nav, Section, SectionHeader, ThemeProvider } from '@/widgets';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { FC, useLayoutEffect } from 'react';
+import { FC, Suspense } from 'react';
 
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const prod = process.env.PRODUCTION;
-
-  useLayoutEffect(() => {
-    if (prod) {
-      const url = `${pathname}?${searchParams}`;
-      // @ts-ignore
-      ym(97095336, 'hit', url);
-    }
-  }, [pathname, searchParams, prod]);
-
   return (
     <ThemeProvider>
       <AuthPageGateProvider>
@@ -35,7 +22,7 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
                       {COMMON_TITLE.toUpperCase()}
                     </h1>
                     <p className="max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl dark:text-gray">
-                      2 миллиона реальных отзывов пользователей проанализированных нейросетью
+                      Анализ и краткое содержание реальных отзывов пользователей
                     </p>
                     <div>
                       <Link
@@ -74,6 +61,9 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
               </Section>
             </HeroSection>
           </Curve>
+          <Suspense fallback={<></>}>
+            <YandexMetric />
+          </Suspense>
         </PageGateProvider>
       </AuthPageGateProvider>
     </ThemeProvider>

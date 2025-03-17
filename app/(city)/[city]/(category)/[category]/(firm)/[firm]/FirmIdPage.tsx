@@ -1,33 +1,33 @@
 'use client';
 import {
-  Category,
-  City,
-  Firm,
-  ImageType,
-  ImagesQueryResult,
-  OaiDescription,
-  OaiReview,
-  PriceCategory,
-  PriceItem,
-  Review,
+    Category,
+    City,
+    Firm,
+    ImageType,
+    ImagesQueryResult,
+    OaiDescription,
+    OaiReview,
+    PriceCategory,
+    PriceItem,
+    Review,
 } from '@/api';
 import {
-  CategoriesGateProvider,
-  CategoryIdGateProvider,
-  CitiesGateProvider,
-  CityIdGateProvider,
-  FirmId,
-  FirmIdGateProvider,
-  FirmsGateProvider,
-  ImagesGateProvider,
-  OaiDescriptionGateProvider,
-  PricesGateProvider,
-  ReviewsGateProvider,
-  SimilarImagesGateProvider,
+    CategoriesGateProvider,
+    CategoryIdGateProvider,
+    CitiesGateProvider,
+    CityIdGateProvider,
+    FirmId,
+    FirmIdGateProvider,
+    FirmsGateProvider,
+    ImagesGateProvider,
+    OaiDescriptionGateProvider,
+    PricesGateProvider,
+    ReviewsGateProvider,
+    SimilarImagesGateProvider,
 } from '@/features';
 import { CommonNavProps } from '@/shared';
 import { Nav, Section } from '@/widgets';
-import { useSearchParams } from 'next/navigation';
+import { notFound, useSearchParams } from 'next/navigation';
 import { FC } from 'react';
 
 // TODO: заменить во всех провайдерах firmId на firmUrl
@@ -66,6 +66,10 @@ export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
   similarFirmsImages,
 }) => {
   const searchParams = useSearchParams();
+
+  if (!cityId) {
+		notFound();
+	}
 
   return (
     <CitiesGateProvider>
