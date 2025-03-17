@@ -5,7 +5,7 @@ import { Curve } from '@/features';
 import { COMMON_TITLE, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import dayjs from 'dayjs';
-import { FC } from 'react';
+import { ElementType, FC } from 'react';
 
 export interface BlogPageProps {
   pages: PageItem[] | null;
@@ -36,7 +36,7 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
                 <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                   <div className="text-center">
                     <AnimatedText
-                      el="h1"
+                      el={'h1' as unknown as ElementType}
                       text={[`Блог - Подборки - ${COMMON_TITLE}`.toUpperCase()]}
                       className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                       once

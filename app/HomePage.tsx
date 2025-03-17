@@ -4,6 +4,7 @@ import { Curve, YandexMetric } from '@/features';
 import { CitiesList } from '@/features/Cities/CitiesList/CitiesList';
 import { COMMON_TITLE, CommonNavProps } from '@/shared';
 import { Footer, HeroSection, Nav, Section, SectionHeader, ThemeProvider } from '@/widgets';
+import Link from 'next/link';
 import { FC, Suspense } from 'react';
 
 export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
@@ -24,7 +25,7 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
                       Анализ и краткое содержание реальных отзывов пользователей
                     </p>
                     <div>
-                      <a
+                      <Link
                         href="/login"
                         className="inline-flex items-center justify-center px-5 py-3 mr-3 font-medium text-center dark:text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
                       >
@@ -41,13 +42,13 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
                             clipRule="evenodd"
                           ></path>
                         </svg>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         href="/register"
                         className="inline-flex items-center justify-center px-5 py-3 font-medium text-center text-gray border border-zinc-300 rounded-lg hover:bg-eboni-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-zinc-700 dark:hover:bg-eboni-700 dark:focus:ring-gray-800"
                       >
                         Зарегестрироваться
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <SectionHeader title="Выберите город" />

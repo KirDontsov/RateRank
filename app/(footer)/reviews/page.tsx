@@ -2,6 +2,7 @@ import { getCategories, getCities } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import { Metadata } from 'next';
 import { ReviewsPage } from './ReviewsPage';
+import React, { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: `${COMMON_TITLE} — отзывы клиентов`,
@@ -11,5 +12,9 @@ export const metadata: Metadata = {
 export default async function Page() {
   const cities = await getCities();
   const categories = await getCategories(1, 10);
-  return <ReviewsPage cities={cities} categories={categories} />;
+  return (
+    <Suspense fallback={<></>}>
+      <ReviewsPage cities={cities} categories={categories} />
+    </Suspense>
+  );
 }

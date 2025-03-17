@@ -1,17 +1,14 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { Inter } from 'next/font/google';
 import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import Image from 'next/image';
 import Script from 'next/script';
-import { Suspense } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
-
-const inter = Inter({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
@@ -43,44 +40,48 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: CommonProps) {
   return (
-    <html lang="en" className="overflow-x-hidden">
+    <html lang="en" className="overflow-x-hidden dark">
       <body>
-        <Suspense fallback={<></>}>
-          <CookiesProvider>{children}</CookiesProvider>
-          <ToastContainer />
-          {process.env.PRODUCTION && (
-            <>
-              <Script id="yandex-metrika" strategy="afterInteractive">
-                {`
-                (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }} k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        <CookiesProvider>{children}</CookiesProvider>
+        <ToastContainer />
+        {process.env.PRODUCTION && (
+          <>
+            <Script id="yandex-metrika" strategy="afterInteractive">
+              {`
+              (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }} k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+              (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-                ym(97095336, "init", { defer: true, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
-              `}
-              </Script>
-              <Script id="webmaster-waiter" strategy="beforeInteractive">
-                {`window.YandexRotorSettings = {
-                  WaiterEnabled: true,
-                  FailOnTimeout: false,
-                  NoJsRedirectsToMain: true,
-                  IsLoaded: function() {
-                      return document.body.querySelectorAll('div').length > 10;
-                  },
-              }`}
-              </Script>
-              <Script id="google-tag" strategy="afterInteractive">
-                {`window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
+              ym(97095336, "init", { defer: true, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true });
+            `}
+            </Script>
+            <Script id="webmaster-waiter" strategy="beforeInteractive">
+              {`window.YandexRotorSettings = {
+                WaiterEnabled: true,
+                FailOnTimeout: false,
+                NoJsRedirectsToMain: true,
+                IsLoaded: function() {
+                    return document.body.querySelectorAll('div').length > 10;
+                },
+            }`}
+            </Script>
+            <Script id="google-tag" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
 
-                gtag('config', 'G-8N2W9TPW5X');`}
-              </Script>
-              <img src="https://mc.yandex.ru/watch/97095336" style={{ position: 'absolute', left: '-9999px' }} alt="" />
-            </>
-          )}
-        </Suspense>
+              gtag('config', 'G-8N2W9TPW5X');`}
+            </Script>
+            <Image
+              src="https://mc.yandex.ru/watch/97095336"
+              width={100}
+              height={100}
+              style={{ position: 'absolute', left: '-9999px' }}
+              alt="yandex-metric"
+            />
+          </>
+        )}
       </body>
     </html>
   );

@@ -5,7 +5,8 @@ import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/s
 import { AnimatedText, Footer, ImageWithFallback, LoadingComponent, Nav, Rating, Section } from '@/widgets';
 import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
-import { FC, Suspense } from 'react';
+import { notFound } from 'next/navigation';
+import { ElementType, FC, Suspense } from 'react';
 
 const DynamicImages = dynamic(() => import('../../../../features/Images'));
 
@@ -18,6 +19,9 @@ export interface ArticlePageProps {
 }
 
 export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categories, images }) => {
+  if (!page) {
+    notFound();
+  }
   const map = new Map<string, SectionItem[]>();
   const tablet = useMediaQuery('(max-width: 768px)');
 
@@ -53,7 +57,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
               <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                 <div className="text-center">
                   <AnimatedText
-                    el="h1"
+                    el={'h1' as unknown as ElementType}
                     text={[`${sections?.[0]?.title ?? ''}`.toUpperCase()]}
                     className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                     once
@@ -72,7 +76,7 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
 
             {Array.from(map).map(([key, value]) => (
               <div key={key} className="flex flex-col gap-8" data-test-id="block">
-                {value.map((section, index) => {
+                {value.map((section) => {
                   const currentFirm = firms?.find((firm) => firm?.url === section?.url) || null;
                   const city = cities?.find((city) => city?.city_id === currentFirm?.city_id) || null;
                   const category =

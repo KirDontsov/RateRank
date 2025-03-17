@@ -2,6 +2,7 @@ import { getCategories, getCities, getCity } from '@/app/api';
 import { PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
 import { CategoriesPage } from './CategoriesPage';
+import React, { Suspense } from 'react';
 
 /** Список категорий внутри города */
 export default async function Page({ params }: PageProps) {
@@ -17,5 +18,9 @@ export default async function Page({ params }: PageProps) {
   const cities = await getCities();
   const categories = await getCategories(1, 10);
 
-  return <CategoriesPage cityId={cityId} cities={cities} categories={categories} />;
+  return (
+    <Suspense fallback={<></>}>
+      <CategoriesPage cityId={cityId} cities={cities} categories={categories} />
+    </Suspense>
+  );
 }

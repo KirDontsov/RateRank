@@ -5,3 +5,21 @@
       list-style-type: circle;
     }
 }
+
+.descItem {
+  width: calc(50% - 4px);
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+}
+
+.descItem:nth-child(4n-2), .descItem:nth-child(4n-1) {
+  background: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  .descItem:nth-child(4n-2), .descItem:nth-child(4n-1) {
+    background: white;
+    color: black;
+  }
+}

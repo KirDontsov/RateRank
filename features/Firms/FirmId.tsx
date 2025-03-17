@@ -32,7 +32,8 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FC, Suspense, useCallback } from 'react';
+import { ElementType, FC, Suspense, useCallback } from 'react';
+import { prepareTextDevidedByGroups } from '@/shared/lib/prepareTextDevidedByGroups';
 
 import styles from './oaiReviewStyles.module.scss';
 
@@ -102,6 +103,15 @@ export const FirmId: FC<FirmIdProps> = ({
   const rodName = (category?.rod_name ?? '').toLowerCase();
   const predName = (category?.pred_name ?? '').toLowerCase();
 
+  const desc =
+    !oai_description?.oai_description_value || oai_description?.oai_description_value === ''
+      ? firm?.description
+      : oai_description?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')?.replaceAll(',,,', ', доб. ');
+
+  const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
+
+  const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
+
   return (
     <div className="h-screen w-full flex flex-col gap-4">
       <div className="w-full flex flex-col gap-8">
@@ -122,7 +132,7 @@ export const FirmId: FC<FirmIdProps> = ({
               <div className="text-center p-8">
                 {category?.single_name && firm?.name && (
                   <AnimatedText
-                    el="h1"
+                    el={'h1' as unknown as ElementType}
                     text={[categoryNameAndFirmName.toUpperCase()]}
                     className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                     once
@@ -143,7 +153,7 @@ export const FirmId: FC<FirmIdProps> = ({
           <div className="container w-full flex flex-col gap-8 items-center px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
             <div className="w-full flex gap-8">
               <div className={cn('w-full flex flex-col gap-4')}>
-                <Anchors />
+                <Anchors rodName={rodName} firmName={firm?.name ?? ''} />
                 <div
                   className={cn('w-full flex', {
                     'gap-8 flex-col-reverse': tablet,
@@ -250,13 +260,15 @@ export const FirmId: FC<FirmIdProps> = ({
                 {(firm?.description || oai_description?.oai_description_value) && (
                   <>
                     <SectionHeader id="description" title={`Описание ${rodName} ${firm?.name ?? ''}`} />
-                    <div className={`${styles.myCustomStyle} list-disc`}>
-                      {!oai_description?.oai_description_value || oai_description?.oai_description_value === ''
-                        ? firm?.description
-                        : oai_description?.oai_description_value
-                            ?.replaceAll('*', '')
-                            ?.replaceAll('#', '')
-                            ?.replaceAll(',,,', ', доб. ')}
+                    <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
+                      {res_desc?.map((item, index) => (
+                        <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
+                          <h3 className="mb-4">
+                            Интересный момент из описания {rodName} {firm?.name ?? ''}
+                          </h3>
+                          {item}
+                        </div>
+                      ))}
                     </div>
                   </>
                 )}
@@ -287,7 +299,16 @@ export const FirmId: FC<FirmIdProps> = ({
                 />
               </div>
               <div className="container w-full p-8 bg-white rounded-lg shadow-md dark:bg-eboni-800">
-                <div className={`${styles.myCustomStyle} list-disc`}>{oai_reviews?.[0]?.text ?? ''}</div>
+                <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
+                  {oai_reviews_analysis?.map((item, index) => (
+                    <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
+                      <h3 className="mb-4">
+                        Анализ отзывов о {predName} {firm?.name ?? ''}
+                      </h3>
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           ) : (
@@ -322,7 +343,9 @@ export const FirmId: FC<FirmIdProps> = ({
             />
           )}
           <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
-            <SectionHeader title={`Похожие ${category?.name ?? ''}:`} />
+            <SectionHeader
+              title={`Похожие ${category?.name ?? ''} на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
+            />
           </div>
           <div className="w-full px-8">
             <Suspense fallback={<LoadingComponent />}>

@@ -32,6 +32,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const categoryName = category?.name ?? '';
 
   const firm = await getFirm(firmUrl);
+  if (!firm) {
+    notFound();
+  }
 
   const firmName = firm?.name ?? '';
 
@@ -69,9 +72,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   const reviewsPage = `${searchParamsRes?.reviewsPage ?? '1'}`;
 
   const firm = await getFirm(firmUrl);
-  if (!firm) {
-    notFound();
-  }
   const city = await getCity(cityAbbr);
   const cities = await getCities();
   const category = await getCategory(categoryAbbr);
