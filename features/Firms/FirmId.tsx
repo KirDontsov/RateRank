@@ -75,8 +75,6 @@ export const FirmId: FC<FirmIdProps> = ({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  console.log('pagesByFirm', pagesByFirm);
-
   const { reviewsCount, setPage, page } = useUnit({
     page: $reviewsPage,
     setPage: setReviewsPageEvt,
@@ -113,9 +111,8 @@ export const FirmId: FC<FirmIdProps> = ({
       ? firm?.description
       : oai_description?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')?.replaceAll(',,,', ', доб. ');
 
-  console.log('desc', desc?.split('\n'));
   const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
-  console.log('res_desc', res_desc);
+
   const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
 
   return (
@@ -275,7 +272,7 @@ export const FirmId: FC<FirmIdProps> = ({
                             </h3>
                           ) : (
                             <h3 className="mb-4">
-                              Возможно вы не знали, что в {predName} {firm?.name ?? ''}
+                              Возможно вы не знали, но в {predName} {firm?.name ?? ''}
                             </h3>
                           )}
                           {item}
@@ -314,9 +311,15 @@ export const FirmId: FC<FirmIdProps> = ({
                 <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                   {oai_reviews_analysis?.map((item, index) => (
                     <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                      <h3 className="mb-4">
-                        Анализ отзывов о {predName} {firm?.name ?? ''}
-                      </h3>
+                      {index % 2 === 0 ? (
+                        <h3 className="mb-4">
+                          Анализ отзывов о {predName} {firm?.name ?? ''}
+                        </h3>
+                      ) : (
+                        <h3 className="mb-4">
+                          Интересный момент из отзывов о {predName} {firm?.name ?? ''}
+                        </h3>
+                      )}
                       {item}
                     </div>
                   ))}

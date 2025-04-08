@@ -8,10 +8,10 @@ export function prepareTextDevidedByGroups(textArray: string[]) {
       inWindow = true;
     }
 
-    if (inWindow && textArray?.[i] !== '') {
+    if (inWindow && textArray?.[i] && textArray?.[i] !== '') {
       group.push(textArray?.[i]);
 
-      if (textArray?.[i - 1] === '' || textArray?.[i + 1] === '') {
+      if (textArray?.[i - 1] === '' || textArray?.[i + 1] === '' || textArray?.[i + 1] !== '') {
         res.push(group.join('\n'));
         group = [];
         inWindow = false;
