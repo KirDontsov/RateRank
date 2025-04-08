@@ -50,7 +50,7 @@ export default function NotFound() {
           <div className="container flex flex-col px-4 py-8">
             <p className="mb-8">Ошибка 404</p>
             <h1 className="w-full mb-4 font-extrabold tracking-tight leading-none text-2xl lg:text-3xl xl:text-8xl dark:text-white">
-              Такой страницы нет 444
+              Такой страницы нет
             </h1>
             <div className="mt-4">
               <Link href="/" className="text-negroni-400">

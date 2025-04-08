@@ -13,6 +13,7 @@ import {
   PriceItem,
   Review,
   setReviewsPageEvt,
+  PageItem,
 } from '@/api';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
@@ -54,6 +55,7 @@ export interface FirmIdProps {
   oai_reviews: OaiReview[] | null;
   prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
   similarFirmsImages: ImagesQueryResult[] | null;
+  pagesByFirm: PageItem[] | null;
 }
 
 export const FirmId: FC<FirmIdProps> = ({
@@ -67,10 +69,13 @@ export const FirmId: FC<FirmIdProps> = ({
   oai_reviews,
   prices,
   similarFirmsImages,
+  pagesByFirm,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  console.log('pagesByFirm', pagesByFirm);
 
   const { reviewsCount, setPage, page } = useUnit({
     page: $reviewsPage,
@@ -108,8 +113,9 @@ export const FirmId: FC<FirmIdProps> = ({
       ? firm?.description
       : oai_description?.oai_description_value?.replaceAll('*', '')?.replaceAll('#', '')?.replaceAll(',,,', ', доб. ');
 
+  console.log('desc', desc?.split('\n'));
   const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
-
+  console.log('res_desc', res_desc);
   const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
 
   return (
@@ -263,9 +269,15 @@ export const FirmId: FC<FirmIdProps> = ({
                     <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                       {res_desc?.map((item, index) => (
                         <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                          <h3 className="mb-4">
-                            Интересный момент из описания {rodName} {firm?.name ?? ''}
-                          </h3>
+                          {index % 2 === 0 ? (
+                            <h3 className="mb-4">
+                              Интересный момент из описания {rodName} {firm?.name ?? ''}
+                            </h3>
+                          ) : (
+                            <h3 className="mb-4">
+                              Возможно вы не знали, что в {predName} {firm?.name ?? ''}
+                            </h3>
+                          )}
                           {item}
                         </div>
                       ))}

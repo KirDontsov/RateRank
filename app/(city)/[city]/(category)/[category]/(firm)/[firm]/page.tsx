@@ -8,13 +8,14 @@ import {
   getImages,
   getOaiDescription,
   getOaiReviews,
+  getPagesByFirm,
   getPrices,
   getReviews,
   getSimilarFirmsImages,
 } from '@/app/api';
 import { COMMON_DOMAIN, COMMON_TITLE, PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next/types';
+import type { Metadata } from 'next/types';
 import { Suspense } from 'react';
 import { FirmIdPage } from './FirmIdPage';
 
@@ -84,6 +85,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
+  const pagesByFirm = await getPagesByFirm(firmUrl);
+
   return (
     <Suspense fallback={<></>}>
       <FirmIdPage
@@ -102,6 +105,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         oai_reviews={oai_reviews}
         prices={prices}
         similarFirmsImages={similarFirmsImages}
+        pagesByFirm={pagesByFirm}
       />
     </Suspense>
   );

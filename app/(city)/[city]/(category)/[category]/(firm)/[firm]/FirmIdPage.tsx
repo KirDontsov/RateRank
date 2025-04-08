@@ -1,29 +1,30 @@
 'use client';
-import {
-    Category,
-    City,
-    Firm,
-    ImageType,
-    ImagesQueryResult,
-    OaiDescription,
-    OaiReview,
-    PriceCategory,
-    PriceItem,
-    Review,
+import type {
+  Category,
+  City,
+  Firm,
+  ImageType,
+  ImagesQueryResult,
+  OaiDescription,
+  OaiReview,
+  PriceCategory,
+  PriceItem,
+  Review,
+  PageItem,
 } from '@/api';
 import {
-    CategoriesGateProvider,
-    CategoryIdGateProvider,
-    CitiesGateProvider,
-    CityIdGateProvider,
-    FirmId,
-    FirmIdGateProvider,
-    FirmsGateProvider,
-    ImagesGateProvider,
-    OaiDescriptionGateProvider,
-    PricesGateProvider,
-    ReviewsGateProvider,
-    SimilarImagesGateProvider,
+  CategoriesGateProvider,
+  CategoryIdGateProvider,
+  CitiesGateProvider,
+  CityIdGateProvider,
+  FirmId,
+  FirmIdGateProvider,
+  FirmsGateProvider,
+  ImagesGateProvider,
+  OaiDescriptionGateProvider,
+  PricesGateProvider,
+  ReviewsGateProvider,
+  SimilarImagesGateProvider,
 } from '@/features';
 import { CommonNavProps } from '@/shared';
 import { Nav, Section } from '@/widgets';
@@ -46,6 +47,7 @@ export interface FirmIdPageProps {
   oai_reviews: OaiReview[] | null;
   prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
   similarFirmsImages: ImagesQueryResult[] | null;
+  pagesByFirm: PageItem[] | null;
 }
 
 export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
@@ -64,12 +66,13 @@ export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
   oai_reviews,
   prices,
   similarFirmsImages,
+  pagesByFirm,
 }) => {
   const searchParams = useSearchParams();
 
   if (!cityId) {
-		notFound();
-	}
+    notFound();
+  }
 
   return (
     <CitiesGateProvider>
@@ -96,6 +99,7 @@ export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
                               oai_description={oai_description}
                               prices={prices}
                               similarFirmsImages={similarFirmsImages}
+                              pagesByFirm={pagesByFirm}
                             />
                           </Section>
                         </SimilarImagesGateProvider>

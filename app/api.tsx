@@ -295,7 +295,7 @@ export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQ
 
 export async function getPages(): Promise<PageItem[] | null> {
   try {
-    const firms = await fetch(`${BACKEND_PORT}/api/pages`, {
+    const pages = await fetch(`${BACKEND_PORT}/api/pages`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     })
@@ -304,7 +304,25 @@ export async function getPages(): Promise<PageItem[] | null> {
         console.warn('error');
       });
 
-    return firms?.data?.pages || null;
+    return pages?.data?.pages || null;
+  } catch (error) {
+    // @ts-ignore
+    throw new Error(error?.message || error);
+  }
+}
+
+export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null> {
+  try {
+    const pages = await fetch(`${BACKEND_PORT}/api/pages/${firmUrl}`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .catch(() => {
+        console.warn('error');
+      });
+
+    return pages?.data?.pages || null;
   } catch (error) {
     // @ts-ignore
     throw new Error(error?.message || error);
