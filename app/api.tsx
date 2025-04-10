@@ -67,7 +67,8 @@ export async function getCity(cityId: string): Promise<City | null> {
 
     return city || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -87,7 +88,8 @@ export async function getCategory(categoryId: string): Promise<Category | null> 
 
     return category?.data?.category || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -121,7 +123,8 @@ export async function getFirms(
 
     return firms?.data?.firms || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -160,7 +163,8 @@ export async function getFirm(firmId: string): Promise<Firm | null> {
 
     return firm?.data?.firm || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -302,7 +306,8 @@ export async function getPages(): Promise<PageItem[] | null> {
 
     return pages?.data?.pages || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -319,7 +324,8 @@ export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null
 
     return pages?.data?.pages || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
@@ -340,7 +346,8 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
 
     return page?.data || null;
   } catch (error) {
-    notFound();
+    // @ts-ignore
+    throw new Error(error?.message || error);
   }
 }
 
