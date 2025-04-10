@@ -16,7 +16,7 @@ export const HomePage: FC<CommonNavProps> = ({ cities, categories }) => {
             <HeroSection>
               <Nav cities={cities} categories={categories} />
               <Section>
-                <div className="container flex flex-col py-8">
+                <div className="container flex flex-col py-8 px-4 md:px-6">
                   <div className="h-[50svh] py-12 flex flex-col justify-center w-fit">
                     <h1 className="mb-4 font-extrabold tracking-tight leading-none text-2xl lg:text-3xl xl:text-8xl dark:text-white">
                       {COMMON_TITLE.toUpperCase()}
