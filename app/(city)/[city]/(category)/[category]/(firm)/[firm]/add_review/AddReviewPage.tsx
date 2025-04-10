@@ -9,7 +9,7 @@ import {
   HeroBackground,
   SegmentParams,
 } from '@/shared';
-import { Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
+import { Button, Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { FC, useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -44,8 +44,8 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
     mode: 'onBlur',
   });
 
-  const { reset, getValues, setError, formState } = form;
-  const { isDirty, isValid, errors } = formState;
+  const { reset, getValues, formState } = form;
+  const { isDirty, isValid } = formState;
 
   const handleReset = useCallback(() => {
     reset({
@@ -85,9 +85,11 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                   <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                     <div className="text-center">
                       <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`Отзыв о ${(category?.pred_name ?? '').toLowerCase()} ${firm?.name}`}</h1>
-                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
-                        Позвонить
-                      </button>
+                      {firm?.default_phone && (
+                        <a href={`tel:${firm?.default_phone}`}>
+                          <Button onClick={() => {}}>Позвонить</Button>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

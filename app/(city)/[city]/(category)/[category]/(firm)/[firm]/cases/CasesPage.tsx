@@ -1,8 +1,9 @@
 'use client';
-import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
+import { AnimatedText, Button, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import { HeroBackground, transliterate } from '@/shared';
 import { ElementType, FC } from 'react';
 import type { Category, City, Firm, PageItem } from '@/api';
+import Link from 'next/link';
 
 export interface CasesPageProps {
   firm: Firm | null;
@@ -19,6 +20,12 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
       <Nav cities={cities} categories={categories} />
       <Section pt={0}>
         <div className="w-full flex flex-col gap-4 relative">
+          <Link href={`/${city?.abbreviation ?? ''}/${category?.abbreviation ?? ''}/${firm?.url ?? ''}`}>
+            <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 dark:text-white text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
+              Компания
+            </div>
+          </Link>
+
           <header>
             <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">
               <ImageWithFallback
@@ -43,9 +50,11 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
                     className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl 2xl:text-12xl leading-none tracking-tighter"
                     once
                   />
-                  <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
-                    Позвонить
-                  </button>
+                  {firm?.default_phone && (
+                    <a href={`tel:${firm?.default_phone}`}>
+                      <Button onClick={() => {}}>Позвонить</Button>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

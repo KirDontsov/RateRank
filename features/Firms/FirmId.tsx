@@ -119,9 +119,11 @@ export const FirmId: FC<FirmIdProps> = ({
   return (
     <div className="h-screen w-full flex flex-col gap-4 relative">
       {(pagesByFirm?.length ?? 0) > 0 && (
-        <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[1] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px]">
-          <Link href={`${firm?.url}/cases`}>Кейсы</Link>
-        </div>
+        <Link href={`${firm?.url}/cases`}>
+          <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
+            Кейсы
+          </div>
+        </Link>
       )}
 
       <div className="w-full flex flex-col gap-8">

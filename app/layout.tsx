@@ -7,7 +7,6 @@ import { ToastContainer } from 'react-toastify';
 import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
 import Image from 'next/image';
 import Script from 'next/script';
-import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
 export const metadata: Metadata = {

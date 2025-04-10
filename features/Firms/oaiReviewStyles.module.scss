@@ -14,12 +14,13 @@
 }
 
 .descItem:nth-child(4n-2), .descItem:nth-child(4n-1) {
-  background: black;
+  background: #2d3034;
+  color: white;
 }
 
 @media (prefers-color-scheme: dark) {
   .descItem:nth-child(4n-2), .descItem:nth-child(4n-1) {
     background: white;
-    color: black;
+    color: #2d3034;
   }
 }
