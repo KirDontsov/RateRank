@@ -118,6 +118,10 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
           return firm?.name ?? path;
         }
 
+        if (index === 3) {
+          return 'Кейсы';
+        }
+
         const items = Array.from(FOOTER_LINKS.values()).flat();
 
         if (items.some((x) => x?.href.indexOf(path) !== -1)) {
@@ -144,7 +148,7 @@ export const BreadCrumbs: FC<BreadcrumbsProps> = ({
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
-      <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse flex-wrap">
         {!omitRootLabel && (
           <li className="inline-flex items-center">
             <a

@@ -67,8 +67,7 @@ export async function getCity(cityId: string): Promise<City | null> {
 
     return city || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
@@ -88,8 +87,7 @@ export async function getCategory(categoryId: string): Promise<Category | null> 
 
     return category?.data?.category || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
@@ -123,8 +121,7 @@ export async function getFirms(
 
     return firms?.data?.firms || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
@@ -163,8 +160,7 @@ export async function getFirm(firmId: string): Promise<Firm | null> {
 
     return firm?.data?.firm || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
@@ -306,14 +302,13 @@ export async function getPages(): Promise<PageItem[] | null> {
 
     return pages?.data?.pages || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
 export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null> {
   try {
-    const pages = await fetch(`${BACKEND_PORT}/api/pages/${firmUrl}`, {
+    const pages = await fetch(`${BACKEND_PORT}/api/pages_by_firm/${firmUrl}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     })
@@ -324,8 +319,7 @@ export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null
 
     return pages?.data?.pages || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 
@@ -346,8 +340,7 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
 
     return page?.data || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    notFound();
   }
 }
 

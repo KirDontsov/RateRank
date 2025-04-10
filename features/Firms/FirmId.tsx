@@ -35,6 +35,7 @@ import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ElementType, FC, Suspense, useCallback } from 'react';
 import { prepareTextDevidedByGroups } from '@/shared/lib/prepareTextDevidedByGroups';
+import Link from 'next/link';
 
 import styles from './oaiReviewStyles.module.scss';
 
@@ -116,7 +117,13 @@ export const FirmId: FC<FirmIdProps> = ({
   const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
 
   return (
-    <div className="h-screen w-full flex flex-col gap-4">
+    <div className="h-screen w-full flex flex-col gap-4 relative">
+      {(pagesByFirm?.length ?? 0) > 0 && (
+        <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[1] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px]">
+          <Link href={`${firm?.url}/cases`}>Кейсы</Link>
+        </div>
+      )}
+
       <div className="w-full flex flex-col gap-8">
         <header>
           <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">

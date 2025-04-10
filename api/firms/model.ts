@@ -1,11 +1,9 @@
-import { BACKEND_PORT, FirmId, FirmUrl, PaginationOptions } from '@/shared';
-import { log } from 'console';
+import { BACKEND_PORT, FirmUrl, PaginationOptions } from '@/shared';
 import { createDomain, sample } from 'effector';
 import persist from 'effector-localstorage';
 import { createGate } from 'effector-react';
-import { $categories, $category, getCategoriesFx } from '../categories';
-import { $cities, $city, getCitiesFx } from '../cities';
-import { getTypesFx } from '../types';
+import { $categories, $category } from '../categories';
+import { $cities, $city } from '../cities';
 
 export const FirmsGate = createGate<{ cityAbbr: string; categoryAbbr: string }>('FirmsGate');
 export const FirmsPageGate = createGate<number>('FirmsPageGate');
@@ -204,16 +202,16 @@ export const $firmError = firmD.createStore<string | null>(null);
 export const setFirmEvt = firmD.createEvent<FirmUrl>();
 export const setFirmLoadingEvt = firmD.createEvent<boolean>();
 
-export const getFirmFx = firmD.createEffect({
-  handler: async ({ firmId }: FirmId): Promise<{ firm: FirmQueryResult }> => {
-    const res = await fetch(`${BACKEND_PORT}/api/firm/${firmId}`, {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'GET',
-    });
-    const firm = await res.json();
-    return { firm };
-  },
-});
+// export const getFirmFx = firmD.createEffect({
+//   handler: async ({ firmId }: FirmId): Promise<{ firm: FirmQueryResult }> => {
+//     const res = await fetch(`${BACKEND_PORT}/api/firm/${firmId}`, {
+//       headers: { 'Content-Type': 'application/json' },
+//       method: 'GET',
+//     });
+//     const firm = await res.json();
+//     return { firm };
+//   },
+// });
 
 export const getFirmByUrlFx = firmD.createEffect({
   handler: async ({ firmUrl }: FirmUrl): Promise<{ firm: FirmQueryResult }> => {

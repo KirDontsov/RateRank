@@ -85,7 +85,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
-  const pagesByFirm = await getPagesByFirm(firmUrl);
+  const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '');
 
   return (
     <Suspense fallback={<></>}>
