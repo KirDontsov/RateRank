@@ -22,13 +22,13 @@ import { FirmIdPage } from './FirmIdPage';
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
   const firmUrl = `${paramsRes?.firm ?? ''}`;
-  const categoryId = `${paramsRes?.category ?? ''}`;
-  const cityId = `${paramsRes?.city ?? ''}`;
+  const categoryAbbr = `${paramsRes?.category ?? ''}`;
+  const cityAbbr = `${paramsRes?.city ?? ''}`;
 
-  const city = await getCity(cityId);
+  const city = await getCity(cityAbbr);
   const cityName = city?.name || '';
 
-  const category = await getCategory(categoryId);
+  const category = await getCategory(categoryAbbr);
 
   const categoryName = category?.name ?? '';
 
@@ -48,13 +48,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
     alternates: {
-      canonical: `https://топвыбор.рф/${cityId}/${category?.abbreviation}/${firmUrl}`,
+      canonical: `https://топвыбор.рф/${cityAbbr}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
       title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
       description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
-      url: `https://топвыбор.рф/${cityId}/${category?.abbreviation}/${firmUrl}`,
+      url: `https://топвыбор.рф/${cityAbbr}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
       locale: 'ru_RU',
       type: 'website',

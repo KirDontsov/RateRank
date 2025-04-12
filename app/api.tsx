@@ -59,11 +59,11 @@ export async function getCities(): Promise<City[] | null> {
   }
 }
 
-export async function getCity(cityId: string): Promise<City | null> {
+export async function getCity(cityAbbr: string): Promise<City | null> {
   try {
     const cities: City[] | null = await getCities();
 
-    const city = cities?.find((city) => city?.abbreviation === cityId);
+    const city = cities?.find((city) => city?.abbreviation === cityAbbr);
 
     return city || null;
   } catch (error) {
@@ -72,12 +72,12 @@ export async function getCity(cityId: string): Promise<City | null> {
   }
 }
 
-export async function getCategory(categoryId: string): Promise<Category | null> {
+export async function getCategory(categoryAbbr: string): Promise<Category | null> {
   try {
-    if (!categoryId || categoryId === 'undefined') {
+    if (!categoryAbbr || categoryAbbr === 'undefined') {
       return null;
     }
-    const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryId}`, {
+    const category: CategoryQueryResult = await fetch(`${BACKEND_PORT}/api/category_abbr/${categoryAbbr}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     })

@@ -1,8 +1,43 @@
 import { getCategories, getCategory, getCities, getCity, getFirm, getPagesByFirm } from '@/app/api';
-import type { SegmentParams } from '@/shared';
+import { COMMON_DOMAIN, PageProps, SegmentParams } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { CasesPage } from './CasesPage';
+import { Metadata } from 'next';
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const paramsRes = await params;
+  const cityAbbr = `${paramsRes?.city ?? ''}`;
+  const categoryAbbr = `${paramsRes?.category ?? ''}`;
+  const firmUrl = `${paramsRes?.firm ?? ''}`;
+
+  const category = await getCategory(categoryAbbr);
+
+  const firm = await getFirm(firmUrl);
+
+  const firmName = firm?.name ?? '';
+
+  const categoryNameAndFirmName =
+    firmName?.indexOf(category?.single_name ?? '') !== -1 ? firmName : `${category?.single_name} ${firmName}`;
+
+  const title = `Ремонт фар ${categoryNameAndFirmName}: реальные кейсы и результаты до/после | Гарантия качества`;
+  const description = `Примеры работ по ремонту фар с гарантией ${categoryNameAndFirmName}. Быстро, качественно, с гарантией. Восстановление вместо покупки новых фар!`;
+
+  return {
+    title: `${title}`,
+    description: `${description}`,
+    alternates: { canonical: `https://топвыбор.рф/${cityAbbr}/${categoryAbbr}/${firmUrl}/cases` },
+    keywords: ['кейсы', ' ремонт фар фото', ' до и после'],
+    openGraph: {
+      title: `${title}`,
+      description: `${description}`,
+      url: `https://топвыбор.рф/${cityAbbr}/${categoryAbbr}/${firmUrl}/cases`,
+      siteName: `${COMMON_DOMAIN}`,
+      locale: 'ru_RU',
+      type: 'website',
+    },
+  };
+}
 
 type Props = {
   params: Promise<SegmentParams>;
