@@ -46,16 +46,18 @@ export default async function Page({ params, searchParams }: PageProps) {
   const categoryAbbr = `${paramsRes?.category ?? ''}`;
   const firmUrl = `${paramsRes?.firm ?? ''}`;
   const casesPage = `${searchParamsRes?.casesPage ?? '1'}`;
+
   const firm = await getFirm(firmUrl);
   if (!firm) {
     notFound();
   }
-
   const cities = await getCities();
   const city = await getCity(cityAbbr);
   const categories = await getCategories(1, 10);
   const category = await getCategory(categoryAbbr);
-
+  if (!category || firm?.category_id !== category?.category_id) {
+    notFound();
+  }
   const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '', casesPage, 10);
 
   return (

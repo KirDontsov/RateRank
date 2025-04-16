@@ -4,6 +4,7 @@ import { COMMON_DOMAIN, PageProps } from '@/shared';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { ArticlePage } from './ArticlePage';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
@@ -37,6 +38,9 @@ export default async function Page({ params }: PageProps) {
   const pageUrl = `${paramsRes?.article ?? ''}`;
 
   const page = await getPageByUrl(pageUrl);
+  if (!page) {
+    notFound();
+  }
 
   const map = new Map<string, ImageType[]>();
   const firms: Firm[] | null = [];

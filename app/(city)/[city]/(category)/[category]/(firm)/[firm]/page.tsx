@@ -74,9 +74,15 @@ export default async function Page({ params, searchParams }: PageProps) {
   const casesPage = `${searchParamsRes?.casesPage ?? '1'}`;
 
   const firm = await getFirm(firmUrl);
+  if (!firm) {
+    notFound();
+  }
   const city = await getCity(cityAbbr);
   const cities = await getCities();
   const category = await getCategory(categoryAbbr);
+  if (!category || firm?.category_id !== category?.category_id) {
+    notFound();
+  }
   const categories = await getCategories(1, 10);
   const images = await getImages(firmUrl);
   const reviews = await getReviews(firmUrl, reviewsPage, 10);
