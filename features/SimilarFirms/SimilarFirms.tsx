@@ -28,9 +28,9 @@ export const SimilarFirms: FC<SimilarFirmsProps> = ({ firm, firms, city, categor
                 city={city}
                 category={category}
                 src={
-                  src
+                  src && src !== ''
                     ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${src}.${DEFAULT_PHOTOS_EXT}`
-                    : ''
+                    : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
                 }
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                 alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}

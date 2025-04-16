@@ -1,4 +1,4 @@
-import {
+import type {
   CategoriesQueryResult,
   Category,
   CategoryQueryResult,
@@ -13,6 +13,7 @@ import {
   Page,
   PageItem,
   PageQueryResult,
+  PagesQueryResult,
   PricesQueryResult,
   ReviewsQueryResult,
 } from '@/api';
@@ -311,9 +312,9 @@ export async function getPages(): Promise<PageItem[] | null> {
   }
 }
 
-export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null> {
+export async function getPagesByFirm(firmUrl: string, page: string, limit: number): Promise<PagesQueryResult> {
   try {
-    const pages = await fetch(`${BACKEND_PORT}/api/pages_by_firm/${firmUrl}`, {
+    const pages = await fetch(`${BACKEND_PORT}/api/pages_by_firm/${firmUrl}?page=${page}&limit=${limit}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     })
@@ -322,7 +323,7 @@ export async function getPagesByFirm(firmUrl: string): Promise<PageItem[] | null
         console.warn('error');
       });
 
-    return pages?.data?.pages || null;
+    return pages?.data || { pages: null, pages_count: null };
   } catch (error) {
     // @ts-ignore
     throw new Error(error?.message || error);

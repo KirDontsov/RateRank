@@ -39,6 +39,11 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
   const firmUrl = `${params?.firm ?? ''}`;
   const firmId = firm?.firm_id ?? '';
 
+  const heroImage =
+    images?.[0]?.img_id && images?.[0]?.img_id !== ''
+      ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
+      : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground];
+
   const form = useForm<AddReviewValues>({
     defaultValues: DEFAULT_ADDREVIEW_FORM_VALUES,
     mode: 'onBlur',
@@ -73,7 +78,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                 <div className="w-full bg-center bg-cover h-[38rem] relative">
                   <ImageWithFallback
                     className="w-full h-[38rem] absolute z-[-1]"
-                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                    src={heroImage}
                     fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                     fill
                     alt={`${category?.single_name} ${firm?.name ?? ''} - ${city?.name}`}

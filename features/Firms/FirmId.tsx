@@ -115,6 +115,10 @@ export const FirmId: FC<FirmIdProps> = ({
   const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
 
   const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
+  const heroImage =
+    images?.[0]?.img_id && images?.[0]?.img_id !== ''
+      ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
+      : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground];
 
   return (
     <div className="h-screen w-full flex flex-col gap-4 relative">
@@ -131,7 +135,7 @@ export const FirmId: FC<FirmIdProps> = ({
           <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">
             <ImageWithFallback
               className="w-full h-[38rem] absolute z-[-1]"
-              src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+              src={heroImage}
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
               alt={`${categoryNameAndFirmName} - ${city?.name ?? ''}`}

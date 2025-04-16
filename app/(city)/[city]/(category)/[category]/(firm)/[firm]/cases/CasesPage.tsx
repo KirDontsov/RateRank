@@ -1,9 +1,10 @@
 'use client';
-import { AnimatedText, Button, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
-import { HeroBackground, transliterate } from '@/shared';
-import { ElementType, FC } from 'react';
+import { AnimatedText, Button, Footer, ImageWithFallback, Nav, Pagination, Section } from '@/widgets';
+import { FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
+import { ElementType, FC, useCallback } from 'react';
 import type { Category, City, Firm, PageItem } from '@/api';
 import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export interface CasesPageProps {
   firm: Firm | null;
@@ -12,16 +13,39 @@ export interface CasesPageProps {
   categories: Category[] | null;
   category: Category | null;
   pagesByFirm: PageItem[] | null;
+  pagesCount: number | null;
 }
 
-export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, category, firm, pagesByFirm }) => {
+export const CasesPage: FC<CasesPageProps> = ({
+  cities,
+  city,
+  categories,
+  category,
+  firm,
+  pagesByFirm,
+  pagesCount,
+}) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const handleChangePage = useCallback(
+    (e: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('casesPage', `${e}`);
+      router.push(pathname + '?' + params.toString());
+      // setPage(e);
+    },
+    [router, searchParams, pathname],
+  );
+
   return (
     <>
       <Nav cities={cities} categories={categories} />
       <Section pt={0}>
         <div className="w-full flex flex-col gap-4 relative">
           <Link href={`/${city?.abbreviation ?? ''}/${category?.abbreviation ?? ''}/${firm?.url ?? ''}`}>
-            <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 dark:text-white text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
+            <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
               Компания
             </div>
           </Link>
@@ -31,8 +55,9 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
               <ImageWithFallback
                 className="w-full h-[38rem] absolute z-[-1]"
                 src={
-                  pagesByFirm?.[0]?.page_photo ??
-                  HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
+                  pagesByFirm?.[0]?.page_photo && pagesByFirm?.[0]?.page_photo !== ''
+                    ? pagesByFirm?.[0]?.page_photo
+                    : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
                 }
                 fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                 fill
@@ -67,7 +92,6 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
                     <a
                       key={item?.page_id}
                       href={`/${city?.abbreviation}/${category?.abbreviation}/${firm?.url ?? transliterate(firm?.name ?? '')}/cases/${item?.url ?? ''}`}
-                      // onClick={handleClick}
                       className="bg-white rounded-lg shadow hover:shadow-md dark:bg-eboni-800 relative cursor-pointer min-w-80 max-w-sm md:min-w-[40rem] md:max-w-lg"
                     >
                       <div className="relative w-full h-[15rem] md:h-[30rem] overflow-hidden">
@@ -75,7 +99,9 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
                           key={item?.page_id}
                           className="w-full h-[15rem] md:h-[30rem] hover:scale-[1.1] duration-300"
                           src={
-                            item?.page_photo ?? HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
+                            item?.page_photo && item?.page_photo !== ''
+                              ? item?.page_photo
+                              : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]
                           }
                           fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                           fill
@@ -96,6 +122,13 @@ export const CasesPage: FC<CasesPageProps> = ({ cities, city, categories, catego
                   </div>
                 ))}
               </div>
+              {(pagesCount ?? 1) > 11 && (
+                <Pagination
+                  current={Number(searchParams.get('casesPage')) || 1}
+                  onChange={handleChangePage}
+                  total={Math.ceil(((pagesCount ?? 0) - 1) / FETCH_LIMIT)}
+                />
+              )}
             </div>
             <Footer />
           </div>

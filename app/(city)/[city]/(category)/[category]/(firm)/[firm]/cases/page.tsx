@@ -1,9 +1,9 @@
 import { getCategories, getCategory, getCities, getCity, getFirm, getPagesByFirm } from '@/app/api';
-import { COMMON_DOMAIN, PageProps, SegmentParams } from '@/shared';
+import { COMMON_DOMAIN, PageProps } from '@/shared';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { CasesPage } from './CasesPage';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const paramsRes = await params;
@@ -39,15 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-type Props = {
-  params: Promise<SegmentParams>;
-};
-
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: PageProps) {
   const paramsRes = await params;
+  const searchParamsRes = await searchParams;
   const cityAbbr = `${paramsRes?.city ?? ''}`;
   const categoryAbbr = `${paramsRes?.category ?? ''}`;
-  const firmUrl = `${paramsRes.firm ?? ''}`;
+  const firmUrl = `${paramsRes?.firm ?? ''}`;
+  const casesPage = `${searchParamsRes?.casesPage ?? '1'}`;
   const firm = await getFirm(firmUrl);
   if (!firm) {
     notFound();
@@ -58,7 +56,7 @@ export default async function Page({ params }: Props) {
   const categories = await getCategories(1, 10);
   const category = await getCategory(categoryAbbr);
 
-  const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '');
+  const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '', casesPage, 10);
 
   return (
     <Suspense fallback={<></>}>
@@ -68,7 +66,8 @@ export default async function Page({ params }: Props) {
         categories={categories}
         category={category}
         firm={firm}
-        pagesByFirm={pagesByFirm}
+        pagesByFirm={pagesByFirm?.pages}
+        pagesCount={pagesByFirm?.pages_count}
       />
     </Suspense>
   );

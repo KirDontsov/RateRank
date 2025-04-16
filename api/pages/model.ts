@@ -1,6 +1,11 @@
 import { createDomain } from 'effector';
 import { createGate } from 'effector-react';
 
+export interface PagesQueryResult {
+  pages: PageItem[] | null;
+  pages_count: number | null;
+}
+
 export interface PageItem {
   page_id: string | null;
   firm_id: string | null;

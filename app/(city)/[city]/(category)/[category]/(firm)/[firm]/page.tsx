@@ -71,6 +71,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const firmUrl = `${paramsRes?.firm ?? ''}`;
   const firmsPage = `${searchParamsRes?.firmsPage ?? '1'}`;
   const reviewsPage = `${searchParamsRes?.reviewsPage ?? '1'}`;
+  const casesPage = `${searchParamsRes?.casesPage ?? '1'}`;
 
   const firm = await getFirm(firmUrl);
   const city = await getCity(cityAbbr);
@@ -85,7 +86,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const firms = await getFirms(cityAbbr, categoryAbbr, firmsPage, 10);
   const similarFirmsImages = await getSimilarFirmsImages(firms?.map(({ url }) => url) ?? []);
 
-  const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '');
+  const pagesByFirm = await getPagesByFirm(firm?.firm_id ?? '', casesPage, 10);
 
   return (
     <Suspense fallback={<></>}>
@@ -105,7 +106,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         oai_reviews={oai_reviews}
         prices={prices}
         similarFirmsImages={similarFirmsImages}
-        pagesByFirm={pagesByFirm}
+        pagesByFirm={pagesByFirm?.pages}
       />
     </Suspense>
   );
