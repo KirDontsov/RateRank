@@ -372,7 +372,7 @@ export const FirmId: FC<FirmIdProps> = ({
           )}
           <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
             <SectionHeader
-              title={`Похожие ${category?.name ?? ''} на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
+              title={`Похожие организации на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
             />
           </div>
           <div className="w-full px-8">
