@@ -37,8 +37,8 @@ export async function getCategories(page: number, limit: number): Promise<Catego
 
     return categories?.data?.categories?.filter((x) => x?.is_active === 'true') || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -55,8 +55,8 @@ export async function getCities(): Promise<City[] | null> {
 
     return cities?.data?.cities?.filter((x) => x?.is_active === 'true') || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -68,8 +68,8 @@ export async function getCity(cityAbbr: string): Promise<City | null> {
 
     return city || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -89,8 +89,8 @@ export async function getCategory(categoryAbbr: string): Promise<Category | null
 
     return category?.data?.category || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -124,8 +124,8 @@ export async function getFirms(
 
     return firms?.data?.firms || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -146,8 +146,8 @@ export async function getFirmsForMap(cityId: string, categoryId: string): Promis
 
     return firms?.data?.firms || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -164,8 +164,8 @@ export async function getFirm(firmId: string): Promise<Firm | null> {
 
     return firm?.data?.firm || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -182,8 +182,8 @@ export async function getImages(firmUrl: string) {
 
     return images?.data?.images || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -203,8 +203,8 @@ export async function getReviews(firmUrl: string, page: string, limit: number) {
 
     return reviews?.data?.reviews || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -221,8 +221,8 @@ export async function getOaiReviews(firmUrl: string) {
 
     return oai_reviews?.data?.oai_reviews || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -242,8 +242,8 @@ export async function getOaiDescription(firmUrl: string) {
 
     return oai_description?.data?.oai_description || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -263,12 +263,12 @@ export async function getPrices(firmUrl: string) {
       prices_categories: oai_reviews?.data?.prices_categories || null,
     };
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
-export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQueryResult[]> {
+export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQueryResult[] | null> {
   try {
     const requests: Promise<ImagesQueryResult>[] = [];
 
@@ -289,8 +289,8 @@ export async function getSimilarFirmsImages(firmUrls: string[]): Promise<ImagesQ
 
     return similarImages || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -307,8 +307,8 @@ export async function getPages(): Promise<PageItem[] | null> {
 
     return pages?.data?.pages || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -325,8 +325,8 @@ export async function getPagesByFirm(firmUrl: string, page: string, limit: numbe
 
     return pages?.data || { pages: null, pages_count: null };
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return { pages: null, pages_count: null };
   }
 }
 
@@ -347,8 +347,8 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
 
     return page?.data || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
 
@@ -377,7 +377,7 @@ export async function getOaiReviewsForFirms(firms: Firm[] | null): Promise<OaiRe
 
     return oai_reviews.map((x) => x?.data?.oai_reviews).flat() || null;
   } catch (error) {
-    // @ts-ignore
-    throw new Error(error?.message || error);
+    console.warn(error);
+    return null;
   }
 }
