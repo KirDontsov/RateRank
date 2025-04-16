@@ -54,7 +54,7 @@ export const CasePage: FC<CasePageProps> = ({ cities, city, categories, category
       <Section pt={0}>
         <div className="w-full flex flex-col gap-4 relative">
           <Link href={`/${city?.abbreviation ?? ''}/${category?.abbreviation ?? ''}/${firm?.url ?? ''}`}>
-            <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
+            <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-2 md:px-4 rounded-br-xl rounded-tr-xl w-[26px] md:w-[40px] leading-1 flex items-center">
               Компания
             </div>
           </Link>

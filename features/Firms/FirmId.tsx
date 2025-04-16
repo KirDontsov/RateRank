@@ -124,7 +124,7 @@ export const FirmId: FC<FirmIdProps> = ({
     <div className="h-screen w-full flex flex-col gap-4 relative">
       {(pagesByFirm?.length ?? 0) > 0 && (
         <Link href={`${firm?.url}/cases`}>
-          <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-4 rounded-br-xl rounded-tr-xl w-[40px] leading-1 flex items-center">
+          <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-2 md:px-4 rounded-br-xl rounded-tr-xl w-[26px] md:w-[40px] leading-1 flex items-center">
             Кейсы
           </div>
         </Link>
