@@ -264,7 +264,10 @@ export async function getPrices(firmUrl: string) {
     };
   } catch (error) {
     console.warn(error);
-    return null;
+    return {
+      prices_items: null,
+      prices_categories: null,
+    };
   }
 }
 
