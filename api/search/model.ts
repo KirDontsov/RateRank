@@ -1,4 +1,4 @@
-import { BACKEND_USER_ACTIONS_URL, createThrottleUnit } from '@/shared';
+import { BACKEND_PORT, createThrottleUnit } from '@/shared';
 import { createDomain, sample } from 'effector';
 import { createGate } from 'effector-react';
 import { Firm } from '..';
@@ -29,7 +29,7 @@ export const toggleSearchVariantsEvt = searchD.createEvent<boolean>();
 
 export const getSearchVariantsFx = searchD.createEffect({
   handler: async ({ input }: SearchValue): Promise<{ firms: SearchQueryResult }> => {
-    const res = await fetch(`${BACKEND_USER_ACTIONS_URL}/api/firms_search?input=${input}`, {
+    const res = await fetch(`${BACKEND_PORT}/api/firms_search?input=${input}`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'GET',
     });
