@@ -45,6 +45,7 @@ export default async function Page({ params }: Props) {
   const caseUrl = `${paramsRes?.case ?? ''}`;
 
   const firm = await getFirm(firmUrl);
+  console.log('firm', firm);
   if (!firm) {
     notFound();
   }
@@ -52,10 +53,12 @@ export default async function Page({ params }: Props) {
   const city = await getCity(cityAbbr);
   const categories = await getCategories(1, 10);
   const category = await getCategory(categoryAbbr);
+  console.log('category', category);
   if (!category || firm?.category_id !== category?.category_id) {
     notFound();
   }
   const page = await getPageByUrl(caseUrl);
+  console.log('page', page);
   if (!page) {
     notFound();
   }
