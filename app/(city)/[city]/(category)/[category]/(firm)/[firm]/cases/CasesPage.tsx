@@ -39,8 +39,6 @@ export const CasesPage: FC<CasesPageProps> = ({
     [router, searchParams, pathname],
   );
 
-  console.log('pagesByFirm', pagesByFirm);
-
   return (
     <>
       <Nav cities={cities} categories={categories} />
