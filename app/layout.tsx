@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
 import { CookiesProvider } from 'next-client-cookies/server';
-import { Metadata } from 'next/types';
+import type { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
 import { COMMON_DOMAIN, COMMON_TITLE, FAVICON_ICONS_SET } from '@/shared';
