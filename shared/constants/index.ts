@@ -20,3 +20,15 @@ export const HeroBackground = {
 export const COMMON_TITLE = 'Топ выбор';
 export const COMMON_DOMAIN = 'Топвыбор.рф';
 export const COMMON_HOST = 'https://топвыбор.рф';
+
+export const FAVICON_ICONS_SET = [
+  { rel: 'shortcut icon', url: '/favicon.ico' },
+  { rel: 'shortcut icon', url: '/favicon.svg', sizes: '57x57' },
+  { rel: 'shortcut icon', url: '/favicon.svg', sizes: '72x72' },
+  { rel: 'shortcut icon', url: '/favicon.svg', sizes: '114x114' },
+  { rel: 'shortcut icon', url: '/favicon.svg', sizes: '144x144' },
+  { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '57x57' },
+  { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '72x72' },
+  { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '114x114' },
+  { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '144x144' },
+];

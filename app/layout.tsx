@@ -4,7 +4,7 @@ import { CookiesProvider } from 'next-client-cookies/server';
 import { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, FAVICON_ICONS_SET } from '@/shared';
 import Image from 'next/image';
 import Script from 'next/script';
 import './globals.css';
@@ -14,17 +14,7 @@ export const metadata: Metadata = {
   description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
   metadataBase: new URL('https://топвыбор.рф'),
   applicationName: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
-  icons: [
-    { rel: 'shortcut icon', url: '/favicon.ico' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '57x57' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '72x72' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '114x114' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '144x144' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '57x57' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '72x72' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '114x114' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '144x144' },
-  ],
+  icons: FAVICON_ICONS_SET,
   alternates: { canonical: 'https://топвыбор.рф' },
   keywords: ['отзывы', ' рестораны', ' салоны красоты', ' автосервисы', ' медицина', ' Москва', ' Санкт-петербург'],
   openGraph: {

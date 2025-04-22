@@ -38,7 +38,7 @@ export async function getCategories(page: number, limit: number): Promise<Catego
     return categories?.data?.categories?.filter((x) => x?.is_active === 'true') || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -56,7 +56,7 @@ export async function getCities(): Promise<City[] | null> {
     return cities?.data?.cities?.filter((x) => x?.is_active === 'true') || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -69,7 +69,7 @@ export async function getCity(cityAbbr: string): Promise<City | null> {
     return city || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -90,7 +90,7 @@ export async function getCategory(categoryAbbr: string): Promise<Category | null
     return category?.data?.category || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -125,7 +125,7 @@ export async function getFirms(
     return firms?.data?.firms || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -147,7 +147,7 @@ export async function getFirmsForMap(cityId: string, categoryId: string): Promis
     return firms?.data?.firms || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -165,7 +165,7 @@ export async function getFirm(firmId: string): Promise<Firm | null> {
     return firm?.data?.firm || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -311,7 +311,7 @@ export async function getPages(): Promise<PageItem[] | null> {
     return pages?.data?.pages || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
@@ -329,7 +329,7 @@ export async function getPagesByFirm(firmUrl: string, page: string, limit: numbe
     return pages?.data || { pages: null, pages_count: null };
   } catch (error) {
     console.warn(error);
-    return { pages: null, pages_count: null };
+    notFound();
   }
 }
 
@@ -351,7 +351,7 @@ export async function getPageByUrl(pageUrl: string): Promise<Page | null> {
     return page?.data || null;
   } catch (error) {
     console.warn(error);
-    return null;
+    notFound();
   }
 }
 
