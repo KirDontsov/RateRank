@@ -1,5 +1,12 @@
 'use client';
-import { CategoriesGateProvider, CategoriesList, CitiesGateProvider, CityIdGateProvider, Curve } from '@/features';
+import {
+  CategoriesGateProvider,
+  CategoriesList,
+  CitiesGateProvider,
+  CityIdGateProvider,
+  Curve,
+  YandexMetric,
+} from '@/features';
 import { CommonNavProps } from '@/shared';
 import { Footer, LoadingComponent, Nav, Section, SectionHeader } from '@/widgets';
 import { FC, Suspense } from 'react';
@@ -31,6 +38,9 @@ export const CategoriesPage: FC<CategoriesPageProps & CommonNavProps> = ({ cityI
               </div>
             </Section>
           </Curve>
+          <Suspense fallback={<></>}>
+            <YandexMetric />
+          </Suspense>
         </CategoriesGateProvider>
       </CityIdGateProvider>
     </CitiesGateProvider>

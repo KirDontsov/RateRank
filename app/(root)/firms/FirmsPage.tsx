@@ -9,12 +9,13 @@ import {
   FirmsGateProvider,
   FirmsList,
   FirmsMap,
+  YandexMetric,
 } from '@/features';
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { CommonHeader, Footer, Nav, Pagination, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FC, useCallback } from 'react';
+import { FC, Suspense, useCallback } from 'react';
 
 export interface FirmsPageProps {
   categoryAbbr: string;
@@ -94,6 +95,9 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                   </div>
                 </Section>
               </Curve>
+              <Suspense fallback={<></>}>
+                <YandexMetric />
+              </Suspense>
             </FirmsGateProvider>
           </CategoryIdGateProvider>
         </CategoriesGateProvider>

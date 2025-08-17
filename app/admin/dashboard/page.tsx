@@ -1,8 +1,10 @@
 'use client';
 import { useUserAuth } from '@/context';
+import { YandexMetric } from '@/features';
 import { COMMON_TITLE } from '@/shared';
 import { CommonHeader } from '@/widgets';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 export default function Page() {
   const value = useUserAuth();
@@ -14,6 +16,9 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-4">
       <CommonHeader title={COMMON_TITLE} subTitle="Админ Панель" />
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </div>
   );
 }

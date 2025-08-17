@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
-import { CookiesProvider } from 'next-client-cookies/server';
 import type { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
@@ -31,7 +30,7 @@ export default function RootLayout({ children }: CommonProps) {
   return (
     <html lang="en" className="overflow-x-hidden dark">
       <body>
-        <CookiesProvider>{children}</CookiesProvider>
+        {children}
         <ToastContainer />
         {process.env.PRODUCTION && (
           <>

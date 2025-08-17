@@ -25,11 +25,12 @@ import {
   PricesGateProvider,
   ReviewsGateProvider,
   SimilarImagesGateProvider,
+  YandexMetric,
 } from '@/features';
 import { CommonNavProps } from '@/shared';
 import { Nav, Section } from '@/widgets';
 import { notFound, useSearchParams } from 'next/navigation';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 // TODO: заменить во всех провайдерах firmId на firmUrl
 
@@ -102,6 +103,9 @@ export const FirmIdPage: FC<FirmIdPageProps & CommonNavProps> = ({
                               pagesByFirm={pagesByFirm}
                             />
                           </Section>
+                          <Suspense fallback={<></>}>
+                            <YandexMetric />
+                          </Suspense>
                         </SimilarImagesGateProvider>
                       </OaiDescriptionGateProvider>
                     </ReviewsGateProvider>

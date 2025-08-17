@@ -1,5 +1,6 @@
 'use client';
 import { Category, City, Firm, ImageType, Page, SectionItem } from '@/api';
+import { YandexMetric } from '@/features';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, LoadingComponent, Nav, Rating, Section } from '@/widgets';
@@ -138,6 +139,9 @@ export const ArticlePage: FC<ArticlePageProps> = ({ page, firms, cities, categor
           <Footer />
         </div>
       </Section>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </div>
   );
 };

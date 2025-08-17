@@ -1,6 +1,6 @@
 'use client';
 import { $category, $city, $firm, $images, addReviewEvt } from '@/api';
-import { Curve, FirmIdGateProvider } from '@/features';
+import { Curve, FirmIdGateProvider, YandexMetric } from '@/features';
 import {
   CommonNavProps,
   DEFAULT_PHOTOS_ENDPOINT,
@@ -11,7 +11,7 @@ import {
 } from '@/shared';
 import { Button, Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, Suspense, useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
@@ -191,6 +191,9 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
           </div>
         </Section>
       </Curve>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </FirmIdGateProvider>
   );
 };

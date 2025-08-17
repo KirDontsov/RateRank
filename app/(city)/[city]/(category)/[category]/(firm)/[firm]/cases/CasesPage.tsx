@@ -1,10 +1,11 @@
 'use client';
 import { AnimatedText, Button, Footer, ImageWithFallback, Nav, Pagination, Section } from '@/widgets';
 import { FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
-import { ElementType, FC, useCallback } from 'react';
+import { ElementType, FC, Suspense, useCallback } from 'react';
 import type { Category, City, Firm, PageItem } from '@/api';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { YandexMetric } from '@/features';
 
 export interface CasesPageProps {
   firm: Firm | null;
@@ -134,6 +135,9 @@ export const CasesPage: FC<CasesPageProps> = ({
           </div>
         </div>
       </Section>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </>
   );
 };

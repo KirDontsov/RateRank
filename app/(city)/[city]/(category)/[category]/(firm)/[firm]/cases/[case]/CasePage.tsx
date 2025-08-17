@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useMediaQuery } from '@/hooks';
 import dynamic from 'next/dynamic';
+import { YandexMetric } from '@/features';
 
 const DynamicMap = dynamic(() => import('../../../../../../../../../features/FirmsMap/FirmMap'), { ssr: false });
 
@@ -254,6 +255,9 @@ export const CasePage: FC<CasePageProps> = ({ cities, city, categories, category
           </div>
         </div>
       </Section>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </>
   );
 };

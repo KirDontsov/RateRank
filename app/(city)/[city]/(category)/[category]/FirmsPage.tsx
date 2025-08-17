@@ -7,6 +7,7 @@ import {
   CityIdGateProvider,
   FirmsGateProvider,
   FirmsList,
+  YandexMetric,
 } from '@/features';
 import { CommonNavProps, FETCH_LIMIT } from '@/shared';
 import { Footer, LoadingComponent, Nav, Pagination, Section, SectionHeader } from '@/widgets';
@@ -104,6 +105,9 @@ export const FirmsPage: FC<FirmsPageProps & CommonNavProps> = ({
                   <Footer />
                 </div>
               </Section>
+              <Suspense fallback={<></>}>
+                <YandexMetric />
+              </Suspense>
             </FirmsGateProvider>
           </CategoryIdGateProvider>
         </CategoriesGateProvider>

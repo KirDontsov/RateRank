@@ -24,6 +24,7 @@ export interface Firm {
   category_id: string;
   city_id: string;
   coords: string;
+  title: string;
 }
 
 export interface FirmForMap {

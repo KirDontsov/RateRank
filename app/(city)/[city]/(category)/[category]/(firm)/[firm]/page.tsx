@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const firmName = firm?.name ?? '';
+  const firmTitle = firm?.title ?? '';
 
   const categoriesWithMenu = ['3ebc7206-6fed-4ea7-a000-27a74e867c9a'];
 
@@ -45,14 +46,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     firmName?.indexOf(category?.single_name ?? '') !== -1 ? firmName : `${category?.single_name} ${firmName}`;
 
   return {
-    title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
+    title: firmTitle
+      ? firmTitle
+      : `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
     description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
     alternates: {
       canonical: `https://топвыбор.рф/${cityAbbr}/${category?.abbreviation}/${firmUrl}`,
     },
     keywords: [`${firmName}`, ` ${categoryName}`, ` ${cityName}`, ' отзывы', ' рейтинг'],
     openGraph: {
-      title: `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
+      title: firmTitle
+        ? firmTitle
+        : `${categoryNameAndFirmName} - отзывы, фото, ${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? 'онлайн бронирование столиков, меню' : 'рейтинг'}, цены, телефон и адрес - ${cityName} ${COMMON_TITLE}`,
       description: `${categoryNameAndFirmName}: адрес ☎️ телефон, часы работы и отзывы посетителей ✉️ ✔️ все фотографии${categoriesWithMenu.indexOf(category?.category_id ?? '') !== -1 ? ', онлайн бронирование столиков' : ''}. Рейтинг ${(category?.vin_name ?? '').toLowerCase()} города ${cityName}, соседние и похожие ${categoryName.toLowerCase()} на ${COMMON_DOMAIN}`,
       url: `https://топвыбор.рф/${cityAbbr}/${category?.abbreviation}/${firmUrl}`,
       siteName: `${COMMON_DOMAIN}`,
