@@ -1,12 +1,11 @@
-'use client';
-import { $cities } from '@/api';
-import { useList } from 'effector-react';
+import { CitiesList } from '@/features';
+import { getCities } from '@/app/api';
+import { Suspense } from 'react';
 
-export default function Page() {
-  return useList($cities, ({ city_id, name, abbreviation }) => (
-    <a href={`/city/${abbreviation}`} key={city_id} className="flex gap-4">
-      <div>{city_id}</div>
-      <div>{name}</div>
-    </a>
-  ));
+export default async function Page() {
+  return (
+    <Suspense fallback={<></>}>
+      <div className="py-8 flex gap-4 mb-auto flex-wrap">cities</div>
+    </Suspense>
+  );
 }

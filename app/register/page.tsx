@@ -6,12 +6,14 @@ import { Suspense } from 'react';
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-4">
-      <CommonHeader title={COMMON_TITLE} subTitle="Зарегистрируйтесь, чтобы начать" />
-      <RegisterForm />
-      <Suspense fallback={<></>}>
-        <YandexMetric />
-      </Suspense>
-    </div>
+    <Suspense fallback={<></>}>
+      <div className="flex flex-col gap-4">
+        <CommonHeader title={COMMON_TITLE} subTitle="Зарегистрируйтесь, чтобы начать" />
+        <RegisterForm />
+        <Suspense fallback={<></>}>
+          <YandexMetric />
+        </Suspense>
+      </div>
+    </Suspense>
   );
 }
