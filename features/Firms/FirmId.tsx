@@ -279,15 +279,6 @@ export const FirmId: FC<FirmIdProps> = ({
                     <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                       {res_desc?.map((item, index) => (
                         <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                          {index % 2 === 0 ? (
-                            <h3 className="mb-4">
-                              Интересный момент из описания {rodName} {firm?.name ?? ''}
-                            </h3>
-                          ) : (
-                            <h3 className="mb-4">
-                              Возможно вы не знали, но в {predName} {firm?.name ?? ''}
-                            </h3>
-                          )}
                           {item}
                         </div>
                       ))}
@@ -324,15 +315,6 @@ export const FirmId: FC<FirmIdProps> = ({
                 <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                   {oai_reviews_analysis?.map((item, index) => (
                     <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                      {index % 2 === 0 ? (
-                        <h3 className="mb-4">
-                          Анализ отзывов о {predName} {firm?.name ?? ''}
-                        </h3>
-                      ) : (
-                        <h3 className="mb-4">
-                          Интересный момент из отзывов о {predName} {firm?.name ?? ''}
-                        </h3>
-                      )}
                       {item}
                     </div>
                   ))}
