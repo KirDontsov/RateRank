@@ -1,8 +1,8 @@
 'use client';
-import { Curve } from '@/features';
+import { Curve, YandexMetric } from '@/features';
 import { COMMON_TITLE, CommonNavProps } from '@/shared';
 import { CommonHeader, Footer, Nav, Section } from '@/widgets';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 export const ReviewsPage: FC<CommonNavProps> = ({ cities, categories }) => {
   return (
@@ -18,7 +18,9 @@ export const ReviewsPage: FC<CommonNavProps> = ({ cities, categories }) => {
                 Каждый месяц мы отгружаем тысячи звонков в компании наших клиентов, анализируем их, собираем обратную
                 связь и даем рекомендации, которые улучшают бизнес.
               </p>
-              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">Мы экспериментируем и не боимся трудностей</h2>
+              <h2 className="text-lg dark:text-negroni-400 text-negroni-400">
+                Мы экспериментируем и не боимся трудностей
+              </h2>
               <p>
                 Мы разрабатываем новые инструменты, которые помогают бизнесу. Мы уважаем предпринимателей и точно знаем,
                 какой продукт упростит их жизнь
@@ -30,6 +32,9 @@ export const ReviewsPage: FC<CommonNavProps> = ({ cities, categories }) => {
           </div>
         </Section>
       </Curve>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </div>
   );
 };

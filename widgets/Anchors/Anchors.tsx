@@ -35,12 +35,17 @@ const ANCHORS = [
 
 export const Anchors: FC<AnchorsProps> = ({ rodName, firmName }) => {
   const getHash = () =>
-    typeof window !== 'undefined' ? decodeURIComponent(window.location.hash.replace('#', '')) : undefined;
+    typeof window !== 'undefined' ? decodeURIComponent(window.location.hash.replace('#', '')) : '';
 
-  const [hash, setHash] = useState(getHash());
+  const [hash, setHash] = useState<string>('');
+  const [isClient, setIsClient] = useState(false);
   const [source, target] = useSingleton();
 
   useEffect(() => {
+    // Set isClient to true on mount to ensure consistent client-side rendering
+    setIsClient(true);
+    setHash(getHash());
+    
     const handleHashChange = () => {
       setHash(getHash());
     };
@@ -49,6 +54,10 @@ export const Anchors: FC<AnchorsProps> = ({ rodName, firmName }) => {
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
+
+  // Render with consistent initial state on server and client
+  const renderHash = isClient ? hash : '';
+  const initialActiveIndex = 0;
 
   return (
     <div className="text-sm xl:text-base font-medium text-center border-b text-eboni-400 border-eboni-200 dark:text-white dark:border-negroni-400">
@@ -75,9 +84,9 @@ export const Anchors: FC<AnchorsProps> = ({ rodName, firmName }) => {
                 href={`#${id}`}
                 className={cn('inline-block p-4 border-b border-transparent rounded-t-lg hover:text-negroni-400', {
                   'text-white dark:text-eboni-400 border-negroni-400 active bg-eboni-800 dark:bg-negroni-400 hover:text-eboni-700':
-                    hash === id || (hash === '' && index === 0),
+                    renderHash === id || (renderHash === '' && index === initialActiveIndex),
                 })}
-                aria-current="page"
+                aria-current={renderHash === id || (renderHash === '' && index === initialActiveIndex) ? "page" : undefined}
               >
                 {title}
               </a>

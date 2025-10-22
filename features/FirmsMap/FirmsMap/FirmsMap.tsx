@@ -117,7 +117,7 @@ export const FirmsMap: FC<FirmsMapProps> = ({ firmsForMap, city, category }) => 
       mapRef.current?.easeTo({
         // @ts-ignore
         center: feature?.geometry?.coordinates,
-        zoom,
+        zoom: zoom ?? undefined,
         duration: 500,
       });
     });

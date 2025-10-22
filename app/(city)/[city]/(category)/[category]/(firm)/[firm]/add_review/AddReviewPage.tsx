@@ -1,6 +1,6 @@
 'use client';
 import { $category, $city, $firm, $images, addReviewEvt } from '@/api';
-import { Curve, FirmIdGateProvider } from '@/features';
+import { Curve, FirmIdGateProvider, YandexMetric } from '@/features';
 import {
   CommonNavProps,
   DEFAULT_PHOTOS_ENDPOINT,
@@ -9,9 +9,9 @@ import {
   HeroBackground,
   SegmentParams,
 } from '@/shared';
-import { Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
+import { Button, Footer, FormInput, FormTextArea, ImageWithFallback, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, Suspense, useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
@@ -39,13 +39,18 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
   const firmUrl = `${params?.firm ?? ''}`;
   const firmId = firm?.firm_id ?? '';
 
+  const heroImage =
+    images?.[0]?.img_id && images?.[0]?.img_id !== ''
+      ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
+      : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground];
+
   const form = useForm<AddReviewValues>({
     defaultValues: DEFAULT_ADDREVIEW_FORM_VALUES,
     mode: 'onBlur',
   });
 
-  const { reset, getValues, setError, formState } = form;
-  const { isDirty, isValid, errors } = formState;
+  const { reset, getValues, formState } = form;
+  const { isDirty, isValid } = formState;
 
   const handleReset = useCallback(() => {
     reset({
@@ -73,7 +78,7 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                 <div className="w-full bg-center bg-cover h-[38rem] relative">
                   <ImageWithFallback
                     className="w-full h-[38rem] absolute z-[-1]"
-                    src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+                    src={heroImage}
                     fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
                     fill
                     alt={`${category?.single_name} ${firm?.name ?? ''} - ${city?.name}`}
@@ -85,9 +90,11 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
                   <div className="flex items-center justify-center w-full h-full bg-eboni-900/40">
                     <div className="text-center">
                       <h1 className="font-semibold text-white text-2xl lg:text-3xl xl:text-8xl">{`Отзыв о ${(category?.pred_name ?? '').toLowerCase()} ${firm?.name}`}</h1>
-                      <button className="w-full px-5 py-2 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-negroni-600 rounded-md lg:w-auto hover:bg-negroni-400 focus:outline-none focus:bg-negroni-400">
-                        Позвонить
-                      </button>
+                      {firm?.default_phone && (
+                        <a href={`tel:${firm?.default_phone}`}>
+                          <Button onClick={() => {}}>Позвонить</Button>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -184,6 +191,9 @@ export const AddReviewPage: FC<AddReviewPageProps & CommonNavProps> = ({ cities,
           </div>
         </Section>
       </Curve>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </FirmIdGateProvider>
   );
 };

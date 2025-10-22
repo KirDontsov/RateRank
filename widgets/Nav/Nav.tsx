@@ -6,7 +6,7 @@ import { useMediaQuery } from '@/hooks';
 import { COMMON_TITLE } from '@/shared';
 import cn from 'classnames';
 import { useUnit } from 'effector-react';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import styles from './nav.module.scss';
 
 export interface NavProps {
@@ -21,11 +21,16 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
     loading: $loading,
   });
 
-  const tablet = useMediaQuery('(max-width: 768px)');
-
+  const [isClient, setIsClient] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleOpen = useCallback(() => setOpen((prevState) => !prevState), []);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const tablet = useMediaQuery('(max-width: 768px)');
 
   return (
     <div className="w-full overflow-hidden">
@@ -37,7 +42,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
       >
         <div
           className={cn('px-6 py-2 xl:py-4 mx-auto pointer-events-none', {
-            'flex justify-between items-center': !tablet,
+            'flex justify-between items-center': isClient && !tablet,
           })}
         >
           <div className="flex items-center justify-between">
@@ -53,7 +58,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
               </div>
             </div>
 
-            {tablet && (
+            {isClient && tablet && (
               <div className="flex lg:hidden">
                 <button
                   onClick={handleOpen}
@@ -89,8 +94,8 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
             )}
           </div>
 
-          {!tablet && !open && (
-            <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-100 translate-x-0 flex items-center">
+          {isClient && !tablet && !open && (
+            <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-10 translate-x-0 flex items-center">
               <div className="flex flex-row mx-6 items-center pointer-events-auto">
                 <CityDropdown cities={cities} />
 
@@ -119,7 +124,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
             </div>
           )}
 
-          {tablet && open && (
+          {isClient && tablet && open && (
             <div className="absolute inset-x-0 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-eboni-700">
               <div className="flex flex-col items-center pointer-events-auto">
                 <CityDropdown cities={cities} />

@@ -1,8 +1,8 @@
 'use client';
-import { Curve } from '@/features';
+import { Curve, YandexMetric } from '@/features';
 import { COMMON_DOMAIN, COMMON_TITLE, CommonNavProps } from '@/shared';
 import { CommonHeader, Footer, Nav, Section } from '@/widgets';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 export const AboutPage: FC<CommonNavProps> = ({ cities, categories }) => {
   return (
@@ -33,6 +33,9 @@ export const AboutPage: FC<CommonNavProps> = ({ cities, categories }) => {
             <Footer />
           </div>
         </Section>
+        <Suspense fallback={<></>}>
+          <YandexMetric />
+        </Suspense>
       </Curve>
     </div>
   );

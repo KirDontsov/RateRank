@@ -1,6 +1,11 @@
 import { createDomain } from 'effector';
 import { createGate } from 'effector-react';
 
+export interface PagesQueryResult {
+  pages: PageItem[] | null;
+  pages_count: number | null;
+}
+
 export interface PageItem {
   page_id: string | null;
   firm_id: string | null;
@@ -8,14 +13,17 @@ export interface PageItem {
   user_id: string | null;
   url: string | null;
   oai_value: string | null;
+  page_photo: string | null;
   createdTs: string | null;
 }
 
 export interface BlockItem {
   page_block_id: string | null;
   page_id: string | null;
-  page_block_type_id: string | null;
+  page_block_type: number | null;
   page_block_order: string | null;
+  page_block_title: string | null;
+  page_block_subtitle: string | null;
 }
 
 export interface SectionItem {

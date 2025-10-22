@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import type { CommonProps } from '@/shared/types';
-import { CookiesProvider } from 'next-client-cookies/server';
-import { Metadata } from 'next/types';
+import type { Metadata } from 'next/types';
 import { ToastContainer } from 'react-toastify';
 
-import { COMMON_DOMAIN, COMMON_TITLE } from '@/shared';
+import { COMMON_DOMAIN, COMMON_TITLE, FAVICON_ICONS_SET } from '@/shared';
 import Image from 'next/image';
 import Script from 'next/script';
-import 'react-toastify/dist/ReactToastify.css';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,17 +13,7 @@ export const metadata: Metadata = {
   description: `Выбор лучших услуг: рестораны, салоны красоты, медицина и многое другое на ${COMMON_DOMAIN}. Фотографии, отзывы, акции, скидки, фильтры для поиска.`,
   metadataBase: new URL('https://топвыбор.рф'),
   applicationName: `Каталог организаций: отзывы, фото, рейтинг — ${COMMON_TITLE}`,
-  icons: [
-    { rel: 'shortcut icon', url: '/favicon.ico' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '57x57' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '72x72' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '114x114' },
-    { rel: 'shortcut icon', url: '/favicon.svg', sizes: '144x144' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '57x57' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '72x72' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '114x114' },
-    { rel: 'apple-touch-icon', url: '/favicon.svg', sizes: '144x144' },
-  ],
+  icons: FAVICON_ICONS_SET,
   alternates: { canonical: 'https://топвыбор.рф' },
   keywords: ['отзывы', ' рестораны', ' салоны красоты', ' автосервисы', ' медицина', ' Москва', ' Санкт-петербург'],
   openGraph: {
@@ -42,7 +30,7 @@ export default function RootLayout({ children }: CommonProps) {
   return (
     <html lang="en" className="overflow-x-hidden dark">
       <body>
-        <CookiesProvider>{children}</CookiesProvider>
+        {children}
         <ToastContainer />
         {process.env.PRODUCTION && (
           <>
@@ -80,6 +68,10 @@ export default function RootLayout({ children }: CommonProps) {
               style={{ position: 'absolute', left: '-9999px' }}
               alt="yandex-metric"
             />
+            <Script id="yandex-ads" strategy="afterInteractive">
+              {`window.yaContextCb=window.yaContextCb||[];`}
+            </Script>
+            <script src="https://yandex.ru/ads/system/context.js" async></script>
           </>
         )}
       </body>

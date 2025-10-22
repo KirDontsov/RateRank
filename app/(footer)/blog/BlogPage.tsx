@@ -1,11 +1,11 @@
 /** eslint-disable react/jsx-key */
 'use client';
 import { Category, City, PageItem } from '@/api';
-import { Curve } from '@/features';
+import { Curve, YandexMetric } from '@/features';
 import { COMMON_TITLE, HeroBackground } from '@/shared';
 import { AnimatedText, Footer, ImageWithFallback, Nav, Section } from '@/widgets';
 import dayjs from 'dayjs';
-import { ElementType, FC } from 'react';
+import { ElementType, FC, Suspense } from 'react';
 
 export interface BlogPageProps {
   pages: PageItem[] | null;
@@ -72,6 +72,9 @@ export const BlogPage: FC<BlogPageProps> = ({ pages, cities, categories }) => {
           </div>
         </Section>
       </Curve>
+      <Suspense fallback={<></>}>
+        <YandexMetric />
+      </Suspense>
     </div>
   );
 };

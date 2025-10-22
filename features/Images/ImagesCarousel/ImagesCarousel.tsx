@@ -113,6 +113,11 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
   return (
     <>
       {images?.map((img, idx) => {
+        const image =
+          img?.img_id && img?.img_id !== ''
+            ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`
+            : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground];
+
         return (
           <motion.div
             key={idx}
@@ -124,7 +129,7 @@ const Images: FC<ImagesProps> = ({ imgIndex, firm, city, category, images }) => 
           >
             <ImageWithFallback
               className="w-full h-[38rem] absolute z-[-1] pointer-events-none"
-              src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${img?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+              src={image}
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
               alt={`${category?.single_name ?? ''} ${firm?.name ?? ''} - ${city?.name ?? ''}`}

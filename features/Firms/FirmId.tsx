@@ -13,6 +13,7 @@ import {
   PriceItem,
   Review,
   setReviewsPageEvt,
+  PageItem,
 } from '@/api';
 import { useMediaQuery } from '@/hooks';
 import { DEFAULT_PHOTOS_ENDPOINT, DEFAULT_PHOTOS_EXT, FETCH_LIMIT, HeroBackground, transliterate } from '@/shared';
@@ -32,8 +33,10 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ElementType, FC, Suspense, useCallback } from 'react';
+import { ElementType, FC, Suspense, useCallback, useState, useEffect } from 'react';
 import { prepareTextDevidedByGroups } from '@/shared/lib/prepareTextDevidedByGroups';
+import Link from 'next/link';
+import { YandexAds } from '@/features';
 
 import styles from './oaiReviewStyles.module.scss';
 
@@ -54,6 +57,7 @@ export interface FirmIdProps {
   oai_reviews: OaiReview[] | null;
   prices: { prices_items: PriceItem[] | null; prices_categories: PriceCategory[] | null };
   similarFirmsImages: ImagesQueryResult[] | null;
+  pagesByFirm: PageItem[] | null;
 }
 
 export const FirmId: FC<FirmIdProps> = ({
@@ -67,6 +71,7 @@ export const FirmId: FC<FirmIdProps> = ({
   oai_reviews,
   prices,
   similarFirmsImages,
+  pagesByFirm,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -94,7 +99,12 @@ export const FirmId: FC<FirmIdProps> = ({
     [setPage, router, searchParams, pathname],
   );
 
+  const [isClient, setIsClient] = useState(false);
   const tablet = useMediaQuery('(max-width: 768px)');
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const firmName = firm?.name ?? '';
   const categoryNameAndFirmName =
@@ -111,15 +121,29 @@ export const FirmId: FC<FirmIdProps> = ({
   const res_desc = prepareTextDevidedByGroups(desc?.split('\n') ?? []);
 
   const oai_reviews_analysis = prepareTextDevidedByGroups(oai_reviews?.[0]?.text?.split('\n') ?? []);
+  const heroImage =
+    images?.[0]?.img_id && images?.[0]?.img_id !== ''
+      ? `${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`
+      : HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground];
 
   return (
-    <div className="h-screen w-full flex flex-col gap-4">
+    <div className="h-screen w-full flex flex-col gap-4 relative">
+      {(pagesByFirm?.length ?? 0) > 0 && (
+        <Link href={`${firm?.url}/cases`}>
+          <div className="fixed top-1/2 left-0 bg-negroni-400 text-eboni-900 text-wrap break-all z-[2] py-4 px-2 md:px-4 rounded-br-xl rounded-tr-xl w-[26px] md:w-[40px] leading-1 flex items-center">
+            Кейсы
+          </div>
+        </Link>
+      )}
+
+      <YandexAds />
+
       <div className="w-full flex flex-col gap-8">
         <header>
           <div className="w-full bg-center bg-cover h-[calc(100svh)] relative">
             <ImageWithFallback
               className="w-full h-[38rem] absolute z-[-1]"
-              src={`${DEFAULT_PHOTOS_ENDPOINT}/${city?.abbreviation}/${category?.abbreviation}/${firm?.firm_id}/${images?.[0]?.img_id}.${DEFAULT_PHOTOS_EXT}`}
+              src={heroImage}
               fallbackSrc={HeroBackground[(firm?.category_id ?? '') as keyof typeof HeroBackground]}
               fill
               alt={`${categoryNameAndFirmName} - ${city?.name ?? ''}`}
@@ -156,13 +180,13 @@ export const FirmId: FC<FirmIdProps> = ({
                 <Anchors rodName={rodName} firmName={firm?.name ?? ''} />
                 <div
                   className={cn('w-full flex', {
-                    'gap-8 flex-col-reverse': tablet,
+                    'gap-8 flex-col-reverse': isClient && tablet,
                   })}
                 >
                   <div
                     className={cn('flex flex-col gap-4', {
-                      'w-full': tablet,
-                      'w-2/3': !tablet,
+                      'w-full': isClient && tablet,
+                      'w-2/3': isClient && !tablet,
                     })}
                   >
                     <SectionHeader id="contacts" title={`Контакты ${rodName} ${firm?.name ?? ''}`} />
@@ -191,8 +215,8 @@ export const FirmId: FC<FirmIdProps> = ({
 
                   <div
                     className={cn('flex h-fit', {
-                      'w-full': tablet,
-                      'w-1/3 justify-end': !tablet,
+                      'w-full': isClient && tablet,
+                      'w-1/3 justify-end': isClient && !tablet,
                     })}
                   >
                     {Number(firm?.reviews_count) > 0 && (
@@ -263,9 +287,6 @@ export const FirmId: FC<FirmIdProps> = ({
                     <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                       {res_desc?.map((item, index) => (
                         <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                          <h3 className="mb-4">
-                            Интересный момент из описания {rodName} {firm?.name ?? ''}
-                          </h3>
                           {item}
                         </div>
                       ))}
@@ -302,9 +323,6 @@ export const FirmId: FC<FirmIdProps> = ({
                 <div className={`${styles.myCustomStyle} list-disc flex flex-col md:flex-row md:flex-wrap gap-2`}>
                   {oai_reviews_analysis?.map((item, index) => (
                     <div id={index.toString()} key={item} className={`p-8 rounded-xl ${styles.descItem}`}>
-                      <h3 className="mb-4">
-                        Анализ отзывов о {predName} {firm?.name ?? ''}
-                      </h3>
                       {item}
                     </div>
                   ))}
@@ -344,7 +362,7 @@ export const FirmId: FC<FirmIdProps> = ({
           )}
           <div className="container flex flex-col items-center justify-between my-4 px-8 xl:px-0 lg:flex-row">
             <SectionHeader
-              title={`Похожие ${category?.name ?? ''} на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
+              title={`Похожие организации на ${category?.single_name?.toLocaleLowerCase() ?? ''} ${firm?.name ?? ''}:`}
             />
           </div>
           <div className="w-full px-8">

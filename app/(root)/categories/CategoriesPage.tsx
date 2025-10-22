@@ -1,11 +1,18 @@
 'use client';
 import { $cityError, Category } from '@/api';
-import { CategoriesGateProvider, CategoriesList, CitiesGateProvider, CityIdGateProvider, Curve } from '@/features';
+import {
+  CategoriesGateProvider,
+  CategoriesList,
+  CitiesGateProvider,
+  CityIdGateProvider,
+  Curve,
+  YandexMetric,
+} from '@/features';
 import { CommonNavProps } from '@/shared';
 import { CommonHeader, Footer, Nav, Section } from '@/widgets';
 import { useUnit } from 'effector-react';
 import { notFound } from 'next/navigation';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 export interface CategoriesPageProps {
   cityId: string;
@@ -33,6 +40,9 @@ export const CategoriesPage: FC<CategoriesPageProps & CommonNavProps> = ({ cityI
               </div>
             </Section>
           </Curve>
+          <Suspense fallback={<></>}>
+            <YandexMetric />
+          </Suspense>
         </CategoriesGateProvider>
       </CityIdGateProvider>
     </CitiesGateProvider>

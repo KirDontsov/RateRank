@@ -1,4 +1,4 @@
-import { CommonProps } from '@/shared/types';
+import type { CommonProps } from '@/shared/types';
 import { HeroSection } from '@/widgets';
 
 export default function CitiesLayout({ children }: CommonProps) {
