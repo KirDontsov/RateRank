@@ -68,6 +68,10 @@ export default function RootLayout({ children }: CommonProps) {
               style={{ position: 'absolute', left: '-9999px' }}
               alt="yandex-metric"
             />
+            <Script id="yandex-ads" strategy="afterInteractive">
+              {`window.yaContextCb=window.yaContextCb||[];`}
+            </Script>
+            <script src="https://yandex.ru/ads/system/context.js" async></script>
           </>
         )}
       </body>

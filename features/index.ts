@@ -13,3 +13,4 @@ export * from './Search';
 export * from './SimilarFirms';
 export * from './Types';
 export * from './YandexMetric';
+export * from './YandexAds';

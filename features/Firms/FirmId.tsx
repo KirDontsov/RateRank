@@ -33,9 +33,10 @@ import cn from 'classnames';
 import { useUnit } from 'effector-react';
 import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ElementType, FC, Suspense, useCallback } from 'react';
+import { ElementType, FC, Suspense, useCallback, useState, useEffect } from 'react';
 import { prepareTextDevidedByGroups } from '@/shared/lib/prepareTextDevidedByGroups';
 import Link from 'next/link';
+import { YandexAds } from '@/features';
 
 import styles from './oaiReviewStyles.module.scss';
 
@@ -98,7 +99,12 @@ export const FirmId: FC<FirmIdProps> = ({
     [setPage, router, searchParams, pathname],
   );
 
+  const [isClient, setIsClient] = useState(false);
   const tablet = useMediaQuery('(max-width: 768px)');
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const firmName = firm?.name ?? '';
   const categoryNameAndFirmName =
@@ -129,6 +135,8 @@ export const FirmId: FC<FirmIdProps> = ({
           </div>
         </Link>
       )}
+
+      <YandexAds />
 
       <div className="w-full flex flex-col gap-8">
         <header>
@@ -172,13 +180,13 @@ export const FirmId: FC<FirmIdProps> = ({
                 <Anchors rodName={rodName} firmName={firm?.name ?? ''} />
                 <div
                   className={cn('w-full flex', {
-                    'gap-8 flex-col-reverse': tablet,
+                    'gap-8 flex-col-reverse': isClient && tablet,
                   })}
                 >
                   <div
                     className={cn('flex flex-col gap-4', {
-                      'w-full': tablet,
-                      'w-2/3': !tablet,
+                      'w-full': isClient && tablet,
+                      'w-2/3': isClient && !tablet,
                     })}
                   >
                     <SectionHeader id="contacts" title={`Контакты ${rodName} ${firm?.name ?? ''}`} />
@@ -207,8 +215,8 @@ export const FirmId: FC<FirmIdProps> = ({
 
                   <div
                     className={cn('flex h-fit', {
-                      'w-full': tablet,
-                      'w-1/3 justify-end': !tablet,
+                      'w-full': isClient && tablet,
+                      'w-1/3 justify-end': isClient && !tablet,
                     })}
                   >
                     {Number(firm?.reviews_count) > 0 && (
