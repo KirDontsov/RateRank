@@ -95,7 +95,7 @@ export const Nav: FC<NavProps> = ({ cities = [], categories = [] }) => {
           </div>
 
           {isClient && !tablet && !open && (
-            <div className="mt-0 p-0 top-0 relative bg-transparent w-auto opacity-10 translate-x-0 flex items-center">
+            <div className="mt-0 p-0 top-0 relative bg-transparent w-auto translate-x-0 flex items-center">
               <div className="flex flex-row mx-6 items-center pointer-events-auto">
                 <CityDropdown cities={cities} />
 

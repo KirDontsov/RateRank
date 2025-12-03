@@ -15,10 +15,6 @@ export const ContactsPage: FC<CommonNavProps> = ({ cities, categories }) => {
             <div className="container min-h-[500px] w-full flex flex-col gap-4 px-8 py-10 overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-eboni-800">
               <p>Набережные Челны, пр. Московский, 140А (52/03А) деловой центр Форт Диалог, этаж 2, офис 200</p>
               <p>
-                {`Телефон для связи: `}
-                <a href="tel:+79112395458">+7 (911) 239-54-58</a>
-              </p>
-              <p>
                 {`Почта для запросов на сотрудничество: `}
                 <a href="mailto:kir.dontsov@gmail.com">kir.dontsov@gmail.com</a>
               </p>
